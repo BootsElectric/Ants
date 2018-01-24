@@ -1,0 +1,98 @@
+var _user$project$Game_TwoD$renderWithOptions = F3(
+	function (attributes, _p0, objects) {
+		var _p1 = _p0;
+		var _p2 = _p1.size;
+		var w = _p2._0;
+		var h = _p2._1;
+		var _p3 = {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Basics$toFloat(w),
+			_1: _elm_lang$core$Basics$toFloat(h)
+		};
+		var wf = _p3._0;
+		var hf = _p3._1;
+		return A3(
+			_elm_community$webgl$WebGL$toHtmlWith,
+			{
+				ctor: '::',
+				_0: _elm_community$webgl$WebGL$alpha(false),
+				_1: {
+					ctor: '::',
+					_0: _elm_community$webgl$WebGL$depth(1),
+					_1: {
+						ctor: '::',
+						_0: _elm_community$webgl$WebGL$antialias,
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$width(w),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$height(h),
+						_1: {ctor: '[]'}
+					}
+				},
+				attributes),
+			A2(
+				_elm_lang$core$List$map,
+				A3(
+					_user$project$Game_TwoD_Render$toWebGl,
+					_p1.time,
+					_p1.camera,
+					{ctor: '_Tuple2', _0: wf, _1: hf}),
+				objects));
+	});
+var _user$project$Game_TwoD$renderCenteredWithOptions = F4(
+	function (containerAttributes, canvasAttributes, renderConfig, objects) {
+		return A2(
+			_elm_lang$html$Html$div,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						{
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'width', _1: '100%'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'height', _1: '100%'},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'display', _1: 'flex'},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'align-items', _1: 'center'},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'justify-content', _1: 'center'},
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						}),
+					_1: {ctor: '[]'}
+				},
+				containerAttributes),
+			{
+				ctor: '::',
+				_0: A3(_user$project$Game_TwoD$renderWithOptions, canvasAttributes, renderConfig, objects),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Game_TwoD$renderCentered = A2(
+	_user$project$Game_TwoD$renderCenteredWithOptions,
+	{ctor: '[]'},
+	{ctor: '[]'});
+var _user$project$Game_TwoD$render = _user$project$Game_TwoD$renderWithOptions(
+	{ctor: '[]'});
+var _user$project$Game_TwoD$RenderConfig = F3(
+	function (a, b, c) {
+		return {time: a, size: b, camera: c};
+	});

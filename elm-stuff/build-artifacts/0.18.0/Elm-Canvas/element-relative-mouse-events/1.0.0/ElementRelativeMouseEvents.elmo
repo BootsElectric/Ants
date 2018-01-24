@@ -1,0 +1,201 @@
+var _Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$toTuple = F2(
+	function (x, y) {
+		return A3(
+			_elm_lang$core$Json_Decode$map2,
+			F2(
+				function (v0, v1) {
+					return {ctor: '_Tuple2', _0: v0, _1: v1};
+				}),
+			A2(_elm_lang$core$Json_Decode$at, x, _elm_lang$core$Json_Decode$float),
+			A2(_elm_lang$core$Json_Decode$at, y, _elm_lang$core$Json_Decode$float));
+	});
+var _Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$positionDecoder = A5(
+	_elm_lang$core$Json_Decode$map4,
+	F4(
+		function (v0, v1, v2, v3) {
+			return {ctor: '_Tuple4', _0: v0, _1: v1, _2: v2, _3: v3};
+		}),
+	A2(
+		_Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$toTuple,
+		{
+			ctor: '::',
+			_0: 'clientX',
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: 'clientY',
+			_1: {ctor: '[]'}
+		}),
+	A2(
+		_Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$toTuple,
+		{
+			ctor: '::',
+			_0: 'target',
+			_1: {
+				ctor: '::',
+				_0: 'offsetLeft',
+				_1: {ctor: '[]'}
+			}
+		},
+		{
+			ctor: '::',
+			_0: 'target',
+			_1: {
+				ctor: '::',
+				_0: 'offsetTop',
+				_1: {ctor: '[]'}
+			}
+		}),
+	A2(
+		_Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$toTuple,
+		{
+			ctor: '::',
+			_0: 'view',
+			_1: {
+				ctor: '::',
+				_0: 'document',
+				_1: {
+					ctor: '::',
+					_0: 'body',
+					_1: {
+						ctor: '::',
+						_0: 'scrollLeft',
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		},
+		{
+			ctor: '::',
+			_0: 'view',
+			_1: {
+				ctor: '::',
+				_0: 'document',
+				_1: {
+					ctor: '::',
+					_0: 'body',
+					_1: {
+						ctor: '::',
+						_0: 'scrollTop',
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		}),
+	A2(
+		_Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$toTuple,
+		{
+			ctor: '::',
+			_0: 'view',
+			_1: {
+				ctor: '::',
+				_0: 'document',
+				_1: {
+					ctor: '::',
+					_0: 'documentElement',
+					_1: {
+						ctor: '::',
+						_0: 'scrollLeft',
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		},
+		{
+			ctor: '::',
+			_0: 'view',
+			_1: {
+				ctor: '::',
+				_0: 'document',
+				_1: {
+					ctor: '::',
+					_0: 'documentElement',
+					_1: {
+						ctor: '::',
+						_0: 'scrollTop',
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		}));
+var _Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$Point = F2(
+	function (a, b) {
+		return {x: a, y: b};
+	});
+var _Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$positionInCanvas = function (_p0) {
+	var _p1 = _p0;
+	var _p2 = _p1._3;
+	var dx = _p2._0;
+	var dy = _p2._1;
+	var _p3 = _p1._2;
+	var bx = _p3._0;
+	var by = _p3._1;
+	var _p4 = _p1._1;
+	var ox = _p4._0;
+	var oy = _p4._1;
+	var _p5 = _p1._0;
+	var cx = _p5._0;
+	var cy = _p5._1;
+	return A2(_Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$Point, ((cx + bx) + dx) - ox, ((cy + by) + dy) - oy);
+};
+var _Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$onMouseDown = function (message) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mousedown',
+		A2(
+			_elm_lang$core$Json_Decode$map,
+			function (_p6) {
+				return message(
+					_Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$positionInCanvas(_p6));
+			},
+			_Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$positionDecoder));
+};
+var _Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$onMouseUp = function (message) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseup',
+		A2(
+			_elm_lang$core$Json_Decode$map,
+			function (_p7) {
+				return message(
+					_Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$positionInCanvas(_p7));
+			},
+			_Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$positionDecoder));
+};
+var _Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$onMouseMove = function (message) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mousemove',
+		A2(
+			_elm_lang$core$Json_Decode$map,
+			function (_p8) {
+				return message(
+					_Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$positionInCanvas(_p8));
+			},
+			_Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$positionDecoder));
+};
+var _Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$onClick = function (message) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'click',
+		A2(
+			_elm_lang$core$Json_Decode$map,
+			function (_p9) {
+				return message(
+					_Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$positionInCanvas(_p9));
+			},
+			_Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$positionDecoder));
+};
+var _Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$onDoubleClick = function (message) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'dblclick',
+		A2(
+			_elm_lang$core$Json_Decode$map,
+			function (_p10) {
+				return message(
+					_Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$positionInCanvas(_p10));
+			},
+			_Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$positionDecoder));
+};

@@ -1,0 +1,43 @@
+var _user$project$Game_TwoD_Shapes$Vertex = function (a) {
+	return {position: a};
+};
+var _user$project$Game_TwoD_Shapes$unitSquare = _elm_community$webgl$WebGL$triangles(
+	{
+		ctor: '::',
+		_0: {
+			ctor: '_Tuple3',
+			_0: _user$project$Game_TwoD_Shapes$Vertex(
+				A2(_elm_community$linear_algebra$Math_Vector2$vec2, 0, 0)),
+			_1: _user$project$Game_TwoD_Shapes$Vertex(
+				A2(_elm_community$linear_algebra$Math_Vector2$vec2, 0, 1)),
+			_2: _user$project$Game_TwoD_Shapes$Vertex(
+				A2(_elm_community$linear_algebra$Math_Vector2$vec2, 1, 0))
+		},
+		_1: {
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple3',
+				_0: _user$project$Game_TwoD_Shapes$Vertex(
+					A2(_elm_community$linear_algebra$Math_Vector2$vec2, 0, 1)),
+				_1: _user$project$Game_TwoD_Shapes$Vertex(
+					A2(_elm_community$linear_algebra$Math_Vector2$vec2, 1, 0)),
+				_2: _user$project$Game_TwoD_Shapes$Vertex(
+					A2(_elm_community$linear_algebra$Math_Vector2$vec2, 1, 1))
+			},
+			_1: {ctor: '[]'}
+		}
+	});
+var _user$project$Game_TwoD_Shapes$unitTriangle = _elm_community$webgl$WebGL$triangles(
+	{
+		ctor: '::',
+		_0: {
+			ctor: '_Tuple3',
+			_0: _user$project$Game_TwoD_Shapes$Vertex(
+				A2(_elm_community$linear_algebra$Math_Vector2$vec2, 0, 0)),
+			_1: _user$project$Game_TwoD_Shapes$Vertex(
+				A2(_elm_community$linear_algebra$Math_Vector2$vec2, 0, 1)),
+			_2: _user$project$Game_TwoD_Shapes$Vertex(
+				A2(_elm_community$linear_algebra$Math_Vector2$vec2, 1, 0))
+		},
+		_1: {ctor: '[]'}
+	});

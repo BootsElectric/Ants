@@ -1,0 +1,301 @@
+var _user$project$Game_TwoD_Render$renderTransparent = _elm_community$webgl$WebGL$entityWith(
+	{
+		ctor: '::',
+		_0: _elm_community$webgl$WebGL_Settings_Blend$custom(
+			{
+				r: 0,
+				g: 0,
+				b: 0,
+				a: 0,
+				color: A2(_elm_community$webgl$WebGL_Settings_Blend$customAdd, _elm_community$webgl$WebGL_Settings_Blend$srcAlpha, _elm_community$webgl$WebGL_Settings_Blend$oneMinusSrcAlpha),
+				alpha: A2(_elm_community$webgl$WebGL_Settings_Blend$customAdd, _elm_community$webgl$WebGL_Settings_Blend$one, _elm_community$webgl$WebGL_Settings_Blend$oneMinusSrcAlpha)
+			}),
+		_1: {ctor: '[]'}
+	});
+var _user$project$Game_TwoD_Render$rectWithFragment = F2(
+	function (frag, uniforms) {
+		return A4(_user$project$Game_TwoD_Render$renderTransparent, _user$project$Game_TwoD_Shaders$vertTexturedRect, frag, _user$project$Game_TwoD_Shapes$unitSquare, uniforms);
+	});
+var _user$project$Game_TwoD_Render$toWebGl = F4(
+	function (time, camera, screenSize, _p0) {
+		var _p1 = _p0;
+		return _p1._0(
+			{camera: camera, screenSize: screenSize, time: time});
+	});
+var _user$project$Game_TwoD_Render$Renderable = function (a) {
+	return {ctor: 'Renderable', _0: a};
+};
+var _user$project$Game_TwoD_Render$customFragment = F2(
+	function (makeUniforms, _p2) {
+		var _p3 = _p2;
+		return _user$project$Game_TwoD_Render$Renderable(
+			function (_p4) {
+				var _p5 = _p4;
+				return A4(
+					_user$project$Game_TwoD_Render$renderTransparent,
+					_user$project$Game_TwoD_Shaders$vertTexturedRect,
+					_p3.fragmentShader,
+					_user$project$Game_TwoD_Shapes$unitSquare,
+					makeUniforms(
+						{
+							transform: A4(_user$project$Game_TwoD_Shaders$makeTransform, _p3.position, _p3.rotation, _p3.size, _p3.pivot),
+							cameraProj: A2(_user$project$Game_TwoD_Camera$view, _p5.camera, _p5.screenSize),
+							time: _p5.time
+						}));
+			});
+	});
+var _user$project$Game_TwoD_Render$veryCustom = _user$project$Game_TwoD_Render$Renderable;
+var _user$project$Game_TwoD_Render$shapeWithOptions = F2(
+	function (shape, _p6) {
+		var _p7 = _p6;
+		var _p8 = function () {
+			var _p9 = shape;
+			switch (_p9.ctor) {
+				case 'Rectangle':
+					return {ctor: '_Tuple2', _0: _user$project$Game_TwoD_Shaders$fragUniColor, _1: _user$project$Game_TwoD_Shapes$unitSquare};
+				case 'Triangle':
+					return {ctor: '_Tuple2', _0: _user$project$Game_TwoD_Shaders$fragUniColor, _1: _user$project$Game_TwoD_Shapes$unitTriangle};
+				case 'Circle':
+					return {ctor: '_Tuple2', _0: _user$project$Game_TwoD_Shaders$fragUniColorCircle, _1: _user$project$Game_TwoD_Shapes$unitSquare};
+				default:
+					return {ctor: '_Tuple2', _0: _user$project$Game_TwoD_Shaders$fragUniColorRing, _1: _user$project$Game_TwoD_Shapes$unitSquare};
+			}
+		}();
+		var frag = _p8._0;
+		var attribs = _p8._1;
+		return _user$project$Game_TwoD_Render$veryCustom(
+			function (_p10) {
+				var _p11 = _p10;
+				return A4(
+					_user$project$Game_TwoD_Render$renderTransparent,
+					_user$project$Game_TwoD_Shaders$vertColoredShape,
+					frag,
+					attribs,
+					{
+						transform: A4(_user$project$Game_TwoD_Shaders$makeTransform, _p7.position, _p7.rotation, _p7.size, _p7.pivot),
+						color: _user$project$Game_TwoD_Shaders$colorToRGBVector(_p7.color),
+						cameraProj: A2(_user$project$Game_TwoD_Camera$view, _p11.camera, _p11.screenSize)
+					});
+			});
+	});
+var _user$project$Game_TwoD_Render$shapeZ = F2(
+	function (shape, _p12) {
+		var _p13 = _p12;
+		return A2(
+			_user$project$Game_TwoD_Render$shapeWithOptions,
+			shape,
+			{
+				color: _p13.color,
+				position: _p13.position,
+				size: _p13.size,
+				rotation: 0,
+				pivot: {ctor: '_Tuple2', _0: 0, _1: 0}
+			});
+	});
+var _user$project$Game_TwoD_Render$shape = F2(
+	function (shape, _p14) {
+		var _p15 = _p14;
+		var _p16 = _p15.position;
+		var x = _p16._0;
+		var y = _p16._1;
+		return A2(
+			_user$project$Game_TwoD_Render$shapeZ,
+			shape,
+			{
+				size: _p15.size,
+				position: {ctor: '_Tuple3', _0: x, _1: y, _2: 0},
+				color: _p15.color
+			});
+	});
+var _user$project$Game_TwoD_Render$Ring = {ctor: 'Ring'};
+var _user$project$Game_TwoD_Render$ring = _user$project$Game_TwoD_Render$Ring;
+var _user$project$Game_TwoD_Render$Circle = {ctor: 'Circle'};
+var _user$project$Game_TwoD_Render$circle = _user$project$Game_TwoD_Render$Circle;
+var _user$project$Game_TwoD_Render$Triangle = {ctor: 'Triangle'};
+var _user$project$Game_TwoD_Render$triangle = _user$project$Game_TwoD_Render$Triangle;
+var _user$project$Game_TwoD_Render$Rectangle = {ctor: 'Rectangle'};
+var _user$project$Game_TwoD_Render$rectangle = _user$project$Game_TwoD_Render$Rectangle;
+var _user$project$Game_TwoD_Render$spriteWithOptions = function (_p17) {
+	var _p18 = _p17;
+	var _p23 = _p18.size;
+	var _p22 = _p18.position;
+	var _p19 = _p18.texture;
+	if (_p19.ctor === 'Just') {
+		return _user$project$Game_TwoD_Render$veryCustom(
+			function (_p20) {
+				var _p21 = _p20;
+				return A2(
+					_user$project$Game_TwoD_Render$rectWithFragment,
+					_user$project$Game_TwoD_Shaders$fragTextured,
+					{
+						transform: A4(_user$project$Game_TwoD_Shaders$makeTransform, _p22, _p18.rotation, _p23, _p18.pivot),
+						texture: _p19._0,
+						tileWH: _elm_community$linear_algebra$Math_Vector2$fromTuple(_p18.tiling),
+						cameraProj: A2(_user$project$Game_TwoD_Camera$view, _p21.camera, _p21.screenSize)
+					});
+			});
+	} else {
+		return A2(
+			_user$project$Game_TwoD_Render$shapeZ,
+			_user$project$Game_TwoD_Render$Rectangle,
+			{position: _p22, size: _p23, color: _elm_lang$core$Color$grey});
+	}
+};
+var _user$project$Game_TwoD_Render$spriteZ = function (_p24) {
+	var _p25 = _p24;
+	return _user$project$Game_TwoD_Render$spriteWithOptions(
+		{
+			texture: _p25.texture,
+			position: _p25.position,
+			size: _p25.size,
+			tiling: {ctor: '_Tuple2', _0: 1, _1: 1},
+			rotation: 0,
+			pivot: {ctor: '_Tuple2', _0: 0, _1: 0}
+		});
+};
+var _user$project$Game_TwoD_Render$sprite = function (_p26) {
+	var _p27 = _p26;
+	var _p28 = _p27.position;
+	var x = _p28._0;
+	var y = _p28._1;
+	return _user$project$Game_TwoD_Render$spriteZ(
+		{
+			texture: _p27.texture,
+			position: {ctor: '_Tuple3', _0: x, _1: y, _2: 0},
+			size: _p27.size
+		});
+};
+var _user$project$Game_TwoD_Render$animatedSpriteWithOptions = function (_p29) {
+	var _p30 = _p29;
+	var _p35 = _p30.size;
+	var _p34 = _p30.position;
+	var _p31 = _p30.texture;
+	if (_p31.ctor === 'Just') {
+		return _user$project$Game_TwoD_Render$veryCustom(
+			function (_p32) {
+				var _p33 = _p32;
+				return A2(
+					_user$project$Game_TwoD_Render$rectWithFragment,
+					_user$project$Game_TwoD_Shaders$fragAnimTextured,
+					{
+						transform: A4(_user$project$Game_TwoD_Shaders$makeTransform, _p34, _p30.rotation, _p35, _p30.pivot),
+						texture: _p31._0,
+						bottomLeft: _elm_community$linear_algebra$Math_Vector2$fromTuple(_p30.bottomLeft),
+						topRight: _elm_community$linear_algebra$Math_Vector2$fromTuple(_p30.topRight),
+						duration: _p30.duration,
+						numberOfFrames: _p30.numberOfFrames,
+						cameraProj: A2(_user$project$Game_TwoD_Camera$view, _p33.camera, _p33.screenSize),
+						time: _p33.time
+					});
+			});
+	} else {
+		return A2(
+			_user$project$Game_TwoD_Render$shapeZ,
+			_user$project$Game_TwoD_Render$Rectangle,
+			{position: _p34, size: _p35, color: _elm_lang$core$Color$grey});
+	}
+};
+var _user$project$Game_TwoD_Render$animatedSpriteZ = function (_p36) {
+	var _p37 = _p36;
+	return _user$project$Game_TwoD_Render$animatedSpriteWithOptions(
+		{
+			texture: _p37.texture,
+			position: _p37.position,
+			size: _p37.size,
+			bottomLeft: _p37.bottomLeft,
+			topRight: _p37.topRight,
+			duration: _p37.duration,
+			numberOfFrames: _p37.numberOfFrames,
+			rotation: 0,
+			pivot: {ctor: '_Tuple2', _0: 0, _1: 0}
+		});
+};
+var _user$project$Game_TwoD_Render$animatedSprite = function (_p38) {
+	var _p39 = _p38;
+	var _p40 = _p39.position;
+	var x = _p40._0;
+	var y = _p40._1;
+	return _user$project$Game_TwoD_Render$animatedSpriteZ(
+		_elm_lang$core$Native_Utils.update(
+			_p39,
+			{
+				position: {ctor: '_Tuple3', _0: x, _1: y, _2: 0}
+			}));
+};
+var _user$project$Game_TwoD_Render$manuallyManagedAnimatedSpriteWithOptions = function (_p41) {
+	var _p42 = _p41;
+	var _p47 = _p42.size;
+	var _p46 = _p42.position;
+	var _p43 = _p42.texture;
+	if (_p43.ctor === 'Just') {
+		return _user$project$Game_TwoD_Render$veryCustom(
+			function (_p44) {
+				var _p45 = _p44;
+				return A2(
+					_user$project$Game_TwoD_Render$rectWithFragment,
+					_user$project$Game_TwoD_Shaders$fragManualAnimTextured,
+					{
+						transform: A4(_user$project$Game_TwoD_Shaders$makeTransform, _p46, _p42.rotation, _p47, _p42.pivot),
+						texture: _p43._0,
+						bottomLeft: _elm_community$linear_algebra$Math_Vector2$fromTuple(_p42.bottomLeft),
+						topRight: _elm_community$linear_algebra$Math_Vector2$fromTuple(_p42.topRight),
+						numberOfFrames: _p42.numberOfFrames,
+						currentFrame: _p42.currentFrame,
+						cameraProj: A2(_user$project$Game_TwoD_Camera$view, _p45.camera, _p45.screenSize)
+					});
+			});
+	} else {
+		return A2(
+			_user$project$Game_TwoD_Render$shapeZ,
+			_user$project$Game_TwoD_Render$Rectangle,
+			{position: _p46, size: _p47, color: _elm_lang$core$Color$grey});
+	}
+};
+var _user$project$Game_TwoD_Render$parallaxScrollWithOptions = function (_p48) {
+	var _p49 = _p48;
+	var _p54 = _p49.z;
+	var _p50 = _p49.texture;
+	if (_p50.ctor === 'Nothing') {
+		return A2(
+			_user$project$Game_TwoD_Render$shapeZ,
+			_user$project$Game_TwoD_Render$Rectangle,
+			{
+				position: {ctor: '_Tuple3', _0: 0, _1: 0, _2: _p54},
+				size: {ctor: '_Tuple2', _0: 1, _1: 1},
+				color: _elm_lang$core$Color$grey
+			});
+	} else {
+		return _user$project$Game_TwoD_Render$veryCustom(
+			function (_p51) {
+				var _p52 = _p51;
+				var _p53 = _p52.camera;
+				return A4(
+					_user$project$Game_TwoD_Render$renderTransparent,
+					_user$project$Game_TwoD_Shaders$vertParallaxScroll,
+					_user$project$Game_TwoD_Shaders$fragTextured,
+					_user$project$Game_TwoD_Shapes$unitSquare,
+					{
+						scrollSpeed: _elm_community$linear_algebra$Math_Vector2$fromTuple(_p49.scrollSpeed),
+						z: _p54,
+						tileWH: _elm_community$linear_algebra$Math_Vector2$fromTuple(_p49.tileWH),
+						texture: _p50._0,
+						offset: _elm_community$linear_algebra$Math_Vector2$fromTuple(_p49.offset),
+						cameraPos: _elm_community$linear_algebra$Math_Vector2$fromTuple(
+							_user$project$Game_TwoD_Camera$getPosition(_p53)),
+						cameraSize: _elm_community$linear_algebra$Math_Vector2$fromTuple(
+							A2(_user$project$Game_TwoD_Camera$getViewSize, _p52.screenSize, _p53))
+					});
+			});
+	}
+};
+var _user$project$Game_TwoD_Render$parallaxScroll = function (_p55) {
+	var _p56 = _p55;
+	return _user$project$Game_TwoD_Render$parallaxScrollWithOptions(
+		{
+			scrollSpeed: _p56.scrollSpeed,
+			tileWH: _p56.tileWH,
+			texture: _p56.texture,
+			z: _p56.z,
+			offset: {ctor: '_Tuple2', _0: 0.5, _1: 0.5}
+		});
+};

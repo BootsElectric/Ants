@@ -1,0 +1,105 @@
+var _user$project$Wheel_ops = _user$project$Wheel_ops || {};
+_user$project$Wheel_ops['&>'] = F2(
+	function (t1, t2) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (_p0) {
+				return t2;
+			},
+			t1);
+	});
+var _user$project$Wheel$onSelfMsg = F3(
+	function (router, delta, state) {
+		var _p1 = state;
+		if (_p1.ctor === 'Nothing') {
+			return _elm_lang$core$Task$succeed(state);
+		} else {
+			var send = function (_p2) {
+				var _p3 = _p2;
+				return A2(
+					_elm_lang$core$Platform$sendToApp,
+					router,
+					_p3._0(delta));
+			};
+			return A2(
+				_user$project$Wheel_ops['&>'],
+				_elm_lang$core$Task$sequence(
+					A2(_elm_lang$core$List$map, send, _p1._0.subs)),
+				_elm_lang$core$Task$succeed(state));
+		}
+	});
+var _user$project$Wheel$init = _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
+var _user$project$Wheel$subscription = _elm_lang$core$Native_Platform.leaf('Wheel');
+var _user$project$Wheel$Delta = F2(
+	function (a, b) {
+		return {x: a, y: b};
+	});
+var _user$project$Wheel$delta = A3(
+	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+	'deltaY',
+	_elm_lang$core$Json_Decode$int,
+	A3(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+		'deltaX',
+		_elm_lang$core$Json_Decode$int,
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Wheel$Delta)));
+var _user$project$Wheel$onEffects = F3(
+	function (router, newSubs, oldState) {
+		var _p4 = {ctor: '_Tuple2', _0: oldState, _1: newSubs};
+		if (_p4._0.ctor === 'Nothing') {
+			if (_p4._1.ctor === '[]') {
+				return _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
+			} else {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (pid) {
+						return _elm_lang$core$Task$succeed(
+							_elm_lang$core$Maybe$Just(
+								{subs: newSubs, pid: pid}));
+					},
+					_elm_lang$core$Process$spawn(
+						A3(
+							_elm_lang$dom$Dom_LowLevel$onWindow,
+							'wheel',
+							_user$project$Wheel$delta,
+							_elm_lang$core$Platform$sendToSelf(router))));
+			}
+		} else {
+			if (_p4._1.ctor === '[]') {
+				return A2(
+					_user$project$Wheel_ops['&>'],
+					_elm_lang$core$Process$kill(_p4._0._0.pid),
+					_elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing));
+			} else {
+				return _elm_lang$core$Task$succeed(
+					_elm_lang$core$Maybe$Just(
+						{subs: newSubs, pid: _p4._0._0.pid}));
+			}
+		}
+	});
+var _user$project$Wheel$MySub = function (a) {
+	return {ctor: 'MySub', _0: a};
+};
+var _user$project$Wheel$deltas = function (tagger) {
+	return _user$project$Wheel$subscription(
+		_user$project$Wheel$MySub(tagger));
+};
+var _user$project$Wheel$xDeltas = function (tagger) {
+	return A2(
+		_elm_lang$core$Platform_Sub$map,
+		tagger,
+		_user$project$Wheel$deltas(
+			function (_) {
+				return _.x;
+			}));
+};
+var _user$project$Wheel$subMap = F2(
+	function (func, _p5) {
+		var _p6 = _p5;
+		return _user$project$Wheel$MySub(
+			function (_p7) {
+				return func(
+					_p6._0(_p7));
+			});
+	});
+_elm_lang$core$Native_Platform.effectManagers['Wheel'] = {pkg: 'user/project', init: _user$project$Wheel$init, onEffects: _user$project$Wheel$onEffects, onSelfMsg: _user$project$Wheel$onSelfMsg, tag: 'sub', subMap: _user$project$Wheel$subMap};

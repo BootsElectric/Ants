@@ -1,0 +1,127 @@
+var _user$project$View$isWithin = F4(
+	function (m, camera, x, y) {
+		var mousePos = A3(
+			_user$project$Game_TwoD_Camera$viewportToGameCoordinates,
+			camera,
+			{ctor: '_Tuple2', _0: m.dimensions.width, _1: m.dimensions.height},
+			{
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Basics$round(m.mPosX),
+				_1: _elm_lang$core$Basics$round(m.mPosY)
+			});
+		var mouseX = _elm_lang$core$Tuple$first(mousePos);
+		var withinX = (_elm_lang$core$Native_Utils.cmp(
+			mouseX,
+			_elm_lang$core$Basics$toFloat(x)) > -1) && (_elm_lang$core$Native_Utils.cmp(
+			mouseX,
+			_elm_lang$core$Basics$toFloat(x) + 1) < 1);
+		var mouseY = _elm_lang$core$Tuple$second(mousePos);
+		var withinY = (_elm_lang$core$Native_Utils.cmp(
+			mouseY,
+			_elm_lang$core$Basics$toFloat(y)) > -1) && (_elm_lang$core$Native_Utils.cmp(
+			mouseY,
+			_elm_lang$core$Basics$toFloat(y) + 1) < 1);
+		return (withinX && withinY) ? true : false;
+	});
+var _user$project$View$unMaybeInt = function ($int) {
+	var _p0 = $int;
+	if (_p0.ctor === 'Just') {
+		return _p0._0;
+	} else {
+		return 0;
+	}
+};
+var _user$project$View$isSelected = F4(
+	function (m, c, x, y) {
+		return _elm_lang$core$Native_Utils.eq(
+			A3(_user$project$Tile$getTile, m.tiles, x, y),
+			m.selected) ? true : false;
+	});
+var _user$project$View$selectedUrl = '..\\textures\\s-dirtBrown.jpg';
+var _user$project$View$highlightedUrl = '..\\textures\\highlighted-dirt-with-boarder.jpg';
+var _user$project$View$dirtUrl = '..\\textures\\dirt-with-border.jpg';
+var _user$project$View$renderCoord = F4(
+	function (model, camera, resources, tile) {
+		var y = _user$project$View$unMaybeInt(
+			_user$project$Tile$getY(
+				_elm_lang$core$Maybe$Just(tile)));
+		var x = _user$project$View$unMaybeInt(
+			_user$project$Tile$getX(
+				_elm_lang$core$Maybe$Just(tile)));
+		var position = {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Basics$toFloat(x),
+			_1: _elm_lang$core$Basics$toFloat(y)
+		};
+		var texture = function () {
+			var _p1 = tile.kind;
+			return A4(_user$project$View$isWithin, model, camera, x, y) ? _user$project$View$highlightedUrl : (A4(_user$project$View$isSelected, model, camera, x, y) ? _user$project$View$selectedUrl : _user$project$View$dirtUrl);
+		}();
+		return _user$project$Game_TwoD_Render$sprite(
+			{
+				texture: A2(_user$project$Game_Resources$getTexture, texture, resources),
+				position: position,
+				size: {ctor: '_Tuple2', _0: 1, _1: 1}
+			});
+	});
+var _user$project$View$renderColumn = F4(
+	function (model, camera, resources, tiles) {
+		return A2(
+			_elm_lang$core$List$map,
+			A3(_user$project$View$renderCoord, model, camera, resources),
+			tiles);
+	});
+var _user$project$View$renderGrid = F4(
+	function (model, camera, resources, tileGrid) {
+		return _elm_lang$core$List$concat(
+			A2(
+				_elm_lang$core$List$map,
+				A3(_user$project$View$renderColumn, model, camera, resources),
+				tileGrid));
+	});
+var _user$project$View$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'overflow', _1: 'hidden'},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'width', _1: '100%'},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'height', _1: '75%'},
+							_1: {ctor: '[]'}
+						}
+					}
+				}),
+			_1: {
+				ctor: '::',
+				_0: _Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$onMouseMove(_user$project$Messages$MouseMove),
+				_1: {
+					ctor: '::',
+					_0: _Elm_Canvas$element_relative_mouse_events$ElementRelativeMouseEvents$onMouseDown(_user$project$Messages$MouseDown),
+					_1: {ctor: '[]'}
+				}
+			}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_user$project$Game_TwoD$render,
+				{
+					time: 0,
+					camera: model.camera,
+					size: {ctor: '_Tuple2', _0: model.dimensions.width, _1: model.dimensions.height}
+				},
+				A4(_user$project$View$renderGrid, model, model.camera, model.resources, model.tiles)),
+			_1: {
+				ctor: '::',
+				_0: _user$project$UI$writeUI(model),
+				_1: {ctor: '[]'}
+			}
+		});
+};

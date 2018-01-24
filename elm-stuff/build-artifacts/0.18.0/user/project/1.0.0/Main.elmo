@@ -1,0 +1,165 @@
+var _user$project$Main$init = A2(
+	_elm_lang$core$Platform_Cmd_ops['!'],
+	_user$project$Model$initialModel,
+	{
+		ctor: '::',
+		_0: A2(_elm_lang$core$Task$perform, _user$project$Messages$Resize, _elm_lang$window$Window$size),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_elm_lang$core$Platform_Cmd$map,
+				_user$project$Messages$Resources,
+				_user$project$Game_Resources$loadTextures(
+					{
+						ctor: '::',
+						_0: _user$project$View$dirtUrl,
+						_1: {
+							ctor: '::',
+							_0: _user$project$View$highlightedUrl,
+							_1: {
+								ctor: '::',
+								_0: _user$project$View$selectedUrl,
+								_1: {ctor: '[]'}
+							}
+						}
+					})),
+			_1: {ctor: '[]'}
+		}
+	});
+var _user$project$Main$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: _elm_lang$window$Window$resizes(_user$project$Messages$Resize),
+			_1: {
+				ctor: '::',
+				_0: A2(_elm_lang$core$Platform_Sub$map, _user$project$Messages$Keys, _ohanhi$keyboard_extra$Keyboard_Extra$subscriptions),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$animation_frame$AnimationFrame$diffs(
+						function (_p0) {
+							return _user$project$Messages$Tick(
+								function (dt) {
+									return dt / 1000;
+								}(_p0));
+						}),
+					_1: {ctor: '[]'}
+				}
+			}
+		});
+};
+var _user$project$Main$inBounds = F4(
+	function (model, speed, x, y) {
+		var maxY = _elm_lang$core$Basics$toFloat(
+			_elm_lang$core$List$length(model.tiles)) / 4;
+		var maxX = _elm_lang$core$Basics$toFloat(
+			_elm_lang$core$List$length(model.tiles)) / 10;
+		var newY = _elm_lang$core$Tuple$second(
+			_user$project$Game_TwoD_Camera$getPosition(model.camera)) + (y * speed);
+		var checkY = (_elm_lang$core$Native_Utils.cmp(newY, 0 - maxY) > 0) && (_elm_lang$core$Native_Utils.cmp(newY, maxY) < 0);
+		var newX = _elm_lang$core$Tuple$first(
+			_user$project$Game_TwoD_Camera$getPosition(model.camera)) + (x * speed);
+		var checkX = (_elm_lang$core$Native_Utils.cmp(newX, 0 - maxX) > 0) && (_elm_lang$core$Native_Utils.cmp(newX, maxX) < 0);
+		return (checkX && checkY) ? true : false;
+	});
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		var _p1 = msg;
+		switch (_p1.ctor) {
+			case 'NoMessageYet':
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'Resize':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{dimensions: _p1._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'MouseMove':
+				var _p2 = _p1._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{mPosX: _p2.x, mPosY: _p2.y}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Resources':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							resources: A2(_user$project$Game_Resources$update, _p1._0, model.resources)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Keys':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							pressedKeys: A2(_ohanhi$keyboard_extra$Keyboard_Extra$update, _p1._0, model.pressedKeys)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'MouseDown':
+				var _p4 = _p1._0;
+				var y = _elm_lang$core$Basics$round(_p4.y);
+				var x = _elm_lang$core$Basics$round(_p4.x);
+				var mousePos = A3(
+					_user$project$Game_TwoD_Camera$viewportToGameCoordinates,
+					model.camera,
+					{ctor: '_Tuple2', _0: model.dimensions.width, _1: model.dimensions.height},
+					{ctor: '_Tuple2', _0: x, _1: y});
+				var normalX = _elm_lang$core$Basics$floor(
+					_elm_lang$core$Tuple$first(mousePos));
+				var normalY = _elm_lang$core$Basics$floor(
+					_elm_lang$core$Tuple$second(mousePos));
+				var tile = function () {
+					var _p3 = A3(_user$project$Tile$getTile, model.tiles, normalX, normalY);
+					if (_p3.ctor === 'Just') {
+						return _elm_lang$core$Maybe$Just(_p3._0);
+					} else {
+						return model.selected;
+					}
+				}();
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{mPosX: _p4.x, mPosY: _p4.y, selected: tile}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				var _p5 = _p1._0;
+				var width = _elm_lang$core$Tuple$first(
+					A2(
+						_user$project$Game_TwoD_Camera$getViewSize,
+						{
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Basics$toFloat(model.dimensions.width),
+							_1: _elm_lang$core$Basics$toFloat(model.dimensions.height)
+						},
+						model.camera));
+				var camSpeed = _p5 * (width / 4);
+				var arrows = _ohanhi$keyboard_extra$Keyboard_Extra$wasd(model.pressedKeys);
+				var x = _elm_lang$core$Basics$toFloat(arrows.x);
+				var y = _elm_lang$core$Basics$toFloat(arrows.y);
+				var newCamera = A4(_user$project$Main$inBounds, model, camSpeed, x, y) ? A2(
+					_user$project$Game_TwoD_Camera$moveBy,
+					{ctor: '_Tuple2', _0: x * camSpeed, _1: y * camSpeed},
+					model.camera) : model.camera;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{time: _p5 + model.time, camera: newCamera}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+		}
+	});
+var _user$project$Main$main = _elm_lang$html$Html$program(
+	{init: _user$project$Main$init, view: _user$project$View$view, update: _user$project$Main$update, subscriptions: _user$project$Main$subscriptions})();

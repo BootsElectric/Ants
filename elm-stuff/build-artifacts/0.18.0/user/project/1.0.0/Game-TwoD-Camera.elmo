@@ -1,0 +1,170 @@
+var _user$project$Game_TwoD_Camera$getPosition = function (_p0) {
+	var _p1 = _p0;
+	return _p1._0.position;
+};
+var _user$project$Game_TwoD_Camera$getViewSize = F2(
+	function (_p3, _p2) {
+		var _p4 = _p3;
+		var _p11 = _p4._0;
+		var _p10 = _p4._1;
+		var _p5 = _p2;
+		var _p6 = _p5._0.size;
+		switch (_p6.ctor) {
+			case 'Width':
+				var _p7 = _p6._0;
+				return {ctor: '_Tuple2', _0: _p7, _1: (_p7 * _p10) / _p11};
+			case 'Height':
+				var _p8 = _p6._0;
+				return {ctor: '_Tuple2', _0: (_p8 * _p11) / _p10, _1: _p8};
+			case 'Area':
+				var _p9 = _p6._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Basics$sqrt((_p9 * _p11) / _p10),
+					_1: _elm_lang$core$Basics$sqrt((_p9 * _p10) / _p11)
+				};
+			default:
+				return _p6._0(
+					{ctor: '_Tuple2', _0: _p11, _1: _p10});
+		}
+	});
+var _user$project$Game_TwoD_Camera$viewportToGameCoordinates = F3(
+	function (camera, _p13, _p12) {
+		var _p14 = _p13;
+		var _p21 = _p14._0;
+		var _p20 = _p14._1;
+		var _p15 = _p12;
+		var _p16 = _user$project$Game_TwoD_Camera$getPosition(camera);
+		var cameraXOffset = _p16._0;
+		var cameraYOffset = _p16._1;
+		var _p17 = A2(
+			_user$project$Game_TwoD_Camera$getViewSize,
+			{
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Basics$toFloat(_p21),
+				_1: _elm_lang$core$Basics$toFloat(_p20)
+			},
+			camera);
+		var gameWidth = _p17._0;
+		var gameHeight = _p17._1;
+		var _p18 = {ctor: '_Tuple4', _0: (0 - (gameWidth / 2)) + cameraXOffset, _1: (gameWidth / 2) + cameraXOffset, _2: (gameHeight / 2) + cameraYOffset, _3: (0 - (gameHeight / 2)) + cameraYOffset};
+		var viewLeft = _p18._0;
+		var viewRight = _p18._1;
+		var viewTop = _p18._2;
+		var viewBottom = _p18._3;
+		var _p19 = {
+			ctor: '_Tuple4',
+			_0: _elm_lang$core$Basics$toFloat(0),
+			_1: _elm_lang$core$Basics$toFloat(_p21),
+			_2: _elm_lang$core$Basics$toFloat(0),
+			_3: _elm_lang$core$Basics$toFloat(_p20)
+		};
+		var screenLeft = _p19._0;
+		var screenRight = _p19._1;
+		var screenTop = _p19._2;
+		var screenBottom = _p19._3;
+		return {
+			ctor: '_Tuple2',
+			_0: viewLeft + (((_elm_lang$core$Basics$toFloat(_p15._0) - screenLeft) / (screenRight - screenLeft)) * (viewRight - viewLeft)),
+			_1: viewTop + (((_elm_lang$core$Basics$toFloat(_p15._1) - screenTop) / (screenBottom - screenTop)) * (viewBottom - viewTop))
+		};
+	});
+var _user$project$Game_TwoD_Camera$view = F2(
+	function (_p22, size) {
+		var _p23 = _p22;
+		var _p24 = A2(
+			_user$project$Game_Helpers$scale,
+			0.5,
+			A2(_user$project$Game_TwoD_Camera$getViewSize, size, _p23));
+		var w = _p24._0;
+		var h = _p24._1;
+		var _p25 = _p23._0.position;
+		var x = _p25._0;
+		var y = _p25._1;
+		var _p26 = {ctor: '_Tuple4', _0: x - w, _1: x + w, _2: y - h, _3: y + h};
+		var l = _p26._0;
+		var r = _p26._1;
+		var d = _p26._2;
+		var u = _p26._3;
+		return A4(_elm_community$linear_algebra$Math_Matrix4$makeOrtho2D, l, r, d, u);
+	});
+var _user$project$Game_TwoD_Camera$Custom = function (a) {
+	return {ctor: 'Custom', _0: a};
+};
+var _user$project$Game_TwoD_Camera$Area = function (a) {
+	return {ctor: 'Area', _0: a};
+};
+var _user$project$Game_TwoD_Camera$Height = function (a) {
+	return {ctor: 'Height', _0: a};
+};
+var _user$project$Game_TwoD_Camera$Width = function (a) {
+	return {ctor: 'Width', _0: a};
+};
+var _user$project$Game_TwoD_Camera$Camera = function (a) {
+	return {ctor: 'Camera', _0: a};
+};
+var _user$project$Game_TwoD_Camera$fixedWidth = F2(
+	function (w, pos) {
+		return _user$project$Game_TwoD_Camera$Camera(
+			{
+				size: _user$project$Game_TwoD_Camera$Width(w),
+				position: pos
+			});
+	});
+var _user$project$Game_TwoD_Camera$fixedHeight = F2(
+	function (h, pos) {
+		return _user$project$Game_TwoD_Camera$Camera(
+			{
+				size: _user$project$Game_TwoD_Camera$Height(h),
+				position: pos
+			});
+	});
+var _user$project$Game_TwoD_Camera$fixedArea = F2(
+	function (a, pos) {
+		return _user$project$Game_TwoD_Camera$Camera(
+			{
+				size: _user$project$Game_TwoD_Camera$Area(a),
+				position: pos
+			});
+	});
+var _user$project$Game_TwoD_Camera$custom = F2(
+	function (fn, pos) {
+		return _user$project$Game_TwoD_Camera$Camera(
+			{
+				size: _user$project$Game_TwoD_Camera$Custom(fn),
+				position: pos
+			});
+	});
+var _user$project$Game_TwoD_Camera$moveBy = F2(
+	function (offset, _p27) {
+		var _p28 = _p27;
+		var _p29 = _p28._0;
+		return _user$project$Game_TwoD_Camera$Camera(
+			_elm_lang$core$Native_Utils.update(
+				_p29,
+				{
+					position: A2(_user$project$Game_Helpers$add, _p29.position, offset)
+				}));
+	});
+var _user$project$Game_TwoD_Camera$moveTo = F2(
+	function (pos, _p30) {
+		var _p31 = _p30;
+		return _user$project$Game_TwoD_Camera$Camera(
+			_elm_lang$core$Native_Utils.update(
+				_p31._0,
+				{position: pos}));
+	});
+var _user$project$Game_TwoD_Camera$follow = F4(
+	function (speed, dt, target, _p32) {
+		var _p33 = _p32;
+		var _p34 = _p33._0.position;
+		var vectorToTarget = A2(_user$project$Game_Helpers$sub, target, _p34);
+		var newPosition = A2(
+			_user$project$Game_Helpers$add,
+			_p34,
+			A2(_user$project$Game_Helpers$scale, speed * dt, vectorToTarget));
+		return _user$project$Game_TwoD_Camera$Camera(
+			_elm_lang$core$Native_Utils.update(
+				_p33._0,
+				{position: newPosition}));
+	});

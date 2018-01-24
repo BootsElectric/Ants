@@ -1,0 +1,49 @@
+var _user$project$Game_TwoD_Shaders$vertParallaxScroll = {'src': '\nattribute vec2 position;\n\nuniform vec2 cameraPos;\nuniform vec2 cameraSize;\nuniform vec2 scrollSpeed;\nuniform vec2 offset;\nuniform float z;\n\nvarying vec2 vcoord;\n\nvoid main()\n{\n    vcoord =\n        (position - vec2(0.5, 0.5)) // offset to middle of texture\n        * normalize(cameraSize) // scale to keep aspect ratio\n        - offset // apply offset\n        + cameraPos * 0.05 * scrollSpeed;\n\n    gl_Position = vec4(position*2.0 - vec2(1.0, 1.0), -z, 1);\n}\n'};
+var _user$project$Game_TwoD_Shaders$fragUniColorRing = {'src': '\n\nprecision mediump float;\n\nuniform vec3 color;\nvarying vec2 vcoord;\n\nvoid main () {\n  float dist = length(vec2(0.5, 0.5) - vcoord);\n\n  float alpha = smoothstep(0.5, 0.5 - 0.01, dist) * smoothstep(0.49 - 0.01, 0.49, dist);\n  vec4 color = vec4(color, alpha);\n\n  gl_FragColor = color;\n}\n'};
+var _user$project$Game_TwoD_Shaders$fragUniColorCircle = {'src': '\n\nprecision mediump float;\n\nuniform vec3 color;\nvarying vec2 vcoord;\n\nvoid main () {\n  float dist = length(vec2(0.5, 0.5) - vcoord);\n\n  float alpha = smoothstep(0.5 - 0.01, 0.5, dist);\n  vec4 color = vec4(color, 1.0 - alpha);\n\n  gl_FragColor = color;\n}\n'};
+var _user$project$Game_TwoD_Shaders$fragUniColor = {'src': '\n\nprecision mediump float;\n\nuniform vec3 color;\nvarying vec2 vcoord;\n\nvoid main() {\n    gl_FragColor = vec4(color, 1);\n}\n'};
+var _user$project$Game_TwoD_Shaders$vertColoredShape = {'src': '\nattribute vec2 position;\n\nuniform mat4 transform;\nuniform mat4 cameraProj;\nvarying vec2 vcoord;\nvoid main() {\n    gl_Position = cameraProj*transform*vec4(position, 0, 1);\n    vcoord = position.xy;\n}\n'};
+var _user$project$Game_TwoD_Shaders$fragManualAnimTextured = {'src': '\n\nprecision mediump float;\n\nuniform sampler2D texture;\nuniform vec2 bottomLeft;\nuniform vec2 topRight;\nuniform int numberOfFrames;\nuniform int currentFrame;\nvarying vec2 vcoord;\n\nvoid main () {\n    float n = float(numberOfFrames);\n    float framePos = float(currentFrame);\n    vec2 stripSize = topRight - bottomLeft;\n    vec2 frameSize = vec2(stripSize.x / n, stripSize.y);\n    vec2 texCoord = bottomLeft + vec2(frameSize.x * framePos, 0) + vcoord * frameSize;\n\n    gl_FragColor = texture2D(texture, texCoord.xy);\n}\n'};
+var _user$project$Game_TwoD_Shaders$fragAnimTextured = {'src': '\n\nprecision mediump float;\n\nuniform sampler2D texture;\nuniform vec2 bottomLeft;\nuniform vec2 topRight;\nuniform int numberOfFrames;\nuniform float duration;\nuniform float time;\nvarying vec2 vcoord;\n\nvoid main () {\n    float n = float(numberOfFrames);\n    float framePos = floor((mod(time, duration) / duration) * n );\n    vec2 stripSize = topRight - bottomLeft;\n    vec2 frameSize = vec2(stripSize.x / n, stripSize.y);\n    vec2 texCoord = bottomLeft + vec2(frameSize.x * framePos, 0) + vcoord * frameSize;\n\n    gl_FragColor = texture2D(texture, texCoord.xy);\n}\n'};
+var _user$project$Game_TwoD_Shaders$fragTextured = {'src': '\n\nprecision mediump float;\n\nuniform sampler2D texture;\nuniform vec2 tileWH;\nvarying vec2 vcoord;\n\nvoid main () {\n    gl_FragColor = texture2D(texture, vcoord*tileWH);\n}\n'};
+var _user$project$Game_TwoD_Shaders$vertTexturedRect = {'src': '\nattribute vec2 position;\n\nuniform mat4 transform;\nuniform mat4 cameraProj;\n\nvarying vec2 vcoord;\nvoid main () {\n    vec4 pos = cameraProj*transform*vec4(position, 0, 1);\n    gl_Position = pos;\n    vcoord = position.xy;\n}\n'};
+var _user$project$Game_TwoD_Shaders$colorToRGBAVector = function (color) {
+	var _p0 = _elm_lang$core$Color$toRgb(color);
+	return A4(
+		_elm_community$linear_algebra$Math_Vector4$vec4,
+		_elm_lang$core$Basics$toFloat(_p0.red) / 256,
+		_elm_lang$core$Basics$toFloat(_p0.green) / 256,
+		_elm_lang$core$Basics$toFloat(_p0.blue) / 256,
+		_p0.alpha / 256);
+};
+var _user$project$Game_TwoD_Shaders$colorToRGBVector = function (color) {
+	var _p1 = _elm_lang$core$Color$toRgb(color);
+	return A3(
+		_elm_community$linear_algebra$Math_Vector3$vec3,
+		_elm_lang$core$Basics$toFloat(_p1.red) / 256,
+		_elm_lang$core$Basics$toFloat(_p1.green) / 256,
+		_elm_lang$core$Basics$toFloat(_p1.blue) / 256);
+};
+var _user$project$Game_TwoD_Shaders$makeTransform = F4(
+	function (_p4, rotation, _p3, _p2) {
+		var _p5 = _p4;
+		var _p6 = _p3;
+		var _p7 = _p2;
+		var pivot = _elm_community$linear_algebra$Math_Matrix4$makeTranslate(
+			A3(_elm_community$linear_algebra$Math_Vector3$vec3, 0 - _p7._0, 0 - _p7._1, 0));
+		var scale = _elm_community$linear_algebra$Math_Matrix4$makeScale(
+			A3(_elm_community$linear_algebra$Math_Vector3$vec3, _p6._0, _p6._1, 1));
+		var rot = A2(
+			_elm_community$linear_algebra$Math_Matrix4$makeRotate,
+			rotation,
+			A3(_elm_community$linear_algebra$Math_Vector3$vec3, 0, 0, 1));
+		var trans = _elm_community$linear_algebra$Math_Matrix4$makeTranslate(
+			A3(_elm_community$linear_algebra$Math_Vector3$vec3, _p5._0, _p5._1, _p5._2));
+		return A2(
+			_elm_community$linear_algebra$Math_Matrix4$mul,
+			A2(
+				_elm_community$linear_algebra$Math_Matrix4$mul,
+				A2(_elm_community$linear_algebra$Math_Matrix4$mul, trans, rot),
+				scale),
+			pivot);
+	});

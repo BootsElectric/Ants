@@ -1,0 +1,14 @@
+Implement elm-2d-game and WebGL
+
+Refactor the Lists of tiles to use a Dict
+
+Think about the none game aspect of the project such as which aspects of Elm lend themselves to game development as well as talking about the libraries: how are these aspects related to game design and why should elm be used over another language (or not)
+
+What are the features of Elm?
+ - strongly, statically typed language
+ - Functional (no side effects)
+ - The compiler does not allow for run time errors to occur when using elm-make -Almost all errors are caught by the type system 
+ - libraries
+
+Make recommendations about good patterns and libraries that are currently working and show the advantages
+Pros and cons of listed features

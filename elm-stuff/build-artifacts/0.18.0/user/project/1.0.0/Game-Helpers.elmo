@@ -1,0 +1,32 @@
+var _user$project$Game_Helpers$scale = F2(
+	function (a, _p0) {
+		var _p1 = _p0;
+		return {ctor: '_Tuple2', _0: a * _p1._0, _1: a * _p1._1};
+	});
+var _user$project$Game_Helpers$sub = F2(
+	function (_p3, _p2) {
+		var _p4 = _p3;
+		var _p5 = _p2;
+		return {ctor: '_Tuple2', _0: _p4._0 - _p5._0, _1: _p4._1 - _p5._1};
+	});
+var _user$project$Game_Helpers$add = F2(
+	function (_p7, _p6) {
+		var _p8 = _p7;
+		var _p9 = _p6;
+		return {ctor: '_Tuple2', _0: _p8._0 + _p9._0, _1: _p8._1 + _p9._1};
+	});
+var _user$project$Game_Helpers$mul3 = F2(
+	function (v1, v2) {
+		var _p10 = {
+			ctor: '_Tuple2',
+			_0: _elm_community$linear_algebra$Math_Vector3$toTuple(v1),
+			_1: _elm_community$linear_algebra$Math_Vector3$toTuple(v2)
+		};
+		var x1 = _p10._0._0;
+		var y1 = _p10._0._1;
+		var z1 = _p10._0._2;
+		var x2 = _p10._1._0;
+		var y2 = _p10._1._1;
+		var z2 = _p10._1._2;
+		return A3(_elm_community$linear_algebra$Math_Vector3$vec3, x1 * x2, y1 * y2, z1 * z2);
+	});

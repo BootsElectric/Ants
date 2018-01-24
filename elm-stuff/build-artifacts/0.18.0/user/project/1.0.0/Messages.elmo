@@ -1,0 +1,19 @@
+var _user$project$Messages$Tick = function (a) {
+	return {ctor: 'Tick', _0: a};
+};
+var _user$project$Messages$Keys = function (a) {
+	return {ctor: 'Keys', _0: a};
+};
+var _user$project$Messages$Resources = function (a) {
+	return {ctor: 'Resources', _0: a};
+};
+var _user$project$Messages$MouseDown = function (a) {
+	return {ctor: 'MouseDown', _0: a};
+};
+var _user$project$Messages$MouseMove = function (a) {
+	return {ctor: 'MouseMove', _0: a};
+};
+var _user$project$Messages$Resize = function (a) {
+	return {ctor: 'Resize', _0: a};
+};
+var _user$project$Messages$NoMessageYet = {ctor: 'NoMessageYet'};

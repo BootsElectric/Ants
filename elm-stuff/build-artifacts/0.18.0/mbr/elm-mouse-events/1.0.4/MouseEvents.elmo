@@ -1,0 +1,111 @@
+var _mbr$elm_mouse_events$MouseEvents$Position = F2(
+	function (a, b) {
+		return {x: a, y: b};
+	});
+var _mbr$elm_mouse_events$MouseEvents$relPos = function (ev) {
+	return A2(_mbr$elm_mouse_events$MouseEvents$Position, ev.clientPos.x - ev.targetPos.x, ev.clientPos.y - ev.targetPos.y);
+};
+var _mbr$elm_mouse_events$MouseEvents$mouseEvent = F3(
+	function (clientX, clientY, target) {
+		return {
+			clientPos: A2(_mbr$elm_mouse_events$MouseEvents$Position, clientX, clientY),
+			targetPos: A2(
+				_mbr$elm_mouse_events$MouseEvents$Position,
+				_elm_lang$core$Basics$truncate(target.left),
+				_elm_lang$core$Basics$truncate(target.top))
+		};
+	});
+var _mbr$elm_mouse_events$MouseEvents$mouseEventDecoder = A4(
+	_elm_lang$core$Json_Decode$map3,
+	_mbr$elm_mouse_events$MouseEvents$mouseEvent,
+	A2(_elm_lang$core$Json_Decode$field, 'clientX', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'clientY', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'target', _debois$elm_dom$DOM$boundingClientRect));
+var _mbr$elm_mouse_events$MouseEvents$onMouseEnter = function (target) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseenter',
+		A2(_elm_lang$core$Json_Decode$map, target, _mbr$elm_mouse_events$MouseEvents$mouseEventDecoder));
+};
+var _mbr$elm_mouse_events$MouseEvents$onMouseOver = function (target) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseover',
+		A2(_elm_lang$core$Json_Decode$map, target, _mbr$elm_mouse_events$MouseEvents$mouseEventDecoder));
+};
+var _mbr$elm_mouse_events$MouseEvents$onMouseMove = function (target) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mousemove',
+		A2(_elm_lang$core$Json_Decode$map, target, _mbr$elm_mouse_events$MouseEvents$mouseEventDecoder));
+};
+var _mbr$elm_mouse_events$MouseEvents$onMouseDown = function (target) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mousedown',
+		A2(_elm_lang$core$Json_Decode$map, target, _mbr$elm_mouse_events$MouseEvents$mouseEventDecoder));
+};
+var _mbr$elm_mouse_events$MouseEvents$onMouseUp = function (target) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseup',
+		A2(_elm_lang$core$Json_Decode$map, target, _mbr$elm_mouse_events$MouseEvents$mouseEventDecoder));
+};
+var _mbr$elm_mouse_events$MouseEvents$onClick = function (target) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'click',
+		A2(_elm_lang$core$Json_Decode$map, target, _mbr$elm_mouse_events$MouseEvents$mouseEventDecoder));
+};
+var _mbr$elm_mouse_events$MouseEvents$onDoubleClick = function (target) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'dblclick',
+		A2(_elm_lang$core$Json_Decode$map, target, _mbr$elm_mouse_events$MouseEvents$mouseEventDecoder));
+};
+var _mbr$elm_mouse_events$MouseEvents$onContextMenu = function (target) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'contextmenu',
+		A2(_elm_lang$core$Json_Decode$map, target, _mbr$elm_mouse_events$MouseEvents$mouseEventDecoder));
+};
+var _mbr$elm_mouse_events$MouseEvents$onWheel = function (target) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'wheel',
+		A2(_elm_lang$core$Json_Decode$map, target, _mbr$elm_mouse_events$MouseEvents$mouseEventDecoder));
+};
+var _mbr$elm_mouse_events$MouseEvents$onMouseLeave = function (target) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseleave',
+		A2(_elm_lang$core$Json_Decode$map, target, _mbr$elm_mouse_events$MouseEvents$mouseEventDecoder));
+};
+var _mbr$elm_mouse_events$MouseEvents$onMouseOut = function (target) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseout',
+		A2(_elm_lang$core$Json_Decode$map, target, _mbr$elm_mouse_events$MouseEvents$mouseEventDecoder));
+};
+var _mbr$elm_mouse_events$MouseEvents$onSelect = function (target) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'select',
+		A2(_elm_lang$core$Json_Decode$map, target, _mbr$elm_mouse_events$MouseEvents$mouseEventDecoder));
+};
+var _mbr$elm_mouse_events$MouseEvents$onPointerLockChange = function (target) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'pointerlockchange',
+		A2(_elm_lang$core$Json_Decode$map, target, _mbr$elm_mouse_events$MouseEvents$mouseEventDecoder));
+};
+var _mbr$elm_mouse_events$MouseEvents$onPointerLockError = function (target) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'pointerlockerror',
+		A2(_elm_lang$core$Json_Decode$map, target, _mbr$elm_mouse_events$MouseEvents$mouseEventDecoder));
+};
+var _mbr$elm_mouse_events$MouseEvents$MouseEvent = F2(
+	function (a, b) {
+		return {clientPos: a, targetPos: b};
+	});

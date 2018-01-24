@@ -1,0 +1,84 @@
+var _user$project$Game_Resources$getTexture = F2(
+	function (url, _p0) {
+		var _p1 = _p0;
+		return A2(_elm_lang$core$Dict$get, url, _p1._0);
+	});
+var _user$project$Game_Resources$LoadTextureConfig = F2(
+	function (a, b) {
+		return {success: a, failed: b};
+	});
+var _user$project$Game_Resources$LoadedTexture = F2(
+	function (a, b) {
+		return {ctor: 'LoadedTexture', _0: a, _1: b};
+	});
+var _user$project$Game_Resources$loadTextures = function (urls) {
+	return _elm_lang$core$Platform_Cmd$batch(
+		A2(
+			_elm_lang$core$List$map,
+			function (url) {
+				return A2(
+					_elm_lang$core$Task$attempt,
+					_user$project$Game_Resources$LoadedTexture(url),
+					_elm_community$webgl$WebGL_Texture$load(url));
+			},
+			urls));
+};
+var _user$project$Game_Resources$loadTexturesWithConfig = F2(
+	function (_p2, urls) {
+		var _p3 = _p2;
+		var handler = F2(
+			function (url, res) {
+				var _p4 = res;
+				if (_p4.ctor === 'Ok') {
+					return _p3.success(
+						A2(
+							_user$project$Game_Resources$LoadedTexture,
+							url,
+							_elm_lang$core$Result$Ok(_p4._0)));
+				} else {
+					return _p3.failed(url);
+				}
+			});
+		return _elm_lang$core$Platform_Cmd$batch(
+			A2(
+				_elm_lang$core$List$map,
+				function (_p5) {
+					var _p6 = _p5;
+					var _p7 = _p6._1;
+					return A2(
+						_elm_lang$core$Task$attempt,
+						handler(_p7),
+						A2(_elm_community$webgl$WebGL_Texture$loadWith, _p6._0, _p7));
+				},
+				urls));
+	});
+var _user$project$Game_Resources$R = function (a) {
+	return {ctor: 'R', _0: a};
+};
+var _user$project$Game_Resources$init = _user$project$Game_Resources$R(_elm_lang$core$Dict$empty);
+var _user$project$Game_Resources$update = F2(
+	function (_p9, _p8) {
+		var _p10 = _p9;
+		var _p14 = _p10._0;
+		var _p11 = _p8;
+		var _p13 = _p11._0;
+		var _p12 = _p10._1;
+		if (_p12.ctor === 'Ok') {
+			return _user$project$Game_Resources$R(
+				A3(_elm_lang$core$Dict$insert, _p14, _p12._0, _p13));
+		} else {
+			return A2(
+				_elm_lang$core$Debug$log,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'failed to load texture: ',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(_p14),
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							' - \n - ',
+							_elm_lang$core$Basics$toString(_p12._0)))),
+				_user$project$Game_Resources$R(_p13));
+		}
+	});
