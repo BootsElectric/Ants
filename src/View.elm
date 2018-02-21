@@ -1,4 +1,4 @@
-module View exposing ( view, dirtUrl, highlightedUrl, selectedUrl, isWithin )
+module View exposing ( view, isWithin )
 
 import Html exposing ( Html, div )
 import Html.Attributes as Attr exposing ( style )
@@ -12,20 +12,9 @@ import ElementRelativeMouseEvents as Canvas exposing ( onMouseMove )
 --
 import Messages exposing ( Msg(..) )
 import Model exposing ( Model, Column, Coord )
+import Textures exposing (..)
 import Tile exposing ( Tile, Kind(..), getX, getY )
 import UI exposing (..)
-
-dirtUrl : String
-dirtUrl =
-    "..\\textures\\dirt-with-border.jpg"
-
-highlightedUrl : String
-highlightedUrl =
-    "..\\textures\\highlighted-dirt-with-boarder.jpg"
-
-selectedUrl : String
-selectedUrl =
-    "..\\textures\\s-dirtBrown.jpg"
 
 {-|
   renders the grid of tiles
@@ -59,23 +48,32 @@ renderCoord model camera resources tile =
     texture =
       case tile.kind of
         Dirt ->
-          if isWithin model camera x y then
+          useUrl model camera x y dirtUrl
 
-            highlightedUrl
-
-          else if isSelected model camera x y then
-
-            selectedUrl
-
-          else
-
-            dirtUrl
+        Queen ->
+          useUrl model camera x y queenUrl
   in
     Render.sprite
       { texture = Resources.getTexture texture resources
       , position = position
       , size = ( 1, 1 )
       }
+
+
+useUrl : Model -> Camera -> Int -> Int -> String -> String
+useUrl model camera x y kind =
+    if isWithin model camera x y then
+
+      String.concat [texturesUrl, "h-", kind]
+
+    else if isSelected model camera x y then
+
+      String.concat [texturesUrl, "s-", kind]
+
+    else
+
+      String.concat [texturesUrl, kind]
+
 
 isSelected : Model -> Camera -> Int -> Int -> Bool
 isSelected m c x y =

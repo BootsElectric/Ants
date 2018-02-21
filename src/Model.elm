@@ -1,6 +1,6 @@
 module Model exposing ( Model, initialModel, Coord, Column )
 
-import Tile exposing ( Tile, dirtTile )
+import Tile exposing ( Tile, Kind(..), newTile )
 
 import Window exposing (..)
 import Game.TwoD.Camera as Camera exposing ( Camera )
@@ -18,6 +18,7 @@ type alias Model =
   , resources : Resources
   , pressedKeys : List Key
   , selected: Maybe Tile
+  , queen: Tile
   }
 
 
@@ -33,6 +34,7 @@ initialModel =
    , resources = Resources.init
    , pressedKeys = []
    , selected = Nothing
+   , queen = newTile ( 1, 12 ) Queen
   }
 
 
@@ -58,7 +60,7 @@ generateTileColumn column =
 
 generateTile : Coord -> Tile
 generateTile coord =
-  dirtTile coord
+  newTile coord Dirt
 
 
 

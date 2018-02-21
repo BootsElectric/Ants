@@ -1,4 +1,4 @@
-module Tile exposing ( Tile, Kind(..), dirtTile, getX, getY, getTile )
+module Tile exposing ( Tile, Kind(..), newTile, getX, getY, getTile )
 
 {-|
   The Tile is an abstract representation of a gameboard tile
@@ -16,17 +16,19 @@ type alias Tile =
 -}
 type Kind
   = Dirt
+  | Queen
 
 
 {-|
-  Creates a new tile with kind Dirt
+  Creates a new tile with kind k at coordinates c
 
     c: a Tuple of Ints representing the tile's coordinates
+    k: the kind of tile to make
 -}
-dirtTile : ( Int, Int ) -> Tile
-dirtTile c =
+newTile : ( Int, Int ) -> Kind -> Tile
+newTile c k =
   { coord = c
-  , kind = Dirt
+  , kind = k
   }
 
 
@@ -35,7 +37,7 @@ dirtTile c =
 
     t: The tile to find the X coordinate of
 
-    TODO: replace with Maybe.map 
+    TODO: replace with Maybe.map
 -}
 getX : Maybe Tile -> Maybe Int
 getX t =
@@ -73,6 +75,9 @@ getKind tile =
         case tile.kind of
             Dirt ->
                 "Dirt"
+
+            Queen ->
+                "Queen"
 
       Nothing ->
           ""

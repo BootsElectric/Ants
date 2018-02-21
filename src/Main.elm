@@ -13,7 +13,8 @@ import Window exposing ( Size )
 import Messages exposing ( Msg(..) )
 import Model exposing (..)
 import Tile exposing ( Tile )
-import View exposing ( view, dirtUrl, highlightedUrl, selectedUrl )
+import Textures exposing (..)
+import View exposing ( view )
 
 
 -- UPDATE
@@ -143,9 +144,21 @@ subscriptions model =
 -- INIT
 init : ( Model, Cmd Msg )
 init =
+  let
+      dirt =
+        String.concat [texturesUrl, dirtUrl]
+
+      h_dirt =
+        String.concat [texturesUrl, "h-", dirtUrl]
+
+      s_dirt =
+        String.concat [texturesUrl, "s-", dirtUrl]
+
+  in
+
   initialModel
   ! [ Task.perform Resize Window.size
-    , Cmd.map Resources ( Resources.loadTextures [ dirtUrl, highlightedUrl, selectedUrl ] )
+    , Cmd.map Resources ( Resources.loadTextures [ dirt, h_dirt, s_dirt ] )
     ]
 
 
