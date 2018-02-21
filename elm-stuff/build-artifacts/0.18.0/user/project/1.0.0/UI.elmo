@@ -1,8 +1,18 @@
+var _user$project$UI$unMaybeInt = function ($int) {
+	var _p0 = $int;
+	if (_p0.ctor === 'Just') {
+		return _p0._0;
+	} else {
+		return 0;
+	}
+};
 var _user$project$UI$writeUI = function (model) {
 	var selY = _elm_lang$core$Basics$toString(
-		_user$project$Tile$getY(model.selected));
+		_user$project$UI$unMaybeInt(
+			_user$project$Tile$getY(model.selected)));
 	var selX = _elm_lang$core$Basics$toString(
-		_user$project$Tile$getX(model.selected));
+		_user$project$UI$unMaybeInt(
+			_user$project$Tile$getX(model.selected)));
 	return A2(
 		_elm_lang$html$Html$div,
 		{

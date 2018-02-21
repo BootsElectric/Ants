@@ -1,31 +1,82 @@
-var _user$project$Main$init = A2(
-	_elm_lang$core$Platform_Cmd_ops['!'],
-	_user$project$Model$initialModel,
-	{
+var _user$project$Main$getTexturePaths = function (kind) {
+	return {
 		ctor: '::',
-		_0: A2(_elm_lang$core$Task$perform, _user$project$Messages$Resize, _elm_lang$window$Window$size),
+		_0: _elm_lang$core$String$concat(
+			{
+				ctor: '::',
+				_0: _user$project$Textures$texturesUrl,
+				_1: {
+					ctor: '::',
+					_0: kind,
+					_1: {ctor: '[]'}
+				}
+			}),
 		_1: {
 			ctor: '::',
-			_0: A2(
-				_elm_lang$core$Platform_Cmd$map,
-				_user$project$Messages$Resources,
-				_user$project$Game_Resources$loadTextures(
-					{
+			_0: _elm_lang$core$String$concat(
+				{
+					ctor: '::',
+					_0: _user$project$Textures$texturesUrl,
+					_1: {
 						ctor: '::',
-						_0: _user$project$View$dirtUrl,
+						_0: 'h-',
 						_1: {
 							ctor: '::',
-							_0: _user$project$View$highlightedUrl,
+							_0: kind,
+							_1: {ctor: '[]'}
+						}
+					}
+				}),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$String$concat(
+					{
+						ctor: '::',
+						_0: _user$project$Textures$texturesUrl,
+						_1: {
+							ctor: '::',
+							_0: 's-',
 							_1: {
 								ctor: '::',
-								_0: _user$project$View$selectedUrl,
+								_0: kind,
 								_1: {ctor: '[]'}
 							}
 						}
-					})),
-			_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}
 		}
-	});
+	};
+};
+var _user$project$Main$init = function () {
+	var queen = _user$project$Main$getTexturePaths(_user$project$Textures$queenUrl);
+	var dirt = _user$project$Main$getTexturePaths(_user$project$Textures$dirtUrl);
+	return A2(
+		_elm_lang$core$Platform_Cmd_ops['!'],
+		_user$project$Model$initialModel,
+		{
+			ctor: '::',
+			_0: A2(_elm_lang$core$Task$perform, _user$project$Messages$Resize, _elm_lang$window$Window$size),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$core$Platform_Cmd$map,
+					_user$project$Messages$Resources,
+					_user$project$Game_Resources$loadTextures(
+						_elm_lang$core$List$concat(
+							{
+								ctor: '::',
+								_0: dirt,
+								_1: {
+									ctor: '::',
+									_0: queen,
+									_1: {ctor: '[]'}
+								}
+							}))),
+				_1: {ctor: '[]'}
+			}
+		});
+}();
 var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$batch(
 		{

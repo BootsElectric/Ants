@@ -1,4 +1,4 @@
-module UI exposing ( UI, writeUI )
+module UI exposing ( UI, writeUI, unMaybeInt )
 
 import Html exposing (..)
 import Html.Attributes as Attr exposing (..)
@@ -10,14 +10,24 @@ import Tile exposing (..)
 type UI =
   UI
 
+unMaybeInt : Maybe Int -> Int
+unMaybeInt int =
+  case int of
+      Just int ->
+           int
+
+      Nothing ->
+          0
+
+
 writeUI : Model -> Html Msg
 writeUI model =
   let
     selX =
-      toString <| getX model.selected
+      toString <| unMaybeInt <| getX model.selected
 
     selY =
-      toString <| getY model.selected
+      toString <| unMaybeInt <| getY model.selected
   in
 
     div

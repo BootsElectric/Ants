@@ -37,9 +37,45 @@ var _user$project$View$isSelected = F4(
 			A3(_user$project$Tile$getTile, m.tiles, x, y),
 			m.selected) ? true : false;
 	});
-var _user$project$View$selectedUrl = '..\\textures\\s-dirtBrown.jpg';
-var _user$project$View$highlightedUrl = '..\\textures\\highlighted-dirt-with-boarder.jpg';
-var _user$project$View$dirtUrl = '..\\textures\\dirt-with-border.jpg';
+var _user$project$View$useUrl = F5(
+	function (model, camera, x, y, kind) {
+		return A4(_user$project$View$isWithin, model, camera, x, y) ? _elm_lang$core$String$concat(
+			{
+				ctor: '::',
+				_0: _user$project$Textures$texturesUrl,
+				_1: {
+					ctor: '::',
+					_0: 'h-',
+					_1: {
+						ctor: '::',
+						_0: kind,
+						_1: {ctor: '[]'}
+					}
+				}
+			}) : (A4(_user$project$View$isSelected, model, camera, x, y) ? _elm_lang$core$String$concat(
+			{
+				ctor: '::',
+				_0: _user$project$Textures$texturesUrl,
+				_1: {
+					ctor: '::',
+					_0: 's-',
+					_1: {
+						ctor: '::',
+						_0: kind,
+						_1: {ctor: '[]'}
+					}
+				}
+			}) : _elm_lang$core$String$concat(
+			{
+				ctor: '::',
+				_0: _user$project$Textures$texturesUrl,
+				_1: {
+					ctor: '::',
+					_0: kind,
+					_1: {ctor: '[]'}
+				}
+			}));
+	});
 var _user$project$View$renderCoord = F4(
 	function (model, camera, resources, tile) {
 		var y = _user$project$View$unMaybeInt(
@@ -55,7 +91,11 @@ var _user$project$View$renderCoord = F4(
 		};
 		var texture = function () {
 			var _p1 = tile.kind;
-			return A4(_user$project$View$isWithin, model, camera, x, y) ? _user$project$View$highlightedUrl : (A4(_user$project$View$isSelected, model, camera, x, y) ? _user$project$View$selectedUrl : _user$project$View$dirtUrl);
+			if (_p1.ctor === 'Dirt') {
+				return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$dirtUrl);
+			} else {
+				return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$queenUrl);
+			}
 		}();
 		return _user$project$Game_TwoD_Render$sprite(
 			{

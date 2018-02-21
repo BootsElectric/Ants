@@ -18,13 +18,20 @@ type alias Model =
   , resources : Resources
   , pressedKeys : List Key
   , selected: Maybe Tile
-  , queen: Tile
+  , queen: Maybe Tile
   }
 
 
 initialModel : Model
 initialModel =
-   { tiles = generateTileGrid ( centreGrid 12 ( generateGrid 25 25 ) )
+  let
+    grid =
+      generateTileGrid ( centreGrid 12 ( generateGrid 25 25 ) )
+
+    q =
+      Tile.getTile grid 0 0
+  in
+   { tiles = grid
    , dimensions = Size 0 0
    , mPosX = 0
    , mPosY = 0
@@ -34,7 +41,7 @@ initialModel =
    , resources = Resources.init
    , pressedKeys = []
    , selected = Nothing
-   , queen = newTile ( 1, 12 ) Queen
+   , queen = q
   }
 
 
@@ -60,7 +67,13 @@ generateTileColumn column =
 
 generateTile : Coord -> Tile
 generateTile coord =
-  newTile coord Dirt
+  if coord == ( 0, 0 ) then
+
+    newTile coord Queen
+
+  else
+
+    newTile coord Dirt
 
 
 

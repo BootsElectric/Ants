@@ -146,19 +146,28 @@ init : ( Model, Cmd Msg )
 init =
   let
       dirt =
-        String.concat [texturesUrl, dirtUrl]
+        getTexturePaths dirtUrl
 
-      h_dirt =
-        String.concat [texturesUrl, "h-", dirtUrl]
-
-      s_dirt =
-        String.concat [texturesUrl, "s-", dirtUrl]
+      queen =
+        getTexturePaths queenUrl
 
   in
 
   initialModel
   ! [ Task.perform Resize Window.size
-    , Cmd.map Resources ( Resources.loadTextures [ dirt, h_dirt, s_dirt ] )
+    , Cmd.map Resources ( Resources.loadTextures  ( List.concat [ dirt, queen ] )  )
+    ]
+
+
+{-|
+  Sets up the paths for each texture of a kind of tile: normal, highlighted and selected
+    kind: a String representation of a Tile.Kind
+-}
+getTexturePaths : String -> List String
+getTexturePaths kind =
+    [ String.concat [ texturesUrl, kind ]
+    , String.concat [ texturesUrl, "h-", kind ]
+    , String.concat [ texturesUrl, "s-", kind ]
     ]
 
 

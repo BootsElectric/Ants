@@ -1,4 +1,4 @@
-module Tile exposing ( Tile, Kind(..), newTile, getX, getY, getTile )
+module Tile exposing ( Tile, Kind(..), newTile, getX, getY, getTile, updateKind )
 
 {-|
   The Tile is an abstract representation of a gameboard tile
@@ -90,9 +90,16 @@ getKind tile =
     tile: The tile to update
     kind: The kind to update this tile to
 -}
-updateKind : Tile -> Kind -> Tile
+updateKind : Maybe Tile -> Kind -> Maybe Tile
 updateKind tile kind =
-    { tile | kind = kind }
+  case tile of
+    Just tile ->
+
+      Just { tile | kind = kind }
+
+    Nothing ->
+      
+      Nothing
 
 
 {-|
