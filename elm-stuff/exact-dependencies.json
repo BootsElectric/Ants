@@ -15,6 +15,5 @@
     "elm-lang/virtual-dom": "2.0.4",
     "elm-community/linear-algebra": "3.1.1",
     "elm-lang/mouse": "1.0.1",
-    "evancz/elm-graphics": "1.0.1",
     "elm-community/webgl": "2.0.5"
 }

@@ -1,0 +1,39 @@
+var _user$project$StyleSheet$StyleOne = {ctor: 'StyleOne'};
+var _user$project$StyleSheet$stylesheet = _mdgriffith$style_elements$Style$styleSheet(
+	{
+		ctor: '::',
+		_0: A2(
+			_mdgriffith$style_elements$Style$style,
+			_user$project$StyleSheet$StyleOne,
+			{
+				ctor: '::',
+				_0: _mdgriffith$style_elements$Style_Color$text(_elm_lang$core$Color$black),
+				_1: {
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Style_Color$background(_elm_lang$core$Color$white),
+					_1: {
+						ctor: '::',
+						_0: _mdgriffith$style_elements$Style_Font$size(12),
+						_1: {
+							ctor: '::',
+							_0: _mdgriffith$style_elements$Style_Font$typeface(
+								{
+									ctor: '::',
+									_0: _mdgriffith$style_elements$Style_Font$font('Robotica'),
+									_1: {
+										ctor: '::',
+										_0: _mdgriffith$style_elements$Style_Font$font('Ariel'),
+										_1: {
+											ctor: '::',
+											_0: _mdgriffith$style_elements$Style_Font$font('Sans-Serif'),
+											_1: {ctor: '[]'}
+										}
+									}
+								}),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}),
+		_1: {ctor: '[]'}
+	});

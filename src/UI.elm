@@ -3,6 +3,10 @@ module UI exposing ( UI, writeUI, unMaybeInt )
 import Html exposing (..)
 import Html.Attributes as Attr exposing (..)
 
+import Element exposing (..)
+import Style
+import StyleSheet exposing (..)
+
 import Messages exposing ( Msg(..) )
 import Model exposing (..)
 import Tile exposing (..)
