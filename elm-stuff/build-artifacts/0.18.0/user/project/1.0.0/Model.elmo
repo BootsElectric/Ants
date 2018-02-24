@@ -40,7 +40,9 @@ var _user$project$Model$centreGrid = F2(
 var _user$project$Model$generateTile = function (coord) {
 	return _elm_lang$core$Native_Utils.eq(
 		coord,
-		{ctor: '_Tuple2', _0: 0, _1: 0}) ? A2(_user$project$Tile$newTile, coord, _user$project$Tile$Queen) : A2(_user$project$Tile$newTile, coord, _user$project$Tile$Dirt);
+		{ctor: '_Tuple2', _0: 0, _1: 0}) ? A2(_user$project$Tile$newTile, coord, _user$project$Tile$Queen) : (_elm_lang$core$Native_Utils.eq(
+		coord,
+		{ctor: '_Tuple2', _0: 1, _1: 1}) ? A2(_user$project$Tile$newTile, coord, _user$project$Tile$Food) : A2(_user$project$Tile$newTile, coord, _user$project$Tile$Dirt));
 };
 var _user$project$Model$generateTileColumn = function (column) {
 	return A2(_elm_lang$core$List$map, _user$project$Model$generateTile, column);

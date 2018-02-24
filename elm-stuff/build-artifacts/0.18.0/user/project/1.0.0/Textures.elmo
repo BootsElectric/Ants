@@ -1,3 +1,4 @@
+var _user$project$Textures$foodUrl = 'food.jpg';
 var _user$project$Textures$queenUrl = 'queen.jpg';
 var _user$project$Textures$dirtUrl = 'dirt.jpg';
 var _user$project$Textures$texturesUrl = '..\\textures\\';

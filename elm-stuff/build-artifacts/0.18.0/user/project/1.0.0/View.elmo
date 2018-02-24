@@ -91,10 +91,13 @@ var _user$project$View$renderCoord = F4(
 		};
 		var texture = function () {
 			var _p1 = tile.kind;
-			if (_p1.ctor === 'Dirt') {
-				return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$dirtUrl);
-			} else {
-				return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$queenUrl);
+			switch (_p1.ctor) {
+				case 'Dirt':
+					return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$dirtUrl);
+				case 'Queen':
+					return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$queenUrl);
+				default:
+					return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$foodUrl);
 			}
 		}();
 		return _user$project$Game_TwoD_Render$sprite(

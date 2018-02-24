@@ -18,9 +18,9 @@ stylesheet =
       , Color.background Colors.white
       , Font.size 20
       , Font.typeface
-        [ Font.font "robotica"
-        , Font.font "ariel"
-        , Font.font "sans-serif"
+        [ Font.importUrl { url = "https://fonts.googleapis.com/css?family=Roboto", name = "roboto" }
+        , Font.font "Ariel"
+        , Font.sansSerif
         ]
       ]
     ]

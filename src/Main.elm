@@ -151,11 +151,14 @@ init =
       queen =
         getTexturePaths queenUrl
 
+      food =
+        getTexturePaths foodUrl
+
   in
 
   initialModel
   ! [ Task.perform Resize Window.size
-    , Cmd.map Resources ( Resources.loadTextures  ( List.concat [ dirt, queen ] )  )
+    , Cmd.map Resources ( Resources.loadTextures  ( List.concat [ dirt, queen, food ] )  )
     ]
 
 

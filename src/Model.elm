@@ -30,6 +30,7 @@ initialModel =
 
     q =
       Tile.getTile grid 0 0
+
   in
    { tiles = grid
    , dimensions = Size 0 0
@@ -53,18 +54,28 @@ type alias Column =
   List Coord
 
 
+{-|
+  Populates the grid with tiles
+    grid - The grid to populate
+-}
 generateTileGrid : List Column -> List ( List Tile )
 generateTileGrid grid =
   List.map generateTileColumn grid
 
 
-
+{-|
+  Poulates a column with tiles
+    column - The column to populate
+-}
 generateTileColumn : Column -> List Tile
 generateTileColumn column =
   List.map generateTile column
 
 
-
+{-|
+  Creates a tile at random unless the coord is ( 0, 0 ) in which case a queen is created
+    coord - The coordinates to create the tile at
+-}
 generateTile : Coord -> Tile
 generateTile coord =
   if coord == ( 0, 0 ) then
@@ -73,7 +84,13 @@ generateTile coord =
 
   else
 
-    newTile coord Dirt
+      if coord == ( 1, 1 ) then
+
+        newTile coord Food
+
+      else
+
+        newTile coord Dirt
 
 
 
