@@ -13,19 +13,19 @@ var _user$project$StyleSheet$stylesheet = _mdgriffith$style_elements$Style$style
 					_0: _mdgriffith$style_elements$Style_Color$background(_elm_lang$core$Color$white),
 					_1: {
 						ctor: '::',
-						_0: _mdgriffith$style_elements$Style_Font$size(12),
+						_0: _mdgriffith$style_elements$Style_Font$size(20),
 						_1: {
 							ctor: '::',
 							_0: _mdgriffith$style_elements$Style_Font$typeface(
 								{
 									ctor: '::',
-									_0: _mdgriffith$style_elements$Style_Font$font('Robotica'),
+									_0: _mdgriffith$style_elements$Style_Font$font('robotica'),
 									_1: {
 										ctor: '::',
-										_0: _mdgriffith$style_elements$Style_Font$font('Ariel'),
+										_0: _mdgriffith$style_elements$Style_Font$font('ariel'),
 										_1: {
 											ctor: '::',
-											_0: _mdgriffith$style_elements$Style_Font$font('Sans-Serif'),
+											_0: _mdgriffith$style_elements$Style_Font$font('sans-serif'),
 											_1: {ctor: '[]'}
 										}
 									}

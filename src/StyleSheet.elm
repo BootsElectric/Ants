@@ -16,11 +16,11 @@ stylesheet =
     [ Style.style StyleOne
       [ Color.text Colors.black
       , Color.background Colors.white
-      , Font.size 12
+      , Font.size 20
       , Font.typeface
-        [ Font.font "Robotica"
-        , Font.font "Ariel"
-        , Font.font "Sans-Serif"
+        [ Font.font "robotica"
+        , Font.font "ariel"
+        , Font.font "sans-serif"
         ]
       ]
     ]

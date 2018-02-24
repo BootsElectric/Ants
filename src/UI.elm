@@ -1,10 +1,10 @@
 module UI exposing ( UI, writeUI, unMaybeInt )
 
 import Html exposing (..)
-import Html.Attributes as Attr exposing (..)
 
 import Element exposing (..)
-import Style
+import Element.Attributes as Attr exposing (..)
+--import Style exposing (..)
 import StyleSheet exposing (..)
 
 import Messages exposing ( Msg(..) )
@@ -34,6 +34,11 @@ writeUI model =
       toString <| unMaybeInt <| getY model.selected
   in
 
-    div
-    [Attr.style [ ( "overflow", "hidden" ), ( "width", "100%" ), ( "height", "25%" ) ]]
-    [ p [] [ Html.text <| "Selected: (" ++  selX ++ ", " ++ selY ++ ")" ] ]
+    layout stylesheet <|
+      screen <| el StyleOne
+        [ moveDown 875, moveLeft 750, width ( px 200 ), paddingTop 25, paddingBottom 25, center ]
+                ( Element.text ( String.concat [ "Selected: (", selX, ",", selY, ")"  ] ) )
+
+    --div
+    --[Attr.style [ ( "overflow", "hidden" ), ( "width", "100%" ), ( "height", "25%" ) ]]
+    --[ p [] [ Html.text <| "Selected: (" ++  selX ++ ", " ++ selY ++ ")" ] ]
