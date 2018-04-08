@@ -10,6 +10,7 @@ import Task
 import Tuple exposing ( first, second )
 import Window exposing ( Size )
 -- Import Private Packages
+import Ants exposing (..)
 import Messages exposing ( Msg(..) )
 import Model exposing (..)
 import Tile exposing ( Tile )
@@ -96,6 +97,8 @@ update msg model =
           | time = dt + model.time
           , camera = newCamera
           }, Cmd.none )
+    Collect ->
+      ( { model | ants = ( Ants.increase model.ants 10 ), selected = ( Tile.updateKind model.selected Tile.Dirt ) }, Cmd.none )
 
 
 {-|
@@ -151,12 +154,14 @@ init =
       queen =
         getTexturePaths queenUrl
 
-  in
+      food =
+        getTexturePaths foodUrl
 
-  initialModel
-  ! [ Task.perform Resize Window.size
-    , Cmd.map Resources ( Resources.loadTextures  ( List.concat [ dirt, queen ] )  )
-    ]
+  in
+    initialModel
+    ! [ Task.perform Resize Window.size
+      , Cmd.map Resources ( Resources.loadTextures  ( List.concat [ dirt, queen, food ] )  )
+      ]
 
 
 {-|

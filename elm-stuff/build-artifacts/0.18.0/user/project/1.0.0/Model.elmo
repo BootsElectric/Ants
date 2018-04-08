@@ -40,7 +40,9 @@ var _user$project$Model$centreGrid = F2(
 var _user$project$Model$generateTile = function (coord) {
 	return _elm_lang$core$Native_Utils.eq(
 		coord,
-		{ctor: '_Tuple2', _0: 0, _1: 0}) ? A2(_user$project$Tile$newTile, coord, _user$project$Tile$Queen) : A2(_user$project$Tile$newTile, coord, _user$project$Tile$Dirt);
+		{ctor: '_Tuple2', _0: 0, _1: 0}) ? A2(_user$project$Tile$newTile, coord, _user$project$Tile$Queen) : (_elm_lang$core$Native_Utils.eq(
+		coord,
+		{ctor: '_Tuple2', _0: 1, _1: 1}) ? A2(_user$project$Tile$newTile, coord, _user$project$Tile$Food) : A2(_user$project$Tile$newTile, coord, _user$project$Tile$Dirt));
 };
 var _user$project$Model$generateTileColumn = function (column) {
 	return A2(_elm_lang$core$List$map, _user$project$Model$generateTile, column);
@@ -69,7 +71,8 @@ var _user$project$Model$initialModel = function () {
 		resources: _user$project$Game_Resources$init,
 		pressedKeys: {ctor: '[]'},
 		selected: _elm_lang$core$Maybe$Nothing,
-		queen: q
+		queen: q,
+		ants: _user$project$Ants$initialAnts
 	};
 }();
 var _user$project$Model$Model = function (a) {
@@ -83,7 +86,9 @@ var _user$project$Model$Model = function (a) {
 								return function (i) {
 									return function (j) {
 										return function (k) {
-											return {tiles: a, dimensions: b, mPosX: c, mPosY: d, screen: e, time: f, camera: g, resources: h, pressedKeys: i, selected: j, queen: k};
+											return function (l) {
+												return {tiles: a, dimensions: b, mPosX: c, mPosY: d, screen: e, time: f, camera: g, resources: h, pressedKeys: i, selected: j, queen: k, ants: l};
+											};
 										};
 									};
 								};

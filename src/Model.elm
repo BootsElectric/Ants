@@ -1,6 +1,7 @@
 module Model exposing ( Model, initialModel, Coord, Column )
 
 import Tile exposing ( Tile, Kind(..), newTile )
+import Ants exposing (..)
 
 import Window exposing (..)
 import Game.TwoD.Camera as Camera exposing ( Camera )
@@ -17,8 +18,9 @@ type alias Model =
   , camera : Camera
   , resources : Resources
   , pressedKeys : List Key
-  , selected: Maybe Tile
-  , queen: Maybe Tile
+  , selected : Maybe Tile
+  , queen : Maybe Tile
+  , ants : Ants
   }
 
 
@@ -30,6 +32,7 @@ initialModel =
 
     q =
       Tile.getTile grid 0 0
+
   in
    { tiles = grid
    , dimensions = Size 0 0
@@ -42,6 +45,7 @@ initialModel =
    , pressedKeys = []
    , selected = Nothing
    , queen = q
+   , ants = Ants.initialAnts
   }
 
 
@@ -53,18 +57,28 @@ type alias Column =
   List Coord
 
 
+{-|
+  Populates the grid with tiles
+    grid - The grid to populate
+-}
 generateTileGrid : List Column -> List ( List Tile )
 generateTileGrid grid =
   List.map generateTileColumn grid
 
 
-
+{-|
+  Poulates a column with tiles
+    column - The column to populate
+-}
 generateTileColumn : Column -> List Tile
 generateTileColumn column =
   List.map generateTile column
 
 
-
+{-|
+  Creates a tile at random unless the coord is ( 0, 0 ) in which case a queen is created
+    coord - The coordinates to create the tile at
+-}
 generateTile : Coord -> Tile
 generateTile coord =
   if coord == ( 0, 0 ) then
@@ -73,7 +87,13 @@ generateTile coord =
 
   else
 
-    newTile coord Dirt
+      if coord == ( 1, 1 ) then
+
+        newTile coord Food
+
+      else
+
+        newTile coord Dirt
 
 
 

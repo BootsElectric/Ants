@@ -52,6 +52,9 @@ renderCoord model camera resources tile =
 
         Queen ->
           useUrl model camera x y queenUrl
+
+        Food ->
+          useUrl model camera x y foodUrl
   in
     Render.sprite
       { texture = Resources.getTexture texture resources

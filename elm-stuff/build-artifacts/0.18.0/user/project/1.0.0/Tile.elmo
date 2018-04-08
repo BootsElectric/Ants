@@ -76,10 +76,13 @@ var _user$project$Tile$getKind = function (tile) {
 	var _p7 = tile;
 	if (_p7.ctor === 'Just') {
 		var _p8 = _p7._0.kind;
-		if (_p8.ctor === 'Dirt') {
-			return 'Dirt';
-		} else {
-			return 'Queen';
+		switch (_p8.ctor) {
+			case 'Dirt':
+				return 'Dirt';
+			case 'Queen':
+				return 'Queen';
+			default:
+				return 'Food';
 		}
 	} else {
 		return '';
@@ -111,5 +114,6 @@ var _user$project$Tile$Tile = F2(
 	function (a, b) {
 		return {coord: a, kind: b};
 	});
+var _user$project$Tile$Food = {ctor: 'Food'};
 var _user$project$Tile$Queen = {ctor: 'Queen'};
 var _user$project$Tile$Dirt = {ctor: 'Dirt'};

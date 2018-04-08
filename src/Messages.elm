@@ -13,3 +13,4 @@ type Msg
   | Resources Resources.Msg
   | Keys Keyboard.Extra.Msg
   | Tick Float
+  | Collect

@@ -1,4 +1,4 @@
-module Tile exposing ( Tile, Kind(..), newTile, getX, getY, getTile, updateKind )
+module Tile exposing ( Tile, Kind(..), newTile, getX, getY, getTile, getKind, updateKind, isTile )
 
 {-|
   The Tile is an abstract representation of a gameboard tile
@@ -17,6 +17,7 @@ type alias Tile =
 type Kind
   = Dirt
   | Queen
+  | Food
 
 
 {-|
@@ -79,6 +80,9 @@ getKind tile =
             Queen ->
                 "Queen"
 
+            Food ->
+                "Food"
+
       Nothing ->
           ""
 
@@ -98,7 +102,7 @@ updateKind tile kind =
       Just { tile | kind = kind }
 
     Nothing ->
-      
+
       Nothing
 
 

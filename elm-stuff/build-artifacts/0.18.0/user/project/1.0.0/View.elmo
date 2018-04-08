@@ -82,11 +82,22 @@ var _user$project$View$renderCoord = F4(
 			_1: _elm_lang$core$Basics$toFloat(y)
 		};
 		var texture = function () {
+<<<<<<< HEAD
 			var _p0 = tile.kind;
 			if (_p0.ctor === 'Dirt') {
 				return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$dirtUrl);
 			} else {
 				return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$queenUrl);
+=======
+			var _p1 = tile.kind;
+			switch (_p1.ctor) {
+				case 'Dirt':
+					return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$dirtUrl);
+				case 'Queen':
+					return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$queenUrl);
+				default:
+					return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$foodUrl);
+>>>>>>> Style-Elements
 			}
 		}();
 		return _user$project$Game_TwoD_Render$sprite(

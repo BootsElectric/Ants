@@ -20,3 +20,8 @@ dirtUrl =
 queenUrl : String
 queenUrl =
     "queen.jpg"
+
+
+foodUrl : String
+foodUrl =
+    "food.jpg"
