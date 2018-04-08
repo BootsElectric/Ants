@@ -1,0 +1,15 @@
+var _user$project$Ants$noAntsLeft = function (ants) {
+	return _elm_lang$core$Native_Utils.cmp(ants.number, 0) < 1;
+};
+var _user$project$Ants$decrease = F2(
+	function (ants, $int) {
+		return {number: ants.number - $int};
+	});
+var _user$project$Ants$increase = F2(
+	function (ants, $int) {
+		return {number: ants.number + $int};
+	});
+var _user$project$Ants$initialAnts = {number: 1000};
+var _user$project$Ants$Ants = function (a) {
+	return {number: a};
+};

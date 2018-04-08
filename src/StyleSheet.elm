@@ -28,8 +28,8 @@ stylesheet =
         ]
       ]
     , Style.style Button
-      [ Color.text Colors.white
-      , Color.background Colors.darkGray
+      [ Color.text Colors.darkGreen
+      , Color.background Colors.darkCharcoal
       , Font.size 20
       , Font.typeface
         [ roboto

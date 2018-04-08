@@ -1,6 +1,7 @@
 module Model exposing ( Model, initialModel, Coord, Column )
 
 import Tile exposing ( Tile, Kind(..), newTile )
+import Ants exposing (..)
 
 import Window exposing (..)
 import Game.TwoD.Camera as Camera exposing ( Camera )
@@ -17,8 +18,9 @@ type alias Model =
   , camera : Camera
   , resources : Resources
   , pressedKeys : List Key
-  , selected: Maybe Tile
-  , queen: Maybe Tile
+  , selected : Maybe Tile
+  , queen : Maybe Tile
+  , ants : Ants
   }
 
 
@@ -43,6 +45,7 @@ initialModel =
    , pressedKeys = []
    , selected = Nothing
    , queen = q
+   , ants = Ants.initialAnts
   }
 
 

@@ -1,17 +1,50 @@
-var _user$project$UI$unMaybeInt = function ($int) {
-	var _p0 = $int;
-	if (_p0.ctor === 'Just') {
-		return _p0._0;
-	} else {
-		return 0;
-	}
-};
 var _user$project$UI$writeUI = function (model) {
+	var collectButton = function () {
+		var _p0 = model.selected;
+		if (_p0.ctor === 'Just') {
+			var _p1 = _p0._0.kind;
+			switch (_p1.ctor) {
+				case 'Dirt':
+					return A3(
+						_mdgriffith$style_elements$Element$el,
+						_user$project$StyleSheet$StyleOne,
+						{ctor: '[]'},
+						_mdgriffith$style_elements$Element$text(''));
+				case 'Queen':
+					return A3(
+						_mdgriffith$style_elements$Element$el,
+						_user$project$StyleSheet$StyleOne,
+						{ctor: '[]'},
+						_mdgriffith$style_elements$Element$text(''));
+				default:
+					return A3(
+						_mdgriffith$style_elements$Element$button,
+						_user$project$StyleSheet$Button,
+						{
+							ctor: '::',
+							_0: _mdgriffith$style_elements$Element_Attributes$width(
+								_mdgriffith$style_elements$Element_Attributes$px(160)),
+							_1: {
+								ctor: '::',
+								_0: _mdgriffith$style_elements$Element_Events$onClick(_user$project$Messages$Collect),
+								_1: {ctor: '[]'}
+							}
+						},
+						_mdgriffith$style_elements$Element$text('Collect'));
+			}
+		} else {
+			return A3(
+				_mdgriffith$style_elements$Element$el,
+				_user$project$StyleSheet$StyleOne,
+				{ctor: '[]'},
+				_mdgriffith$style_elements$Element$text(''));
+		}
+	}();
 	var src = function () {
-		var _p1 = model.selected;
-		if (_p1.ctor === 'Just') {
-			var _p2 = _p1._0.kind;
-			switch (_p2.ctor) {
+		var _p2 = model.selected;
+		if (_p2.ctor === 'Just') {
+			var _p3 = _p2._0.kind;
+			switch (_p3.ctor) {
 				case 'Dirt':
 					return _elm_lang$core$String$concat(
 						{
@@ -52,10 +85,10 @@ var _user$project$UI$writeUI = function (model) {
 	}();
 	var kind = _user$project$Tile$getKind(model.selected);
 	var selY = _elm_lang$core$Basics$toString(
-		_user$project$UI$unMaybeInt(
+		_user$project$UnMaybe$unMaybeInt(
 			_user$project$Tile$getY(model.selected)));
 	var selX = _elm_lang$core$Basics$toString(
-		_user$project$UI$unMaybeInt(
+		_user$project$UnMaybe$unMaybeInt(
 			_user$project$Tile$getX(model.selected)));
 	return A2(
 		_mdgriffith$style_elements$Element$layout,
@@ -72,7 +105,7 @@ var _user$project$UI$writeUI = function (model) {
 						ctor: '::',
 						_0: _mdgriffith$style_elements$Element_Attributes$height(
 							_mdgriffith$style_elements$Element_Attributes$px(
-								_elm_lang$core$Tuple$second(model.screen))),
+								_elm_lang$core$Basics$toFloat(model.dimensions.height))),
 						_1: {ctor: '[]'}
 					}
 				},
@@ -173,8 +206,22 @@ var _user$project$UI$writeUI = function (model) {
 								}),
 							_1: {
 								ctor: '::',
-								_0: _mdgriffith$style_elements$Element$text('Population: 1000'),
-								_1: {ctor: '[]'}
+								_0: _mdgriffith$style_elements$Element$text(
+									_elm_lang$core$String$concat(
+										{
+											ctor: '::',
+											_0: 'Population: ',
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$core$Basics$toString(model.ants.number),
+												_1: {ctor: '[]'}
+											}
+										})),
+								_1: {
+									ctor: '::',
+									_0: collectButton,
+									_1: {ctor: '[]'}
+								}
 							}
 						}
 					}))));

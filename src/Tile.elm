@@ -1,4 +1,4 @@
-module Tile exposing ( Tile, Kind(..), newTile, getX, getY, getTile, getKind, updateKind )
+module Tile exposing ( Tile, Kind(..), newTile, getX, getY, getTile, getKind, updateKind, isTile )
 
 {-|
   The Tile is an abstract representation of a gameboard tile

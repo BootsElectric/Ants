@@ -45,10 +45,10 @@ var _user$project$StyleSheet$stylesheet = _mdgriffith$style_elements$Style$style
 				_user$project$StyleSheet$Button,
 				{
 					ctor: '::',
-					_0: _mdgriffith$style_elements$Style_Color$text(_elm_lang$core$Color$white),
+					_0: _mdgriffith$style_elements$Style_Color$text(_elm_lang$core$Color$darkGreen),
 					_1: {
 						ctor: '::',
-						_0: _mdgriffith$style_elements$Style_Color$background(_elm_lang$core$Color$darkGray),
+						_0: _mdgriffith$style_elements$Style_Color$background(_elm_lang$core$Color$darkCharcoal),
 						_1: {
 							ctor: '::',
 							_0: _mdgriffith$style_elements$Style_Font$size(20),

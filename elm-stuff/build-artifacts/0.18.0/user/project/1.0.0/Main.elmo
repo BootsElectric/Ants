@@ -189,7 +189,7 @@ var _user$project$Main$update = F2(
 						{mPosX: _p4.x, mPosY: _p4.y, selected: tile}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			default:
+			case 'Tick':
 				var _p5 = _p1._0;
 				var width = _elm_lang$core$Tuple$first(
 					A2(
@@ -213,6 +213,17 @@ var _user$project$Main$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{time: _p5 + model.time, camera: newCamera}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							ants: A2(_user$project$Ants$increase, model.ants, 10),
+							selected: A2(_user$project$Tile$updateKind, model.selected, _user$project$Tile$Dirt)
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 		}
