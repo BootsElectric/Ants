@@ -56,14 +56,15 @@ writeUI model =
 
     layout stylesheet <|
       screen <|
-        column StyleOne [ width ( px 200 ), paddingLeft 10, paddingTop 25, paddingBottom 25, alignLeft, spacing 25 ]
-                [ ( Element.text ( String.concat [ "Selected: (", selX, ",", selY, ")"  ] ) )
-                , row StyleOne [ spacing 10 ]
-                  [ ( el StyleOne [ paddingTop 15 ] ( Element.text kind ) )
-                  , image StyleOne [ width ( px 64 ), height ( px 64 ) ] { src = src, caption = kind }
-                  ]
-                , Element.text "Population: 1000"
-                ]
+        el StyleOne [ width ( px 180 ), height ( px (Tuple.second model.screen) ) ]
+          ( column StyleOne [ width ( px 180 ), paddingLeft 10, paddingTop 25, paddingBottom 25, alignLeft, spacing 25 ]
+            [ ( Element.text ( String.concat [ "Selected: (", selX, ",", selY, ")"  ] ) )
+            , row StyleOne [ spacing 10 ]
+              [ ( el StyleOne [ paddingTop 15 ] ( Element.text kind ) )
+              , image StyleOne [ width ( px 64 ), height ( px 64 ) ] { src = src, caption = kind }
+              ]
+            , Element.text "Population: 1000"
+            ] )
 
 
 

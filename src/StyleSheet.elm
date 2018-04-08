@@ -8,7 +8,11 @@ import Color as Colors
 --Representation of style identifiers
 type MyStyles
   = StyleOne
+  | Button
 
+roboto : Style.Font
+roboto =
+    Font.importUrl { url = "https://fonts.googleapis.com/css?family=Roboto", name = "roboto" }
 
 stylesheet : Style.StyleSheet MyStyles variation
 stylesheet =
@@ -18,7 +22,17 @@ stylesheet =
       , Color.background Colors.white
       , Font.size 20
       , Font.typeface
-        [ Font.importUrl { url = "https://fonts.googleapis.com/css?family=Roboto", name = "roboto" }
+        [ roboto
+        , Font.font "Ariel"
+        , Font.sansSerif
+        ]
+      ]
+    , Style.style Button
+      [ Color.text Colors.white
+      , Color.background Colors.darkGray
+      , Font.size 20
+      , Font.typeface
+        [ roboto
         , Font.font "Ariel"
         , Font.sansSerif
         ]
