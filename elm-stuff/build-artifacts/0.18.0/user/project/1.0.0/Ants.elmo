@@ -1,15 +1,33 @@
+var _user$project$Ants$calculatePopulation = function (ants) {
+	var n = ants.number;
+	var er = ants.eatRate;
+	var f = ants.food;
+	var newF = (_elm_lang$core$Native_Utils.cmp(f, 0) > 0) ? (f - er) : 0;
+	var newBr = (_elm_lang$core$Native_Utils.cmp(f, 0) > 0) ? (f / n) : 0;
+	var dr = ants.deathRate;
+	var br = ants.birthRate;
+	var p = (n + br) - dr;
+	return _elm_lang$core$Native_Utils.update(
+		ants,
+		{number: p, food: newF, birthRate: newBr});
+};
 var _user$project$Ants$noAntsLeft = function (ants) {
 	return _elm_lang$core$Native_Utils.cmp(ants.number, 0) < 1;
 };
 var _user$project$Ants$decrease = F2(
-	function (ants, $int) {
-		return {number: ants.number - $int};
+	function (ants, amount) {
+		return _elm_lang$core$Native_Utils.update(
+			ants,
+			{food: ants.food - amount});
 	});
 var _user$project$Ants$increase = F2(
-	function (ants, $int) {
-		return {number: ants.number + $int};
+	function (ants, amount) {
+		return _elm_lang$core$Native_Utils.update(
+			ants,
+			{food: ants.food + amount});
 	});
-var _user$project$Ants$initialAnts = {number: 1000};
-var _user$project$Ants$Ants = function (a) {
-	return {number: a};
-};
+var _user$project$Ants$initialAnts = {number: 1000, birthRate: 0, deathRate: 0.1, food: 10, eatRate: 5.0e-2};
+var _user$project$Ants$Ants = F5(
+	function (a, b, c, d, e) {
+		return {number: a, birthRate: b, deathRate: c, food: d, eatRate: e};
+	});

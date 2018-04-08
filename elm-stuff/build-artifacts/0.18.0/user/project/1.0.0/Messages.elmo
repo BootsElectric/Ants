@@ -1,3 +1,5 @@
+var _user$project$Messages$Reset = {ctor: 'Reset'};
+var _user$project$Messages$Quit = {ctor: 'Quit'};
 var _user$project$Messages$Collect = {ctor: 'Collect'};
 var _user$project$Messages$Tick = function (a) {
 	return {ctor: 'Tick', _0: a};

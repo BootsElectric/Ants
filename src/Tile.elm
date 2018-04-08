@@ -1,4 +1,9 @@
-module Tile exposing ( Tile, Kind(..), newTile, getX, getY, getTile, getKind, updateKind, isTile )
+module Tile exposing ( Tile, Kind(..), newTile, getX, getY, getTile, getKind, updateKind, isTile, Grid )
+
+import Dict exposing (..)
+
+type alias Grid =
+  Dict ( Int, Int ) Tile
 
 {-|
   The Tile is an abstract representation of a gameboard tile
@@ -113,25 +118,11 @@ updateKind tile kind =
     x: The X coordinate of the desired tile
     y: The Y coordinate of the desired tile
 -}
-getTile : List ( List Tile ) -> Int -> Int -> Maybe Tile
+getTile : Grid -> Int -> Int -> Maybe Tile
 getTile tiles x y =
-  case List.head tiles of
-
-    Just column ->
-
-      case getTileFromColumn column x y of
-
-        Just tile ->
-          Just tile
-
-        Nothing ->
-          case List.tail tiles of
-            Just newTiles ->
-              getTile newTiles x y
-
-            Nothing ->
-              Nothing
-
+  case get ( x, y ) tiles of
+    Just tile ->
+      Just tile
     Nothing ->
       Nothing
 

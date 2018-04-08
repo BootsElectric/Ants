@@ -1,15 +1,16 @@
 module Model exposing ( Model, initialModel, Coord, Column )
 
-import Tile exposing ( Tile, Kind(..), newTile )
+import Tile exposing ( Tile, Kind(..), newTile, Grid )
 import Ants exposing (..)
 
+import Dict exposing (..)
 import Window exposing (..)
 import Game.TwoD.Camera as Camera exposing ( Camera )
 import Game.Resources as Resources exposing ( Resources )
 import Keyboard.Extra exposing ( Key(..) )
 
 type alias Model =
-  { tiles : List ( List Tile )
+  { grid : Grid
   , dimensions : Size
   , mPosX : Float
   , mPosY : Float
@@ -28,13 +29,10 @@ initialModel : Model
 initialModel =
   let
     grid =
-      generateTileGrid ( centreGrid 12 ( generateGrid 25 25 ) )
-
-    q =
-      Tile.getTile grid 0 0
+      createGrid 12 12 empty
 
   in
-   { tiles = grid
+   { grid = grid
    , dimensions = Size 0 0
    , mPosX = 0
    , mPosY = 0
@@ -44,7 +42,7 @@ initialModel =
    , resources = Resources.init
    , pressedKeys = []
    , selected = Nothing
-   , queen = q
+   , queen = Tile.getTile grid 0 0
    , ants = Ants.initialAnts
   }
 
@@ -56,6 +54,26 @@ type alias Coord =
 type alias Column =
   List Coord
 
+createGrid : Int -> Int -> Grid -> Grid
+createGrid var const grid =
+
+  let
+      newGrid =
+        union grid ( fromList <| createPairList var const )
+  in
+
+    if var <= -const then
+      newGrid
+    else
+      createGrid ( var - 1 ) const newGrid
+
+createPairList : Int -> Int -> List ( ( Int, Int ), Tile )
+createPairList x y =
+    List.map (createKeyValuePair x) ( List.range -y y )
+
+createKeyValuePair : Int -> Int -> ( ( Int, Int ), Tile )
+createKeyValuePair x y =
+    ( ( x, y ), generateTile ( x, y ) )
 
 {-|
   Populates the grid with tiles

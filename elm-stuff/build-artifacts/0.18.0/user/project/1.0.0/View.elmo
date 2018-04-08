@@ -26,7 +26,7 @@ var _user$project$View$isWithin = F4(
 var _user$project$View$isSelected = F4(
 	function (m, c, x, y) {
 		return _elm_lang$core$Native_Utils.eq(
-			A3(_user$project$Tile$getTile, m.tiles, x, y),
+			A3(_user$project$Tile$getTile, m.grid, x, y),
 			m.selected) ? true : false;
 	});
 var _user$project$View$useUrl = F5(
@@ -70,10 +70,10 @@ var _user$project$View$useUrl = F5(
 	});
 var _user$project$View$renderCoord = F4(
 	function (model, camera, resources, tile) {
-		var y = _user$project$UI$unMaybeInt(
+		var y = _user$project$UnMaybe$unMaybeInt(
 			_user$project$Tile$getY(
 				_elm_lang$core$Maybe$Just(tile)));
-		var x = _user$project$UI$unMaybeInt(
+		var x = _user$project$UnMaybe$unMaybeInt(
 			_user$project$Tile$getX(
 				_elm_lang$core$Maybe$Just(tile)));
 		var position = {
@@ -82,22 +82,14 @@ var _user$project$View$renderCoord = F4(
 			_1: _elm_lang$core$Basics$toFloat(y)
 		};
 		var texture = function () {
-<<<<<<< HEAD
 			var _p0 = tile.kind;
-			if (_p0.ctor === 'Dirt') {
-				return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$dirtUrl);
-			} else {
-				return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$queenUrl);
-=======
-			var _p1 = tile.kind;
-			switch (_p1.ctor) {
+			switch (_p0.ctor) {
 				case 'Dirt':
 					return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$dirtUrl);
 				case 'Queen':
 					return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$queenUrl);
 				default:
 					return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$foodUrl);
->>>>>>> Style-Elements
 			}
 		}();
 		return _user$project$Game_TwoD_Render$sprite(
@@ -107,23 +99,14 @@ var _user$project$View$renderCoord = F4(
 				size: {ctor: '_Tuple2', _0: 1, _1: 1}
 			});
 	});
-var _user$project$View$renderColumn = F4(
-	function (model, camera, resources, tiles) {
-		return A2(
-			_elm_lang$core$List$map,
-			A3(_user$project$View$renderCoord, model, camera, resources),
-			tiles);
-	});
-var _user$project$View$renderGrid = F4(
-	function (model, camera, resources, tileGrid) {
-		return _elm_lang$core$List$concat(
-			A2(
-				_elm_lang$core$List$map,
-				A3(_user$project$View$renderColumn, model, camera, resources),
-				tileGrid));
-	});
-var _user$project$View$view = function (model) {
+var _user$project$View$renderGrid = function (model) {
 	return A2(
+		_elm_lang$core$List$map,
+		A3(_user$project$View$renderCoord, model, model.camera, model.resources),
+		_elm_lang$core$Dict$values(model.grid));
+};
+var _user$project$View$view = function (model) {
+	var ui = (_elm_lang$core$Native_Utils.cmp(model.ants.number, 0) > 0) ? A2(
 		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
@@ -160,11 +143,12 @@ var _user$project$View$view = function (model) {
 					camera: model.camera,
 					size: {ctor: '_Tuple2', _0: model.dimensions.width, _1: model.dimensions.height}
 				},
-				A4(_user$project$View$renderGrid, model, model.camera, model.resources, model.tiles)),
+				_user$project$View$renderGrid(model)),
 			_1: {
 				ctor: '::',
 				_0: _user$project$UI$writeUI(model),
 				_1: {ctor: '[]'}
 			}
-		});
+		}) : _user$project$UI$writeGameOver(model);
+	return ui;
 };

@@ -1,6 +1,7 @@
 module StyleSheet exposing (..)
 
 import Style
+import Style.Border as Border
 import Style.Color as Color
 import Style.Font as Font
 import Color as Colors
@@ -9,6 +10,8 @@ import Color as Colors
 type MyStyles
   = StyleOne
   | Button
+  | GameOver
+  | MainBackground
 
 roboto : Style.Font
 roboto =
@@ -28,8 +31,10 @@ stylesheet =
         ]
       ]
     , Style.style Button
-      [ Color.text Colors.darkGreen
-      , Color.background Colors.darkCharcoal
+      [ Color.text Colors.black
+      , Color.background Colors.white
+      , Border.all 1
+      , Color.border Colors.black
       , Font.size 20
       , Font.typeface
         [ roboto
@@ -37,4 +42,18 @@ stylesheet =
         , Font.sansSerif
         ]
       ]
-    ]
+    , Style.style GameOver
+      [ Color.text Colors.black
+      , Color.background Colors.white
+      , Font.size 60
+      , Font.bold
+      , Font.center
+      , Font.typeface
+        [ roboto
+        , Font.font "Ariel"
+        , Font.sansSerif
+        ]
+      ]
+    , Style.style MainBackground
+      [ Border.right 2 ]
+  ]

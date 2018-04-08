@@ -9,6 +9,7 @@ import Keyboard.Extra
 import Task
 import Tuple exposing ( first, second )
 import Window exposing ( Size )
+import Dict exposing (..)
 -- Import Private Packages
 import Ants exposing (..)
 import Messages exposing ( Msg(..) )
@@ -16,6 +17,7 @@ import Model exposing (..)
 import Tile exposing ( Tile )
 import Textures exposing (..)
 import View exposing ( view )
+import UnMaybe exposing ( unMaybeInt )
 
 
 -- UPDATE
@@ -55,7 +57,7 @@ update msg model =
           second mousePos |> floor
 
         tile =
-          case Tile.getTile model.tiles normalX normalY of
+          case Tile.getTile model.grid normalX normalY of
             Just tile ->
               Just tile
 
@@ -96,9 +98,41 @@ update msg model =
         ( {  model
           | time = dt + model.time
           , camera = newCamera
+          , ants = Ants.calculatePopulation model.ants
           }, Cmd.none )
     Collect ->
-      ( { model | ants = ( Ants.increase model.ants 10 ), selected = ( Tile.updateKind model.selected Tile.Dirt ) }, Cmd.none )
+      let
+          selX = unMaybeInt <| Tile.getX model.selected
+
+          selY = unMaybeInt <| Tile.getY model.selected
+
+          grid = Dict.update ( selX, selY ) updateTile model.grid
+
+      in
+
+      ( { model
+      | ants = ( Ants.increase model.ants 200 )
+      , grid = grid
+      , selected = get ( selX, selY ) grid }, Cmd.none )
+    Quit ->
+      let
+          ants = model.ants
+      in
+
+        ( { model | ants = { ants | food = 0.1, deathRate = 0.5, number = 1 } }, Cmd.none )
+    Reset ->
+      ( initialModel, Cmd.none )
+
+updateTile : Maybe Tile -> Maybe Tile
+updateTile tile =
+  case tile of
+      Just tile ->
+          Just { tile | kind = Tile.Dirt }
+
+      Nothing ->
+          Nothing
+
+
 
 
 {-|
@@ -118,10 +152,10 @@ inBounds model speed x y =
         second ( Camera.getPosition model.camera ) + ( y * speed )
 
       maxX =
-        ( toFloat ( List.length model.tiles ) ) / 10
+        ( toFloat ( Dict.size model.grid ) ) / 400
 
       maxY =
-        ( toFloat ( List.length model.tiles ) ) / 4
+        ( toFloat ( Dict.size model.grid ) ) / 100
 
       checkX =
         newX > -maxX && newX < maxX

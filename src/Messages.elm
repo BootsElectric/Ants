@@ -14,3 +14,5 @@ type Msg
   | Keys Keyboard.Extra.Msg
   | Tick Float
   | Collect
+  | Quit
+  | Reset

@@ -50,15 +50,48 @@ var _user$project$Model$generateTileColumn = function (column) {
 var _user$project$Model$generateTileGrid = function (grid) {
 	return A2(_elm_lang$core$List$map, _user$project$Model$generateTileColumn, grid);
 };
+var _user$project$Model$createKeyValuePair = F2(
+	function (x, y) {
+		return {
+			ctor: '_Tuple2',
+			_0: {ctor: '_Tuple2', _0: x, _1: y},
+			_1: _user$project$Model$generateTile(
+				{ctor: '_Tuple2', _0: x, _1: y})
+		};
+	});
+var _user$project$Model$createPairList = F2(
+	function (x, y) {
+		return A2(
+			_elm_lang$core$List$map,
+			_user$project$Model$createKeyValuePair(x),
+			A2(_elm_lang$core$List$range, 0 - y, y));
+	});
+var _user$project$Model$createGrid = F3(
+	function ($var, $const, grid) {
+		createGrid:
+		while (true) {
+			var newGrid = A2(
+				_elm_lang$core$Dict$union,
+				grid,
+				_elm_lang$core$Dict$fromList(
+					A2(_user$project$Model$createPairList, $var, $const)));
+			if (_elm_lang$core$Native_Utils.cmp($var, 0 - $const) < 1) {
+				return newGrid;
+			} else {
+				var _v0 = $var - 1,
+					_v1 = $const,
+					_v2 = newGrid;
+				$var = _v0;
+				$const = _v1;
+				grid = _v2;
+				continue createGrid;
+			}
+		}
+	});
 var _user$project$Model$initialModel = function () {
-	var grid = _user$project$Model$generateTileGrid(
-		A2(
-			_user$project$Model$centreGrid,
-			12,
-			A2(_user$project$Model$generateGrid, 25, 25)));
-	var q = A3(_user$project$Tile$getTile, grid, 0, 0);
+	var grid = A3(_user$project$Model$createGrid, 12, 12, _elm_lang$core$Dict$empty);
 	return {
-		tiles: grid,
+		grid: grid,
 		dimensions: A2(_elm_lang$window$Window$Size, 0, 0),
 		mPosX: 0,
 		mPosY: 0,
@@ -71,7 +104,7 @@ var _user$project$Model$initialModel = function () {
 		resources: _user$project$Game_Resources$init,
 		pressedKeys: {ctor: '[]'},
 		selected: _elm_lang$core$Maybe$Nothing,
-		queen: q,
+		queen: A3(_user$project$Tile$getTile, grid, 0, 0),
 		ants: _user$project$Ants$initialAnts
 	};
 }();
@@ -87,7 +120,7 @@ var _user$project$Model$Model = function (a) {
 									return function (j) {
 										return function (k) {
 											return function (l) {
-												return {tiles: a, dimensions: b, mPosX: c, mPosY: d, screen: e, time: f, camera: g, resources: h, pressedKeys: i, selected: j, queen: k, ants: l};
+												return {grid: a, dimensions: b, mPosX: c, mPosY: d, screen: e, time: f, camera: g, resources: h, pressedKeys: i, selected: j, queen: k, ants: l};
 											};
 										};
 									};

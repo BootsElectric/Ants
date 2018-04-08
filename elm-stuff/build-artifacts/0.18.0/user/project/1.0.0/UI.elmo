@@ -96,7 +96,7 @@ var _user$project$UI$writeUI = function (model) {
 		_mdgriffith$style_elements$Element$screen(
 			A3(
 				_mdgriffith$style_elements$Element$el,
-				_user$project$StyleSheet$StyleOne,
+				_user$project$StyleSheet$MainBackground,
 				{
 					ctor: '::',
 					_0: _mdgriffith$style_elements$Element_Attributes$width(
@@ -111,7 +111,7 @@ var _user$project$UI$writeUI = function (model) {
 				},
 				A3(
 					_mdgriffith$style_elements$Element$column,
-					_user$project$StyleSheet$StyleOne,
+					_user$project$StyleSheet$MainBackground,
 					{
 						ctor: '::',
 						_0: _mdgriffith$style_elements$Element_Attributes$width(
@@ -213,17 +213,93 @@ var _user$project$UI$writeUI = function (model) {
 											_0: 'Population: ',
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$core$Basics$toString(model.ants.number),
+												_0: _elm_lang$core$Basics$toString(
+													_elm_lang$core$Basics$round(model.ants.number)),
 												_1: {ctor: '[]'}
 											}
 										})),
 								_1: {
 									ctor: '::',
-									_0: collectButton,
-									_1: {ctor: '[]'}
+									_0: _mdgriffith$style_elements$Element$text(
+										_elm_lang$core$String$concat(
+											{
+												ctor: '::',
+												_0: 'Food: ',
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$core$Basics$toString(
+														_elm_lang$core$Basics$round(model.ants.food)),
+													_1: {ctor: '[]'}
+												}
+											})),
+									_1: {
+										ctor: '::',
+										_0: collectButton,
+										_1: {
+											ctor: '::',
+											_0: A3(
+												_mdgriffith$style_elements$Element$button,
+												_user$project$StyleSheet$Button,
+												{
+													ctor: '::',
+													_0: _mdgriffith$style_elements$Element_Attributes$width(
+														_mdgriffith$style_elements$Element_Attributes$px(160)),
+													_1: {
+														ctor: '::',
+														_0: _mdgriffith$style_elements$Element_Events$onClick(_user$project$Messages$Quit),
+														_1: {ctor: '[]'}
+													}
+												},
+												_mdgriffith$style_elements$Element$text('Quit')),
+											_1: {ctor: '[]'}
+										}
+									}
 								}
 							}
 						}
 					}))));
+};
+var _user$project$UI$writeGameOver = function (model) {
+	return A2(
+		_mdgriffith$style_elements$Element$layout,
+		_user$project$StyleSheet$stylesheet,
+		_mdgriffith$style_elements$Element$screen(
+			A3(
+				_mdgriffith$style_elements$Element$column,
+				_user$project$StyleSheet$StyleOne,
+				{
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Element_Attributes$center,
+					_1: {
+						ctor: '::',
+						_0: _mdgriffith$style_elements$Element_Attributes$verticalCenter,
+						_1: {
+							ctor: '::',
+							_0: _mdgriffith$style_elements$Element_Attributes$width(
+								_mdgriffith$style_elements$Element_Attributes$px(
+									_elm_lang$core$Basics$toFloat(model.dimensions.width))),
+							_1: {
+								ctor: '::',
+								_0: _mdgriffith$style_elements$Element_Attributes$height(
+									_mdgriffith$style_elements$Element_Attributes$px(
+										_elm_lang$core$Basics$toFloat(model.dimensions.height))),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				},
+				{
+					ctor: '::',
+					_0: A3(
+						_mdgriffith$style_elements$Element$header,
+						_user$project$StyleSheet$GameOver,
+						{ctor: '[]'},
+						_mdgriffith$style_elements$Element$text('Game Over')),
+					_1: {
+						ctor: '::',
+						_0: _mdgriffith$style_elements$Element$text('Refresh to try again!'),
+						_1: {ctor: '[]'}
+					}
+				})));
 };
 var _user$project$UI$UI = {ctor: 'UI'};

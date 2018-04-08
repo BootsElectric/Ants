@@ -3,6 +3,7 @@ module View exposing ( view, isWithin )
 import Html exposing ( Html, div )
 import Html.Attributes as Attr exposing ( style )
 import Tuple exposing ( first, second )
+import Dict exposing (..)
 --
 import Game.TwoD as Game
 import Game.TwoD.Camera as Camera exposing ( Camera )
@@ -13,23 +14,16 @@ import ElementRelativeMouseEvents as Canvas exposing ( onMouseMove )
 import Messages exposing ( Msg(..) )
 import Model exposing ( Model, Column, Coord )
 import Textures exposing (..)
-import Tile exposing ( Tile, Kind(..), getX, getY )
+import Tile exposing ( Tile, Kind(..), getX, getY, Grid )
 import UI exposing (..)
+import UnMaybe exposing (..)
 
 {-|
   renders the grid of tiles
 -}
-renderGrid : Model -> Camera -> Resources -> List ( List Tile ) -> List Renderable
-renderGrid model camera resources tileGrid =
-  List.concat ( List.map ( renderColumn model camera resources ) tileGrid )
-
-
-{-|
-  Rednders a Column of tiles
--}
-renderColumn : Model -> Camera -> Resources -> List Tile -> List Renderable
-renderColumn model camera resources tiles =
-  List.map ( renderCoord model camera resources ) tiles
+renderGrid : Model -> List Renderable
+renderGrid model =
+  List.map (renderCoord model model.camera model.resources) ( values <| model.grid )
 
 
 {-|
@@ -81,7 +75,7 @@ useUrl model camera x y kind =
 isSelected : Model -> Camera -> Int -> Int -> Bool
 isSelected m c x y =
 
-  if Tile.getTile m.tiles x y == m.selected then
+  if Tile.getTile m.grid x y == m.selected then
     True
   else
     False
@@ -124,14 +118,20 @@ isWithin m camera x y =
 
 view : Model -> Html Msg
 view model =
-
-  div
-  [ Attr.style [ ( "overflow", "hidden" ), ( "width", "100%" ), ( "height", "75%" ) ]
-  , Canvas.onMouseMove MouseMove
-  , Canvas.onMouseDown MouseDown
-  ]
-  [ Game.render
-    { time = 0, camera = model.camera, size = ( model.dimensions.width, model.dimensions.height  ) }
-    ( renderGrid model model.camera model.resources model.tiles )
-  , writeUI model
-  ]
+  let
+      ui =
+        if model.ants.number > 0 then
+          div
+          [ Attr.style [ ( "overflow", "hidden" ), ( "width", "100%" ), ( "height", "75%" ) ]
+          , Canvas.onMouseMove MouseMove
+          , Canvas.onMouseDown MouseDown
+          ]
+          [ Game.render
+            { time = 0, camera = model.camera, size = ( model.dimensions.width, model.dimensions.height  ) }
+            ( renderGrid model )
+          , writeUI model
+          ]
+        else
+          writeGameOver model
+  in
+    ui

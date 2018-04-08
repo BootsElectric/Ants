@@ -1,4 +1,4 @@
-module UI exposing ( UI, writeUI )
+module UI exposing ( UI, writeUI, writeGameOver )
 
 import Html exposing (..)
 
@@ -15,6 +15,16 @@ import UnMaybe exposing ( unMaybeInt )
 
 type UI =
   UI
+
+writeGameOver : Model -> Html Msg
+writeGameOver model =
+    layout stylesheet <|
+      screen <|
+        Element.column StyleOne [ center, verticalCenter, width ( px <| toFloat <| model.dimensions.width ), height ( px <| toFloat <| model.dimensions.height ) ]
+          [ Element.header GameOver [] ( Element.text "Game Over" )
+          , Element.text "Refresh to try again!"
+          ]
+
 
 writeUI : Model -> Html Msg
 writeUI model =
@@ -61,13 +71,15 @@ writeUI model =
 
     layout stylesheet <|
       screen <|
-        el StyleOne [ width ( px 180 ), height ( px (toFloat model.dimensions.height) ) ]
-          ( column StyleOne [ width ( px 180 ), paddingLeft 10, paddingTop 25, paddingBottom 25, alignLeft, spacing 25 ]
+        el MainBackground [ width ( px 180 ), height ( px (toFloat model.dimensions.height) ) ]
+          ( column MainBackground [ width ( px 180 ), paddingLeft 10, paddingTop 25, paddingBottom 25, alignLeft, spacing 25 ]
             [ ( Element.text ( String.concat [ "Selected: (", selX, ",", selY, ")"  ] ) )
             , row StyleOne [ spacing 10 ]
               [ ( el StyleOne [ paddingTop 15 ] ( Element.text kind ) )
               , image StyleOne [ width ( px 64 ), height ( px 64 ) ] { src = src, caption = kind }
               ]
-            , Element.text ( String.concat [ "Population: ", ( toString model.ants.number ) ] )
+            , Element.text ( String.concat [ "Population: ", ( toString <| round model.ants.number ) ] )
+            , Element.text ( String.concat [ "Food: ", ( toString <| round model.ants.food ) ] )
             , collectButton
+            , Element.button Button [ width ( px 160 ), Events.onClick Quit ] ( Element.text "Quit" )
             ] )
