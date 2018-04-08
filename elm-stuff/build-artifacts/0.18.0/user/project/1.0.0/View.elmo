@@ -23,14 +23,6 @@ var _user$project$View$isWithin = F4(
 			_elm_lang$core$Basics$toFloat(y) + 1) < 1);
 		return (withinX && withinY) ? true : false;
 	});
-var _user$project$View$unMaybeInt = function ($int) {
-	var _p0 = $int;
-	if (_p0.ctor === 'Just') {
-		return _p0._0;
-	} else {
-		return 0;
-	}
-};
 var _user$project$View$isSelected = F4(
 	function (m, c, x, y) {
 		return _elm_lang$core$Native_Utils.eq(
@@ -78,10 +70,10 @@ var _user$project$View$useUrl = F5(
 	});
 var _user$project$View$renderCoord = F4(
 	function (model, camera, resources, tile) {
-		var y = _user$project$View$unMaybeInt(
+		var y = _user$project$UI$unMaybeInt(
 			_user$project$Tile$getY(
 				_elm_lang$core$Maybe$Just(tile)));
-		var x = _user$project$View$unMaybeInt(
+		var x = _user$project$UI$unMaybeInt(
 			_user$project$Tile$getX(
 				_elm_lang$core$Maybe$Just(tile)));
 		var position = {
@@ -90,8 +82,8 @@ var _user$project$View$renderCoord = F4(
 			_1: _elm_lang$core$Basics$toFloat(y)
 		};
 		var texture = function () {
-			var _p1 = tile.kind;
-			if (_p1.ctor === 'Dirt') {
+			var _p0 = tile.kind;
+			if (_p0.ctor === 'Dirt') {
 				return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$dirtUrl);
 			} else {
 				return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$queenUrl);
