@@ -1,7 +1,15 @@
-var _user$project$UnMaybe$unMaybeInt = function ($int) {
-	var _p0 = $int;
+var _user$project$UnMaybe$unMaybeFloat = function ($float) {
+	var _p0 = $float;
 	if (_p0.ctor === 'Just') {
 		return _p0._0;
+	} else {
+		return 0;
+	}
+};
+var _user$project$UnMaybe$unMaybeInt = function ($int) {
+	var _p1 = $int;
+	if (_p1.ctor === 'Just') {
+		return _p1._0;
 	} else {
 		return 0;
 	}

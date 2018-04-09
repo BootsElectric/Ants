@@ -11,7 +11,7 @@ import Messages exposing ( Msg(..) )
 import Model exposing (..)
 import Textures exposing (..)
 import Tile exposing (..)
-import UnMaybe exposing ( unMaybeInt )
+import UnMaybe exposing ( unMaybeInt, unMaybeFloat )
 
 type UI =
   UI
@@ -25,13 +25,14 @@ writePreGame model =
           , verticalCenter
           , width ( px <| toFloat <| model.dimensions.width )
           , height ( px <| toFloat <| model.dimensions.height )
+          , spacing 50
           ]
           [ Element.header GameOver [] ( Element.text "Welcome To Formica" )
           , Element.text "A game about ant colonies"
           , Element.button Button
             [ width ( px 160 )
             , height ( px 40 )
-            , Events.onClick <| UpdateState InGame
+            , Events.onClick <| Generate
             ]
              ( Element.text "Start Game" )
           ]
@@ -45,6 +46,7 @@ writePostGame model =
           , verticalCenter
           , width ( px <| toFloat <| model.dimensions.width )
           , height ( px <| toFloat <| model.dimensions.height )
+          , spacing 50
           ]
           [ Element.header GameOver [] ( Element.text "Game Over" )
           , Element.button Button
@@ -65,21 +67,29 @@ writeUI model =
     selY =
       toString <| unMaybeInt <| getY model.selected
 
+    float =
+      toString <| unMaybeFloat <| getFloat model.selected
+
     kind =
       Tile.getKind model.selected
 
     src =
       case model.selected of
         Just tile ->
-          case tile.kind of
-            Dirt ->
-              String.concat [ texturesUrl, dirtUrl ]
+          if tile.isDug == False then
+            String.concat [ texturesUrl, undugUrl ]
 
-            Queen ->
-              String.concat [ texturesUrl, queenUrl ]
+          else
 
-            Food ->
-              String.concat [ texturesUrl, foodUrl ]
+            case tile.kind of
+              Dirt ->
+                String.concat [ texturesUrl, dirtUrl ]
+
+              Queen ->
+                String.concat [ texturesUrl, queenUrl ]
+
+              Food ->
+                String.concat [ texturesUrl, foodUrl ]
 
         Nothing ->
           "Nothing Selected"
@@ -87,17 +97,25 @@ writeUI model =
     collectButton =
       case model.selected of
           Just tile ->
-            case tile.kind of
-              Dirt ->
-                el StyleOne [] ( Element.text "" )
-              Queen ->
-                el StyleOne [] ( Element.text "" )
-              Food ->
-                Element.button Button
-                  [ width (px 160)
-                  , Events.onClick Collect
-                  ]
-                  ( Element.text "Collect" )
+            if tile.isDug == False then
+                Element.button Button [ width (px 160)
+                , onClick Dig
+                ]
+                ( Element.text "Dig" )
+
+            else
+
+              case tile.kind of
+                Dirt ->
+                  el StyleOne [] ( Element.text "" )
+                Queen ->
+                  el StyleOne [] ( Element.text "" )
+                Food ->
+                  Element.button Button
+                    [ width (px 160)
+                    , Events.onClick Collect
+                    ]
+                    ( Element.text "Collect" )
 
           Nothing ->
               el StyleOne [] ( Element.text "" )
@@ -119,8 +137,8 @@ writeUI model =
               [ ( el StyleOne [ paddingTop 15 ] ( Element.text kind ) )
               , image StyleOne [ width ( px 64 ), height ( px 64 ) ] { src = src, caption = kind }
               ]
-            , Element.text ( String.concat [ "Population: ", ( toString <| round model.ants.number ) ] )
-            , Element.text ( String.concat [ "Food: ", ( toString <| round model.ants.food ) ] )
+            , Element.text ( String.concat [ "Population: ", ( toString <| model.ants.number ) ] )
+            , Element.text ( String.concat [ "Food: ", ( toString <| model.ants.food ) ] )
             , collectButton
             , Element.button Button
               [ width ( px 160 )

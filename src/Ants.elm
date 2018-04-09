@@ -1,66 +1,39 @@
 module Ants exposing (..)
 
 type alias Ants =
-  { number : Float
-  , birthRate : Float
-  , deathRate : Float
-  , food : Float
-  , eatRate : Float
+  { number : Int
+  , food : Int
   }
 
 initialAnts : Ants
 initialAnts =
     { number = 1000
-    , birthRate = 0
-    , deathRate = 0.1
-    , food = 10
-    , eatRate = 0.05
+    , food = 1000
     }
 
-increase : Ants -> Float -> Ants
-increase ants amount =
+increaseFood : Ants -> Int -> Ants
+increaseFood ants amount =
     { ants | food = ants.food + amount }
 
-decrease : Ants -> Float -> Ants
-decrease ants amount =
-    { ants | food = ants.food - amount }
+decreaseFood : Ants -> Int -> Ants
+decreaseFood ants amount =
+  if ants.food > amount then
+      { ants | food = ants.food - amount }
+  else
+      { ants | food = 0 }
+    
+
+increaseNumber : Ants -> Int -> Ants
+increaseNumber ants amount =
+    { ants | number = ants.number + amount }
+
+decreaseNumber : Ants -> Int -> Ants
+decreaseNumber ants amount =
+  if ants.number > amount then
+      { ants | number = ants.number - amount }
+  else
+      { ants | number = 0 }
 
 noAntsLeft : Ants -> Bool
 noAntsLeft ants =
     ants.number <= 0
-
-calculatePopulation : Ants -> Ants
-calculatePopulation ants =
-    let
-        br = ants.birthRate
-
-        dr = ants.deathRate
-
-        f = ants.food
-
-        er = ants.eatRate
-
-        n = ants.number
-
-        p =
-          n + br - dr
-
-        newF =
-          if f > 0 then
-            f - er
-          else
-            0
-
-        newBr =
-          if f > 0 then
-              f / n
-          else
-            0
-
-    in
-
-      { ants
-      | number = p
-      , food = newF
-      , birthRate = newBr
-       }

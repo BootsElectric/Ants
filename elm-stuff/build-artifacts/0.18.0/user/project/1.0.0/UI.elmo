@@ -2,35 +2,53 @@ var _user$project$UI$writeUI = function (model) {
 	var collectButton = function () {
 		var _p0 = model.selected;
 		if (_p0.ctor === 'Just') {
-			var _p1 = _p0._0.kind;
-			switch (_p1.ctor) {
-				case 'Dirt':
-					return A3(
-						_mdgriffith$style_elements$Element$el,
-						_user$project$StyleSheet$StyleOne,
-						{ctor: '[]'},
-						_mdgriffith$style_elements$Element$text(''));
-				case 'Queen':
-					return A3(
-						_mdgriffith$style_elements$Element$el,
-						_user$project$StyleSheet$StyleOne,
-						{ctor: '[]'},
-						_mdgriffith$style_elements$Element$text(''));
-				default:
-					return A3(
-						_mdgriffith$style_elements$Element$button,
-						_user$project$StyleSheet$Button,
-						{
+			var _p2 = _p0._0;
+			if (_elm_lang$core$Native_Utils.eq(_p2.isDug, false)) {
+				return A3(
+					_mdgriffith$style_elements$Element$button,
+					_user$project$StyleSheet$Button,
+					{
+						ctor: '::',
+						_0: _mdgriffith$style_elements$Element_Attributes$width(
+							_mdgriffith$style_elements$Element_Attributes$px(160)),
+						_1: {
 							ctor: '::',
-							_0: _mdgriffith$style_elements$Element_Attributes$width(
-								_mdgriffith$style_elements$Element_Attributes$px(160)),
-							_1: {
+							_0: _mdgriffith$style_elements$Element_Events$onClick(_user$project$Messages$Dig),
+							_1: {ctor: '[]'}
+						}
+					},
+					_mdgriffith$style_elements$Element$text('Dig'));
+			} else {
+				var _p1 = _p2.kind;
+				switch (_p1.ctor) {
+					case 'Dirt':
+						return A3(
+							_mdgriffith$style_elements$Element$el,
+							_user$project$StyleSheet$StyleOne,
+							{ctor: '[]'},
+							_mdgriffith$style_elements$Element$text(''));
+					case 'Queen':
+						return A3(
+							_mdgriffith$style_elements$Element$el,
+							_user$project$StyleSheet$StyleOne,
+							{ctor: '[]'},
+							_mdgriffith$style_elements$Element$text(''));
+					default:
+						return A3(
+							_mdgriffith$style_elements$Element$button,
+							_user$project$StyleSheet$Button,
+							{
 								ctor: '::',
-								_0: _mdgriffith$style_elements$Element_Events$onClick(_user$project$Messages$Collect),
-								_1: {ctor: '[]'}
-							}
-						},
-						_mdgriffith$style_elements$Element$text('Collect'));
+								_0: _mdgriffith$style_elements$Element_Attributes$width(
+									_mdgriffith$style_elements$Element_Attributes$px(160)),
+								_1: {
+									ctor: '::',
+									_0: _mdgriffith$style_elements$Element_Events$onClick(_user$project$Messages$Collect),
+									_1: {ctor: '[]'}
+								}
+							},
+							_mdgriffith$style_elements$Element$text('Collect'));
+				}
 			}
 		} else {
 			return A3(
@@ -41,49 +59,66 @@ var _user$project$UI$writeUI = function (model) {
 		}
 	}();
 	var src = function () {
-		var _p2 = model.selected;
-		if (_p2.ctor === 'Just') {
-			var _p3 = _p2._0.kind;
-			switch (_p3.ctor) {
-				case 'Dirt':
-					return _elm_lang$core$String$concat(
-						{
+		var _p3 = model.selected;
+		if (_p3.ctor === 'Just') {
+			var _p5 = _p3._0;
+			if (_elm_lang$core$Native_Utils.eq(_p5.isDug, false)) {
+				return _elm_lang$core$String$concat(
+					{
+						ctor: '::',
+						_0: _user$project$Textures$texturesUrl,
+						_1: {
 							ctor: '::',
-							_0: _user$project$Textures$texturesUrl,
-							_1: {
+							_0: _user$project$Textures$undugUrl,
+							_1: {ctor: '[]'}
+						}
+					});
+			} else {
+				var _p4 = _p5.kind;
+				switch (_p4.ctor) {
+					case 'Dirt':
+						return _elm_lang$core$String$concat(
+							{
 								ctor: '::',
-								_0: _user$project$Textures$dirtUrl,
-								_1: {ctor: '[]'}
-							}
-						});
-				case 'Queen':
-					return _elm_lang$core$String$concat(
-						{
-							ctor: '::',
-							_0: _user$project$Textures$texturesUrl,
-							_1: {
+								_0: _user$project$Textures$texturesUrl,
+								_1: {
+									ctor: '::',
+									_0: _user$project$Textures$dirtUrl,
+									_1: {ctor: '[]'}
+								}
+							});
+					case 'Queen':
+						return _elm_lang$core$String$concat(
+							{
 								ctor: '::',
-								_0: _user$project$Textures$queenUrl,
-								_1: {ctor: '[]'}
-							}
-						});
-				default:
-					return _elm_lang$core$String$concat(
-						{
-							ctor: '::',
-							_0: _user$project$Textures$texturesUrl,
-							_1: {
+								_0: _user$project$Textures$texturesUrl,
+								_1: {
+									ctor: '::',
+									_0: _user$project$Textures$queenUrl,
+									_1: {ctor: '[]'}
+								}
+							});
+					default:
+						return _elm_lang$core$String$concat(
+							{
 								ctor: '::',
-								_0: _user$project$Textures$foodUrl,
-								_1: {ctor: '[]'}
-							}
-						});
+								_0: _user$project$Textures$texturesUrl,
+								_1: {
+									ctor: '::',
+									_0: _user$project$Textures$foodUrl,
+									_1: {ctor: '[]'}
+								}
+							});
+				}
 			}
 		} else {
 			return 'Nothing Selected';
 		}
 	}();
 	var kind = _user$project$Tile$getKind(model.selected);
+	var $float = _elm_lang$core$Basics$toString(
+		_user$project$UnMaybe$unMaybeFloat(
+			_user$project$Tile$getFloat(model.selected)));
 	var selY = _elm_lang$core$Basics$toString(
 		_user$project$UnMaybe$unMaybeInt(
 			_user$project$Tile$getY(model.selected)));
@@ -213,8 +248,7 @@ var _user$project$UI$writeUI = function (model) {
 											_0: 'Population: ',
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$core$Basics$toString(
-													_elm_lang$core$Basics$round(model.ants.number)),
+												_0: _elm_lang$core$Basics$toString(model.ants.number),
 												_1: {ctor: '[]'}
 											}
 										})),
@@ -227,8 +261,7 @@ var _user$project$UI$writeUI = function (model) {
 												_0: 'Food: ',
 												_1: {
 													ctor: '::',
-													_0: _elm_lang$core$Basics$toString(
-														_elm_lang$core$Basics$round(model.ants.food)),
+													_0: _elm_lang$core$Basics$toString(model.ants.food),
 													_1: {ctor: '[]'}
 												}
 											})),
@@ -284,7 +317,11 @@ var _user$project$UI$writePostGame = function (model) {
 								_0: _mdgriffith$style_elements$Element_Attributes$height(
 									_mdgriffith$style_elements$Element_Attributes$px(
 										_elm_lang$core$Basics$toFloat(model.dimensions.height))),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: _mdgriffith$style_elements$Element_Attributes$spacing(50),
+									_1: {ctor: '[]'}
+								}
 							}
 						}
 					}
@@ -346,7 +383,11 @@ var _user$project$UI$writePreGame = function (model) {
 								_0: _mdgriffith$style_elements$Element_Attributes$height(
 									_mdgriffith$style_elements$Element_Attributes$px(
 										_elm_lang$core$Basics$toFloat(model.dimensions.height))),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: _mdgriffith$style_elements$Element_Attributes$spacing(50),
+									_1: {ctor: '[]'}
+								}
 							}
 						}
 					}
@@ -376,8 +417,7 @@ var _user$project$UI$writePreGame = function (model) {
 											_mdgriffith$style_elements$Element_Attributes$px(40)),
 										_1: {
 											ctor: '::',
-											_0: _mdgriffith$style_elements$Element_Events$onClick(
-												_user$project$Messages$UpdateState(_user$project$Model$InGame)),
+											_0: _mdgriffith$style_elements$Element_Events$onClick(_user$project$Messages$Generate),
 											_1: {ctor: '[]'}
 										}
 									}

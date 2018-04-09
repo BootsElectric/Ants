@@ -1,3 +1,9 @@
+var _user$project$Messages$Generated = F2(
+	function (a, b) {
+		return {ctor: 'Generated', _0: a, _1: b};
+	});
+var _user$project$Messages$Generate = {ctor: 'Generate'};
+var _user$project$Messages$Dig = {ctor: 'Dig'};
 var _user$project$Messages$UpdateState = function (a) {
 	return {ctor: 'UpdateState', _0: a};
 };

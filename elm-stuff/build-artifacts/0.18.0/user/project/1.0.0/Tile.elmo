@@ -1,75 +1,65 @@
-var _user$project$Tile$isTile = F3(
-	function (tile, x, y) {
-		var tileY = _elm_lang$core$Tuple$second(tile.coord);
-		var tileX = _elm_lang$core$Tuple$first(tile.coord);
-		return (_elm_lang$core$Native_Utils.eq(tileX, x) && _elm_lang$core$Native_Utils.eq(tileY, y)) ? _elm_lang$core$Maybe$Just(tile) : _elm_lang$core$Maybe$Nothing;
-	});
-var _user$project$Tile$getTileFromColumn = F3(
-	function (tiles, x, y) {
-		getTileFromColumn:
-		while (true) {
-			var _p0 = _elm_lang$core$List$head(tiles);
-			if (_p0.ctor === 'Just') {
-				var _p1 = A3(_user$project$Tile$isTile, _p0._0, x, y);
-				if (_p1.ctor === 'Just') {
-					return _elm_lang$core$Maybe$Just(_p1._0);
-				} else {
-					var _p2 = _elm_lang$core$List$tail(tiles);
-					if (_p2.ctor === 'Just') {
-						var _v3 = _p2._0,
-							_v4 = x,
-							_v5 = y;
-						tiles = _v3;
-						x = _v4;
-						y = _v5;
-						continue getTileFromColumn;
-					} else {
-						return _elm_lang$core$Maybe$Nothing;
-					}
-				}
-			} else {
-				return _elm_lang$core$Maybe$Nothing;
-			}
-		}
-	});
 var _user$project$Tile$getTile = F3(
 	function (tiles, x, y) {
-		var _p3 = A2(
+		var _p0 = A2(
 			_elm_lang$core$Dict$get,
 			{ctor: '_Tuple2', _0: x, _1: y},
 			tiles);
-		if (_p3.ctor === 'Just') {
-			return _elm_lang$core$Maybe$Just(_p3._0);
+		if (_p0.ctor === 'Just') {
+			return _elm_lang$core$Maybe$Just(_p0._0);
 		} else {
 			return _elm_lang$core$Maybe$Nothing;
 		}
 	});
+var _user$project$Tile$digTile = function (tile) {
+	var _p1 = tile;
+	if (_p1.ctor === 'Just') {
+		return _elm_lang$core$Maybe$Just(
+			_elm_lang$core$Native_Utils.update(
+				_p1._0,
+				{isDug: true}));
+	} else {
+		return _elm_lang$core$Maybe$Nothing;
+	}
+};
 var _user$project$Tile$updateKind = F2(
 	function (tile, kind) {
-		var _p4 = tile;
-		if (_p4.ctor === 'Just') {
+		var _p2 = tile;
+		if (_p2.ctor === 'Just') {
 			return _elm_lang$core$Maybe$Just(
 				_elm_lang$core$Native_Utils.update(
-					_p4._0,
+					_p2._0,
 					{kind: kind}));
 		} else {
 			return _elm_lang$core$Maybe$Nothing;
 		}
 	});
 var _user$project$Tile$getKind = function (tile) {
-	var _p5 = tile;
-	if (_p5.ctor === 'Just') {
-		var _p6 = _p5._0.kind;
-		switch (_p6.ctor) {
-			case 'Dirt':
-				return 'Dirt';
-			case 'Queen':
-				return 'Queen';
-			default:
-				return 'Food';
+	var _p3 = tile;
+	if (_p3.ctor === 'Just') {
+		var _p5 = _p3._0;
+		if (_elm_lang$core$Native_Utils.eq(_p5.isDug, false)) {
+			return 'Dig to\nfind out';
+		} else {
+			var _p4 = _p5.kind;
+			switch (_p4.ctor) {
+				case 'Dirt':
+					return 'Dirt';
+				case 'Queen':
+					return 'Queen';
+				default:
+					return 'Food';
+			}
 		}
 	} else {
 		return '';
+	}
+};
+var _user$project$Tile$getFloat = function (t) {
+	var _p6 = t;
+	if (_p6.ctor === 'Just') {
+		return _elm_lang$core$Maybe$Just(_p6._0.$float);
+	} else {
+		return _elm_lang$core$Maybe$Nothing;
 	}
 };
 var _user$project$Tile$getY = function (t) {
@@ -90,14 +80,25 @@ var _user$project$Tile$getX = function (t) {
 		return _elm_lang$core$Maybe$Nothing;
 	}
 };
-var _user$project$Tile$newTile = F2(
-	function (c, k) {
-		return {coord: c, kind: k};
+var _user$project$Tile$newTile = F3(
+	function (c, f, k) {
+		return {coord: c, kind: k, isDug: false, $float: f};
 	});
-var _user$project$Tile$Tile = F2(
-	function (a, b) {
-		return {coord: a, kind: b};
+var _user$project$Tile$Tile = F4(
+	function (a, b, c, d) {
+		return {coord: a, kind: b, isDug: c, $float: d};
 	});
 var _user$project$Tile$Food = {ctor: 'Food'};
 var _user$project$Tile$Queen = {ctor: 'Queen'};
 var _user$project$Tile$Dirt = {ctor: 'Dirt'};
+var _user$project$Tile$updateToDirt = function (tile) {
+	var _p9 = tile;
+	if (_p9.ctor === 'Just') {
+		return _elm_lang$core$Maybe$Just(
+			_elm_lang$core$Native_Utils.update(
+				_p9._0,
+				{kind: _user$project$Tile$Dirt}));
+	} else {
+		return _elm_lang$core$Maybe$Nothing;
+	}
+};

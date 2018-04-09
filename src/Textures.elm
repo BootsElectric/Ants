@@ -21,7 +21,16 @@ queenUrl : String
 queenUrl =
     "queen.jpg"
 
-
+{-|
+  The string of the name of the food texture
+-}
 foodUrl : String
 foodUrl =
     "food.jpg"
+
+{-|
+  The string of the name of the undug texture
+-}
+undugUrl : String
+undugUrl =
+    "undug.jpg"

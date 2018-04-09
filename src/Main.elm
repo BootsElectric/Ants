@@ -10,11 +10,12 @@ import Task
 import Tuple exposing ( first, second )
 import Window exposing ( Size )
 import Dict exposing (..)
+import Random exposing ( initialSeed, step, Generator )
 -- Import Private Packages
 import Ants exposing (..)
 import Messages exposing ( Msg(..) )
 import Model exposing (..)
-import Tile exposing ( Tile )
+import Tile exposing ( Tile, updateToDirt )
 import Textures exposing (..)
 import View exposing ( view )
 import UnMaybe exposing ( unMaybeInt )
@@ -34,6 +35,30 @@ update msg model =
 
           Resources msg ->
             ( { model | resources = Resources.update msg model.resources }, Cmd.none )
+
+          Generate ->
+            let
+                floatList =
+                  Random.list 625 (Random.float 0 1)
+            in
+
+              ( model, Random.generate ( Generated InGame ) floatList )
+
+          Generated state floats ->
+            let
+                newFloats =
+                  Model.randomFloatsFromLists (Model.listOfCoords 12 12 []) floats
+
+                newGrid =
+                  Model.createGrid model 12 12 Dict.empty
+            in
+
+              ( { model
+                | randomFloats = newFloats
+                , floatsList = floats
+                , grid = newGrid
+                , state = state
+                }, Cmd.none )
 
           _ ->
             ( model, Cmd.none )
@@ -63,8 +88,14 @@ update msg model =
               y =
                 round point.y
 
+              w =
+                model.dimensions.width
+
+              h =
+                model.dimensions.height
+
               mousePos =
-                Camera.viewportToGameCoordinates model.camera ( model.dimensions.width, model.dimensions.height ) ( x, y )
+                Camera.viewportToGameCoordinates model.camera ( w, h ) ( x, y )
 
               normalX =
                 first mousePos |> floor
@@ -93,8 +124,13 @@ update msg model =
               arrows =
                 Keyboard.Extra.wasd model.pressedKeys
 
+              w = model.dimensions.width
+
+              h = model.dimensions.height
+
+
               width =
-                ( first ( Camera.getViewSize ( toFloat model.dimensions.width, toFloat model.dimensions.height ) model.camera ) )
+                ( first ( Camera.getViewSize ( toFloat w, toFloat h ) model.camera ) )
 
               camSpeed =
                 dt * ( width / 4 )
@@ -114,25 +150,48 @@ update msg model =
               ( {  model
                 | time = dt + model.time
                 , camera = newCamera
-                , ants = Ants.calculatePopulation model.ants
                 }, Cmd.none )
+
           Collect ->
             let
-                selX = unMaybeInt <| Tile.getX model.selected
+                selX =
+                  unMaybeInt <| Tile.getX model.selected
 
-                selY = unMaybeInt <| Tile.getY model.selected
+                selY =
+                  unMaybeInt <| Tile.getY model.selected
 
-                grid = Dict.update ( selX, selY ) updateTile model.grid
+                grid =
+                  Dict.update ( selX, selY ) updateToDirt model.grid
 
             in
 
             ( { model
-            | ants = ( Ants.increase model.ants 200 )
+            | ants = ( Ants.increaseFood model.ants 200 )
             , grid = grid
             , selected = get ( selX, selY ) grid }, Cmd.none )
 
           UpdateState state ->
             ( { model | state = state }, Cmd.none )
+
+          Dig ->
+            let
+              selX =
+                unMaybeInt <| Tile.getX model.selected
+
+              selY =
+                unMaybeInt <| Tile.getY model.selected
+
+              grid =
+                Dict.update ( selX, selY ) Tile.digTile model.grid
+
+            in
+              ( { model
+              | ants = ( Ants.decreaseFood model.ants 40 )
+              , grid = grid
+              , selected = get ( selX, selY ) grid }, Cmd.none )
+
+          _ ->
+            ( model, Cmd.none )
 
       PostGame ->
         case msg of
@@ -148,16 +207,6 @@ update msg model =
 
           _ ->
             ( model, Cmd.none )
-
-
-updateTile : Maybe Tile -> Maybe Tile
-updateTile tile =
-  case tile of
-      Just tile ->
-          Just { tile | kind = Tile.Dirt }
-
-      Nothing ->
-          Nothing
 
 
 
@@ -195,6 +244,28 @@ inBounds model speed x y =
     else
         False
 
+
+randomFloatList : Generator Float-> List Float -> Model -> Random.Seed -> Int -> List Float
+randomFloatList generator floats model seed var =
+
+  let
+      floatSeedPair =
+        step generator seed
+
+      float =
+        Tuple.first floatSeedPair
+
+      newSeed = Tuple.second floatSeedPair
+  in
+
+
+  if var > 0 then
+      List.concat [ floats,  [ float ], randomFloatList generator floats model newSeed ( var - 1 ) ]
+  else
+      floats
+
+
+
 -- SUBSCRIPTIONS TODO: try removing AnimationFrame
 subscriptions : Model -> Sub Msg
 subscriptions model =
@@ -218,10 +289,14 @@ init =
       food =
         getTexturePaths foodUrl
 
+      undug=
+        getTexturePaths undugUrl
+
   in
     initialModel
     ! [ Task.perform Resize Window.size
-      , Cmd.map Resources ( Resources.loadTextures  ( List.concat [ dirt, queen, food ] )  )
+      , Cmd.map Resources ( Resources.loadTextures  ( List.concat [ dirt, queen, food, undug ] )  )
+      , Random.generate ( Generated PreGame ) ( Random.list 625 ( Random.float 0 1 ) )
       ]
 
 

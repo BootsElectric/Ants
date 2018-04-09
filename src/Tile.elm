@@ -1,4 +1,4 @@
-module Tile exposing ( Tile, Kind(..), newTile, getX, getY, getTile, getKind, updateKind, isTile, Grid )
+module Tile exposing (..)
 
 import Dict exposing (..)
 
@@ -14,6 +14,8 @@ type alias Grid =
 type alias Tile =
   { coord : ( Int, Int )
   , kind : Kind
+  , isDug : Bool
+  , float : Float
   }
 
 {-|
@@ -24,17 +26,18 @@ type Kind
   | Queen
   | Food
 
-
 {-|
   Creates a new tile with kind k at coordinates c
 
     c: a Tuple of Ints representing the tile's coordinates
     k: the kind of tile to make
 -}
-newTile : ( Int, Int ) -> Kind -> Tile
-newTile c k =
+newTile : ( Int, Int ) -> Float  -> Kind -> Tile
+newTile c f k =
   { coord = c
   , kind = k
+  , isDug = False
+  , float = f
   }
 
 
@@ -69,6 +72,15 @@ getY t =
       Nothing
 
 
+getFloat : Maybe Tile -> Maybe Float
+getFloat t =
+    case t of
+        Just tile ->
+            Just tile.float
+
+        Nothing ->
+            Nothing
+
 {-|
   Gets the kind of tile that this is as a String
 
@@ -78,18 +90,24 @@ getKind : Maybe Tile -> String
 getKind tile =
   case tile of
       Just tile ->
-        case tile.kind of
-            Dirt ->
+        if tile.isDug == False then
+
+          "Dig to\nfind out"
+
+        else
+
+          case tile.kind of
+              Dirt ->
                 "Dirt"
 
-            Queen ->
+              Queen ->
                 "Queen"
 
-            Food ->
+              Food ->
                 "Food"
 
       Nothing ->
-          ""
+        ""
 
 
 
@@ -110,6 +128,26 @@ updateKind tile kind =
 
       Nothing
 
+updateToDirt : Maybe Tile -> Maybe Tile
+updateToDirt tile =
+  case tile of
+      Just tile ->
+          Just { tile | kind = Dirt }
+
+      Nothing ->
+          Nothing
+
+
+digTile : Maybe Tile -> Maybe Tile
+digTile tile =
+    case tile of
+        Just tile ->
+            Just { tile | isDug = True }
+
+        Nothing ->
+            Nothing
+
+
 
 {-|
   Gets a tile specified by integer coordinates from a List of Lists of Tiles
@@ -124,62 +162,4 @@ getTile tiles x y =
     Just tile ->
       Just tile
     Nothing ->
-      Nothing
-
-
-{-|
-  Gets a tile specified by integer coordinates from a List of Tiles
-
-    tiles: The column of tiles to get the desired tile from
-    x: The X coordinate of the desired tile
-    y: The Y coordinate of the desired tile
-
-  *NOTE*: This is a helper function of getTile
--}
-getTileFromColumn : List Tile -> Int -> Int -> Maybe Tile
-getTileFromColumn tiles x y =
-  case List.head tiles of
-
-    Just tile ->
-
-      case isTile tile x y of
-
-        Just tile ->
-          Just tile
-
-        Nothing ->
-          case List.tail tiles of
-            Just newTiles ->
-              getTileFromColumn newTiles x y
-
-            Nothing ->
-              Nothing
-
-    Nothing ->
-      Nothing
-
-
-
-{-|
-  Checks to see if the candidate tile is the desired tile and returns it if so.
-
-    tile: The candidate tile
-    x: The X coordinate of the desired tile
-    y: The Y coordinate of the desired tile
-
-  *NOTE*: This is a helper function of getTileFromColumn
--}
-isTile : Tile -> Int -> Int -> Maybe Tile
-isTile tile x y =
-  let
-      tileX =
-        Tuple.first tile.coord
-
-      tileY =
-        Tuple.second tile.coord
-  in
-
-    if tileX == x && tileY == y then
-      Just tile
-    else
       Nothing

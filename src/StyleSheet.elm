@@ -23,7 +23,7 @@ stylesheet =
     [ Style.style StyleOne
       [ Color.text Colors.black
       , Color.background Colors.white
-      , Font.size 20
+      , Font.size 16
       , Font.typeface
         [ roboto
         , Font.font "Ariel"

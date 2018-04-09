@@ -1,47 +1,109 @@
-var _user$project$Model$generateTile = function (coord) {
-	return _elm_lang$core$Native_Utils.eq(
-		coord,
-		{ctor: '_Tuple2', _0: 0, _1: 0}) ? A2(_user$project$Tile$newTile, coord, _user$project$Tile$Queen) : (_elm_lang$core$Native_Utils.eq(
-		coord,
-		{ctor: '_Tuple2', _0: 1, _1: 1}) ? A2(_user$project$Tile$newTile, coord, _user$project$Tile$Food) : A2(_user$project$Tile$newTile, coord, _user$project$Tile$Dirt));
-};
-var _user$project$Model$createKeyValuePair = F2(
-	function (x, y) {
+var _user$project$Model$generateTile = F2(
+	function (model, coord) {
+		if (_elm_lang$core$Native_Utils.eq(
+			coord,
+			{ctor: '_Tuple2', _0: 0, _1: 0})) {
+			var tile = A3(_user$project$Tile$newTile, coord, 0, _user$project$Tile$Queen);
+			return _elm_lang$core$Native_Utils.update(
+				tile,
+				{isDug: true});
+		} else {
+			var $float = _user$project$UnMaybe$unMaybeFloat(
+				A2(_elm_lang$core$Dict$get, coord, model.randomFloats));
+			return (_elm_lang$core$Native_Utils.cmp($float, 0.1) < 0) ? A3(_user$project$Tile$newTile, coord, $float, _user$project$Tile$Food) : A3(_user$project$Tile$newTile, coord, $float, _user$project$Tile$Dirt);
+		}
+	});
+var _user$project$Model$createKeyValuePair = F3(
+	function (model, x, y) {
 		return {
 			ctor: '_Tuple2',
 			_0: {ctor: '_Tuple2', _0: x, _1: y},
-			_1: _user$project$Model$generateTile(
+			_1: A2(
+				_user$project$Model$generateTile,
+				model,
 				{ctor: '_Tuple2', _0: x, _1: y})
 		};
 	});
-var _user$project$Model$createPairList = F2(
-	function (x, y) {
+var _user$project$Model$createPairList = F3(
+	function (model, x, y) {
 		return A2(
 			_elm_lang$core$List$map,
-			_user$project$Model$createKeyValuePair(x),
+			A2(_user$project$Model$createKeyValuePair, model, x),
 			A2(_elm_lang$core$List$range, 0 - y, y));
 	});
-var _user$project$Model$createGrid = F3(
-	function ($var, $const, grid) {
+var _user$project$Model$createGrid = F4(
+	function (model, $var, $const, grid) {
 		createGrid:
 		while (true) {
 			var newGrid = A2(
 				_elm_lang$core$Dict$union,
 				grid,
 				_elm_lang$core$Dict$fromList(
-					A2(_user$project$Model$createPairList, $var, $const)));
+					A3(_user$project$Model$createPairList, model, $var, $const)));
 			if (_elm_lang$core$Native_Utils.cmp($var, 0 - $const) < 1) {
 				return newGrid;
 			} else {
-				var _v0 = $var - 1,
-					_v1 = $const,
-					_v2 = newGrid;
-				$var = _v0;
-				$const = _v1;
-				grid = _v2;
+				var _v0 = model,
+					_v1 = $var - 1,
+					_v2 = $const,
+					_v3 = newGrid;
+				model = _v0;
+				$var = _v1;
+				$const = _v2;
+				grid = _v3;
 				continue createGrid;
 			}
 		}
+	});
+var _user$project$Model$createCoord = F2(
+	function (x, y) {
+		return {ctor: '_Tuple2', _0: x, _1: y};
+	});
+var _user$project$Model$createCoordList = F2(
+	function (x, y) {
+		return A2(
+			_elm_lang$core$List$map,
+			_user$project$Model$createCoord(x),
+			A2(_elm_lang$core$List$range, 0 - y, y));
+	});
+var _user$project$Model$listOfCoords = F3(
+	function ($var, $const, list) {
+		listOfCoords:
+		while (true) {
+			var newList = _elm_lang$core$List$concat(
+				{
+					ctor: '::',
+					_0: list,
+					_1: {
+						ctor: '::',
+						_0: A2(_user$project$Model$createCoordList, $var, $const),
+						_1: {ctor: '[]'}
+					}
+				});
+			if (_elm_lang$core$Native_Utils.cmp($var, 0 - $const) < 1) {
+				return newList;
+			} else {
+				var _v4 = $var - 1,
+					_v5 = $const,
+					_v6 = newList;
+				$var = _v4;
+				$const = _v5;
+				list = _v6;
+				continue listOfCoords;
+			}
+		}
+	});
+var _user$project$Model$randomFloatsFromLists = F2(
+	function (coords, floats) {
+		return _elm_lang$core$Dict$fromList(
+			A3(
+				_elm_lang$core$List$map2,
+				F2(
+					function (v0, v1) {
+						return {ctor: '_Tuple2', _0: v0, _1: v1};
+					}),
+				coords,
+				floats));
 	});
 var _user$project$Model$Model = function (a) {
 	return function (b) {
@@ -56,7 +118,11 @@ var _user$project$Model$Model = function (a) {
 										return function (k) {
 											return function (l) {
 												return function (m) {
-													return {state: a, grid: b, dimensions: c, mPosX: d, mPosY: e, screen: f, time: g, camera: h, resources: i, pressedKeys: j, selected: k, queen: l, ants: m};
+													return function (n) {
+														return function (o) {
+															return {state: a, seed: b, randomFloats: c, floatsList: d, grid: e, dimensions: f, mPosX: g, mPosY: h, screen: i, time: j, camera: k, resources: l, pressedKeys: m, selected: n, ants: o};
+														};
+													};
 												};
 											};
 										};
@@ -73,24 +139,23 @@ var _user$project$Model$Model = function (a) {
 var _user$project$Model$PostGame = {ctor: 'PostGame'};
 var _user$project$Model$InGame = {ctor: 'InGame'};
 var _user$project$Model$PreGame = {ctor: 'PreGame'};
-var _user$project$Model$initialModel = function () {
-	var grid = A3(_user$project$Model$createGrid, 12, 12, _elm_lang$core$Dict$empty);
-	return {
-		state: _user$project$Model$PreGame,
-		grid: grid,
-		dimensions: A2(_elm_lang$window$Window$Size, 0, 0),
-		mPosX: 0,
-		mPosY: 0,
-		screen: {ctor: '_Tuple2', _0: 800, _1: 600},
-		time: 0,
-		camera: A2(
-			_user$project$Game_TwoD_Camera$fixedArea,
-			32 * 20,
-			{ctor: '_Tuple2', _0: 0, _1: 0}),
-		resources: _user$project$Game_Resources$init,
-		pressedKeys: {ctor: '[]'},
-		selected: _elm_lang$core$Maybe$Nothing,
-		queen: A3(_user$project$Tile$getTile, grid, 0, 0),
-		ants: _user$project$Ants$initialAnts
-	};
-}();
+var _user$project$Model$initialModel = {
+	state: _user$project$Model$PreGame,
+	seed: _elm_lang$core$Random$initialSeed(42),
+	randomFloats: _elm_lang$core$Dict$empty,
+	floatsList: {ctor: '[]'},
+	grid: _elm_lang$core$Dict$empty,
+	dimensions: A2(_elm_lang$window$Window$Size, 0, 0),
+	mPosX: 0,
+	mPosY: 0,
+	screen: {ctor: '_Tuple2', _0: 800, _1: 600},
+	time: 0,
+	camera: A2(
+		_user$project$Game_TwoD_Camera$fixedArea,
+		32 * 20,
+		{ctor: '_Tuple2', _0: 0, _1: 0}),
+	resources: _user$project$Game_Resources$init,
+	pressedKeys: {ctor: '[]'},
+	selected: _elm_lang$core$Maybe$Nothing,
+	ants: _user$project$Ants$initialAnts
+};

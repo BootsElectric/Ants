@@ -40,15 +40,19 @@ renderCoord model camera resources tile =
       ( toFloat x, toFloat y )
 
     texture =
-      case tile.kind of
-        Dirt ->
-          useUrl model camera x y dirtUrl
+      if tile.isDug == False then
+          useUrl model camera x y undugUrl
+      else
 
-        Queen ->
-          useUrl model camera x y queenUrl
+        case tile.kind of
+          Dirt ->
+            useUrl model camera x y dirtUrl
 
-        Food ->
-          useUrl model camera x y foodUrl
+          Queen ->
+            useUrl model camera x y queenUrl
+
+          Food ->
+            useUrl model camera x y foodUrl
   in
     Render.sprite
       { texture = Resources.getTexture texture resources

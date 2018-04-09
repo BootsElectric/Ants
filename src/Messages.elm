@@ -16,3 +16,6 @@ type Msg
   | Tick Float
   | Collect
   | UpdateState State
+  | Dig
+  | Generate
+  | Generated State ( List Float ) 
