@@ -1,4 +1,4 @@
-module UI exposing ( UI, writeUI, writeGameOver )
+module UI exposing ( UI, writeUI, writePostGame, writePreGame )
 
 import Html exposing (..)
 
@@ -16,8 +16,28 @@ import UnMaybe exposing ( unMaybeInt )
 type UI =
   UI
 
-writeGameOver : Model -> Html Msg
-writeGameOver model =
+writePreGame : Model -> Html Msg
+writePreGame model =
+    layout stylesheet <|
+      screen <|
+        Element.column StyleOne
+          [ center
+          , verticalCenter
+          , width ( px <| toFloat <| model.dimensions.width )
+          , height ( px <| toFloat <| model.dimensions.height )
+          ]
+          [ Element.header GameOver [] ( Element.text "Welcome To Formica" )
+          , Element.text "A game about ant colonies"
+          , Element.button Button
+            [ width ( px 160 )
+            , height ( px 40 )
+            , Events.onClick <| UpdateState InGame
+            ]
+             ( Element.text "Start Game" )
+          ]
+
+writePostGame : Model -> Html Msg
+writePostGame model =
     layout stylesheet <|
       screen <|
         Element.column StyleOne
@@ -27,7 +47,12 @@ writeGameOver model =
           , height ( px <| toFloat <| model.dimensions.height )
           ]
           [ Element.header GameOver [] ( Element.text "Game Over" )
-          , Element.text "Refresh to try again!"
+          , Element.button Button
+            [ width ( px 160 )
+            , height ( px 40 )
+            , onClick <| UpdateState PreGame
+            ]
+            (Element.text "Back To Start")
           ]
 
 
@@ -97,5 +122,9 @@ writeUI model =
             , Element.text ( String.concat [ "Population: ", ( toString <| round model.ants.number ) ] )
             , Element.text ( String.concat [ "Food: ", ( toString <| round model.ants.food ) ] )
             , collectButton
-            , Element.button Button [ width ( px 160 ), Events.onClick Quit ] ( Element.text "Quit" )
+            , Element.button Button
+              [ width ( px 160 )
+              , Events.onClick <| UpdateState PostGame
+              ]
+              ( Element.text "Quit" )
             ] )

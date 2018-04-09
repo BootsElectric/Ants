@@ -1,4 +1,4 @@
-module Model exposing ( Model, initialModel, Coord, Column )
+module Model exposing ( Model, initialModel, Coord, Column, State(..) )
 
 import Tile exposing ( Tile, Kind(..), newTile, Grid )
 import Ants exposing (..)
@@ -9,8 +9,14 @@ import Game.TwoD.Camera as Camera exposing ( Camera )
 import Game.Resources as Resources exposing ( Resources )
 import Keyboard.Extra exposing ( Key(..) )
 
+type State
+  = PreGame
+  | InGame
+  | PostGame
+
 type alias Model =
-  { grid : Grid
+  { state : State
+  , grid : Grid
   , dimensions : Size
   , mPosX : Float
   , mPosY : Float
@@ -32,7 +38,8 @@ initialModel =
       createGrid 12 12 empty
 
   in
-   { grid = grid
+   { state = PreGame
+   , grid = grid
    , dimensions = Size 0 0
    , mPosX = 0
    , mPosY = 0
@@ -54,6 +61,15 @@ type alias Coord =
 type alias Column =
   List Coord
 
+{-|
+  Creates a Dict as a representation of a grid of Tiles
+    var - the variable for recursion that will range from const to -const
+    const - the constant for recursion that var will be compared against
+
+  var and const should be equal so that this function recurses the correct number of times
+
+  *NOTE* This is a helper function for initialModel
+-}
 createGrid : Int -> Int -> Grid -> Grid
 createGrid var const grid =
 
@@ -67,31 +83,28 @@ createGrid var const grid =
     else
       createGrid ( var - 1 ) const newGrid
 
+
+{-|
+  Creates a List of key value pairs that correspond to one column of a grid of coordinates
+    x - the x coordinate of the column
+    y - the maximum y value to create the list from ( the list will range from y to -y )
+  *NOTE* This is a helper funtion for createGrid
+-}
 createPairList : Int -> Int -> List ( ( Int, Int ), Tile )
 createPairList x y =
     List.map (createKeyValuePair x) ( List.range -y y )
 
+
+{-|
+  Creates a key value pair from a tuple of integers and a tile with coordinates corrisponding to that tuple
+    x - the X coordinate of the tile
+    y - the Y coordinate of the tile
+
+  *NOTE* This is a helper function of createPairList
+-}
 createKeyValuePair : Int -> Int -> ( ( Int, Int ), Tile )
 createKeyValuePair x y =
     ( ( x, y ), generateTile ( x, y ) )
-
-{-|
-  Populates the grid with tiles
-    grid - The grid to populate
--}
-generateTileGrid : List Column -> List ( List Tile )
-generateTileGrid grid =
-  List.map generateTileColumn grid
-
-
-{-|
-  Poulates a column with tiles
-    column - The column to populate
--}
-generateTileColumn : Column -> List Tile
-generateTileColumn column =
-  List.map generateTile column
-
 
 {-|
   Creates a tile at random unless the coord is ( 0, 0 ) in which case a queen is created
@@ -112,57 +125,3 @@ generateTile coord =
       else
 
         newTile coord Dirt
-
-
-
-{-|
-  Centres the grid on 0, 0
-    x is half the size of the grid
-    grid is the grid to be centred
--}
-centreGrid : Int -> List Column -> List Column
-centreGrid x grid =
-  List.map ( centreColumn x ) grid
-
-
-{-|
-  Centres a single column on the x axis and is shifted to be centred along the y axis
-    x is half the size of the grid
-    column is the column to be centred
--}
-centreColumn : Int -> Column -> Column
-centreColumn x column =
-    List.map ( centreCoord x ) column
-
-
-{-|
-  Shifts the x and y coordinate of a Coord with the overall effect of centering the grid
-    x is the amount to shift by
-    coord is the Coord to shift
--}
-centreCoord : Int -> Coord -> Coord
-centreCoord x coord =
-  ( ( Tuple.first coord ) - x, ( Tuple.second coord ) - x )
-
-
-
-{-|
-  Generates a List of Columns using generateColumn
-
-    x is the width of the grid
-    y is the height of the grid
--}
-generateGrid : Int -> Int -> List Column
-generateGrid x y =
-  List.map ( generateColumn x ) ( List.range 0 ( y - 1 ) )
-
-
-{-|
-  Generates a Column of Coord's
-
-    x is the variable
-    y is the constant
--}
-generateColumn : Int -> Int -> List Coord
-generateColumn x y =
-  List.indexedMap (,) ( List.repeat x y )

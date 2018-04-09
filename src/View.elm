@@ -12,7 +12,7 @@ import Game.Resources as Resources exposing (Resources)
 import ElementRelativeMouseEvents as Canvas exposing ( onMouseMove )
 --
 import Messages exposing ( Msg(..) )
-import Model exposing ( Model, Column, Coord )
+import Model exposing ( Model, Column, Coord, State(..) )
 import Textures exposing (..)
 import Tile exposing ( Tile, Kind(..), getX, getY, Grid )
 import UI exposing (..)
@@ -119,19 +119,24 @@ isWithin m camera x y =
 view : Model -> Html Msg
 view model =
   let
-      ui =
-        if model.ants.number > 0 then
-          div
-          [ Attr.style [ ( "overflow", "hidden" ), ( "width", "100%" ), ( "height", "75%" ) ]
-          , Canvas.onMouseMove MouseMove
-          , Canvas.onMouseDown MouseDown
-          ]
-          [ Game.render
-            { time = 0, camera = model.camera, size = ( model.dimensions.width, model.dimensions.height  ) }
-            ( renderGrid model )
-          , writeUI model
-          ]
-        else
-          writeGameOver model
+    ui =
+      case model.state of
+        PreGame ->
+          writePreGame model
+
+        InGame ->
+          writeUI model
+
+        PostGame ->
+          writePostGame model
   in
-    ui
+    div
+    [ Attr.style [ ( "overflow", "hidden" ), ( "width", "100%" ), ( "height", "75%" ) ]
+    , Canvas.onMouseMove MouseMove
+    , Canvas.onMouseDown MouseDown
+    ]
+    [ Game.render
+      { time = 0, camera = model.camera, size = ( model.dimensions.width, model.dimensions.height  ) }
+      ( renderGrid model )
+    , ui
+    ]

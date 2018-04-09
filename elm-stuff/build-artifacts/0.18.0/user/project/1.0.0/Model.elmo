@@ -1,54 +1,9 @@
-var _user$project$Model$generateColumn = F2(
-	function (x, y) {
-		return A2(
-			_elm_lang$core$List$indexedMap,
-			F2(
-				function (v0, v1) {
-					return {ctor: '_Tuple2', _0: v0, _1: v1};
-				}),
-			A2(_elm_lang$core$List$repeat, x, y));
-	});
-var _user$project$Model$generateGrid = F2(
-	function (x, y) {
-		return A2(
-			_elm_lang$core$List$map,
-			_user$project$Model$generateColumn(x),
-			A2(_elm_lang$core$List$range, 0, y - 1));
-	});
-var _user$project$Model$centreCoord = F2(
-	function (x, coord) {
-		return {
-			ctor: '_Tuple2',
-			_0: _elm_lang$core$Tuple$first(coord) - x,
-			_1: _elm_lang$core$Tuple$second(coord) - x
-		};
-	});
-var _user$project$Model$centreColumn = F2(
-	function (x, column) {
-		return A2(
-			_elm_lang$core$List$map,
-			_user$project$Model$centreCoord(x),
-			column);
-	});
-var _user$project$Model$centreGrid = F2(
-	function (x, grid) {
-		return A2(
-			_elm_lang$core$List$map,
-			_user$project$Model$centreColumn(x),
-			grid);
-	});
 var _user$project$Model$generateTile = function (coord) {
 	return _elm_lang$core$Native_Utils.eq(
 		coord,
 		{ctor: '_Tuple2', _0: 0, _1: 0}) ? A2(_user$project$Tile$newTile, coord, _user$project$Tile$Queen) : (_elm_lang$core$Native_Utils.eq(
 		coord,
 		{ctor: '_Tuple2', _0: 1, _1: 1}) ? A2(_user$project$Tile$newTile, coord, _user$project$Tile$Food) : A2(_user$project$Tile$newTile, coord, _user$project$Tile$Dirt));
-};
-var _user$project$Model$generateTileColumn = function (column) {
-	return A2(_elm_lang$core$List$map, _user$project$Model$generateTile, column);
-};
-var _user$project$Model$generateTileGrid = function (grid) {
-	return A2(_elm_lang$core$List$map, _user$project$Model$generateTileColumn, grid);
 };
 var _user$project$Model$createKeyValuePair = F2(
 	function (x, y) {
@@ -88,9 +43,40 @@ var _user$project$Model$createGrid = F3(
 			}
 		}
 	});
+var _user$project$Model$Model = function (a) {
+	return function (b) {
+		return function (c) {
+			return function (d) {
+				return function (e) {
+					return function (f) {
+						return function (g) {
+							return function (h) {
+								return function (i) {
+									return function (j) {
+										return function (k) {
+											return function (l) {
+												return function (m) {
+													return {state: a, grid: b, dimensions: c, mPosX: d, mPosY: e, screen: f, time: g, camera: h, resources: i, pressedKeys: j, selected: k, queen: l, ants: m};
+												};
+											};
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
+var _user$project$Model$PostGame = {ctor: 'PostGame'};
+var _user$project$Model$InGame = {ctor: 'InGame'};
+var _user$project$Model$PreGame = {ctor: 'PreGame'};
 var _user$project$Model$initialModel = function () {
 	var grid = A3(_user$project$Model$createGrid, 12, 12, _elm_lang$core$Dict$empty);
 	return {
+		state: _user$project$Model$PreGame,
 		grid: grid,
 		dimensions: A2(_elm_lang$window$Window$Size, 0, 0),
 		mPosX: 0,
@@ -108,28 +94,3 @@ var _user$project$Model$initialModel = function () {
 		ants: _user$project$Ants$initialAnts
 	};
 }();
-var _user$project$Model$Model = function (a) {
-	return function (b) {
-		return function (c) {
-			return function (d) {
-				return function (e) {
-					return function (f) {
-						return function (g) {
-							return function (h) {
-								return function (i) {
-									return function (j) {
-										return function (k) {
-											return function (l) {
-												return {grid: a, dimensions: b, mPosX: c, mPosY: d, screen: e, time: f, camera: g, resources: h, pressedKeys: i, selected: j, queen: k, ants: l};
-											};
-										};
-									};
-								};
-							};
-						};
-					};
-				};
-			};
-		};
-	};
-};

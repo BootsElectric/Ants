@@ -1,5 +1,6 @@
 module Messages exposing ( Msg(..) )
 
+import Model exposing ( State )
 import Window exposing ( Size )
 import Game.Resources as Resources exposing ( Resources )
 import Keyboard.Extra
@@ -14,5 +15,4 @@ type Msg
   | Keys Keyboard.Extra.Msg
   | Tick Float
   | Collect
-  | Quit
-  | Reset
+  | UpdateState State

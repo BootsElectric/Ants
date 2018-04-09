@@ -1,5 +1,6 @@
-var _user$project$Messages$Reset = {ctor: 'Reset'};
-var _user$project$Messages$Quit = {ctor: 'Quit'};
+var _user$project$Messages$UpdateState = function (a) {
+	return {ctor: 'UpdateState', _0: a};
+};
 var _user$project$Messages$Collect = {ctor: 'Collect'};
 var _user$project$Messages$Tick = function (a) {
 	return {ctor: 'Tick', _0: a};

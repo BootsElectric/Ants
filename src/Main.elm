@@ -23,105 +23,132 @@ import UnMaybe exposing ( unMaybeInt )
 -- UPDATE
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-  case msg of
-    NoMessageYet ->
-      ( model, Cmd.none )
+  case model.state of
+      PreGame ->
+        case msg of
+          Resize size ->
+            ( { model | dimensions = size }, Cmd.none )
 
-    Resize size ->
-      ( { model | dimensions = size }, Cmd.none )
+          UpdateState state ->
+            ( { model | state = state }, Cmd.none )
 
-    MouseMove point ->
-      ( { model | mPosX = point.x, mPosY = point.y }, Cmd.none )
+          Resources msg ->
+            ( { model | resources = Resources.update msg model.resources }, Cmd.none )
 
-    Resources msg ->
-      ( { model | resources = Resources.update msg model.resources }, Cmd.none )
+          _ ->
+            ( model, Cmd.none )
 
-    Keys msg ->
-      ( { model | pressedKeys = Keyboard.Extra.update msg model.pressedKeys }, Cmd.none )
+      InGame ->
+        case msg of
+          NoMessageYet ->
+            ( model, Cmd.none )
 
-    MouseDown point ->
-     let
-        x =
-          round point.x
+          Resize size ->
+            ( { model | dimensions = size }, Cmd.none )
 
-        y =
-          round point.y
+          MouseMove point ->
+            ( { model | mPosX = point.x, mPosY = point.y }, Cmd.none )
 
-        mousePos =
-          Camera.viewportToGameCoordinates model.camera ( model.dimensions.width, model.dimensions.height ) ( x, y )
+          Resources msg ->
+            ( { model | resources = Resources.update msg model.resources }, Cmd.none )
 
-        normalX =
-          first mousePos |> floor
+          Keys msg ->
+            ( { model | pressedKeys = Keyboard.Extra.update msg model.pressedKeys }, Cmd.none )
 
-        normalY =
-          second mousePos |> floor
+          MouseDown point ->
+           let
+              x =
+                round point.x
 
-        tile =
-          case Tile.getTile model.grid normalX normalY of
-            Just tile ->
-              Just tile
+              y =
+                round point.y
 
-            Nothing ->
-              model.selected
+              mousePos =
+                Camera.viewportToGameCoordinates model.camera ( model.dimensions.width, model.dimensions.height ) ( x, y )
 
-      in
+              normalX =
+                first mousePos |> floor
 
-        ( { model
-          | mPosX = point.x
-          , mPosY = point.y
-          , selected = tile
-          }, Cmd.none )
+              normalY =
+                second mousePos |> floor
 
-    Tick dt ->
-      let
-        arrows =
-          Keyboard.Extra.wasd model.pressedKeys
+              tile =
+                case Tile.getTile model.grid normalX normalY of
+                  Just tile ->
+                    Just tile
 
-        width =
-          ( first ( Camera.getViewSize ( toFloat model.dimensions.width, toFloat model.dimensions.height ) model.camera ) )
+                  Nothing ->
+                    model.selected
 
-        camSpeed =
-          dt * ( width / 4 )
+            in
 
-        x =
-          toFloat arrows.x
+              ( { model
+                | mPosX = point.x
+                , mPosY = point.y
+                , selected = tile
+                }, Cmd.none )
 
-        y =
-          toFloat arrows.y
+          Tick dt ->
+            let
+              arrows =
+                Keyboard.Extra.wasd model.pressedKeys
 
-        newCamera =
-          if inBounds model camSpeed x y then
-              Camera.moveBy ( x * camSpeed, y * camSpeed ) model.camera
-          else
-              model.camera
-      in
-        ( {  model
-          | time = dt + model.time
-          , camera = newCamera
-          , ants = Ants.calculatePopulation model.ants
-          }, Cmd.none )
-    Collect ->
-      let
-          selX = unMaybeInt <| Tile.getX model.selected
+              width =
+                ( first ( Camera.getViewSize ( toFloat model.dimensions.width, toFloat model.dimensions.height ) model.camera ) )
 
-          selY = unMaybeInt <| Tile.getY model.selected
+              camSpeed =
+                dt * ( width / 4 )
 
-          grid = Dict.update ( selX, selY ) updateTile model.grid
+              x =
+                toFloat arrows.x
 
-      in
+              y =
+                toFloat arrows.y
 
-      ( { model
-      | ants = ( Ants.increase model.ants 200 )
-      , grid = grid
-      , selected = get ( selX, selY ) grid }, Cmd.none )
-    Quit ->
-      let
-          ants = model.ants
-      in
+              newCamera =
+                if inBounds model camSpeed x y then
+                    Camera.moveBy ( x * camSpeed, y * camSpeed ) model.camera
+                else
+                    model.camera
+            in
+              ( {  model
+                | time = dt + model.time
+                , camera = newCamera
+                , ants = Ants.calculatePopulation model.ants
+                }, Cmd.none )
+          Collect ->
+            let
+                selX = unMaybeInt <| Tile.getX model.selected
 
-        ( { model | ants = { ants | food = 0.1, deathRate = 0.5, number = 1 } }, Cmd.none )
-    Reset ->
-      ( initialModel, Cmd.none )
+                selY = unMaybeInt <| Tile.getY model.selected
+
+                grid = Dict.update ( selX, selY ) updateTile model.grid
+
+            in
+
+            ( { model
+            | ants = ( Ants.increase model.ants 200 )
+            , grid = grid
+            , selected = get ( selX, selY ) grid }, Cmd.none )
+
+          UpdateState state ->
+            ( { model | state = state }, Cmd.none )
+
+      PostGame ->
+        case msg of
+          Resize size ->
+            ( { model | dimensions = size }, Cmd.none )
+
+          UpdateState state ->
+            ( { model
+            | state = state
+            , ants = initialAnts
+            }
+            , Cmd.none )
+
+          _ ->
+            ( model, Cmd.none )
+
 
 updateTile : Maybe Tile -> Maybe Tile
 updateTile tile =

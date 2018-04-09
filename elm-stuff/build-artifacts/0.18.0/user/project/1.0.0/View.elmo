@@ -106,7 +106,18 @@ var _user$project$View$renderGrid = function (model) {
 		_elm_lang$core$Dict$values(model.grid));
 };
 var _user$project$View$view = function (model) {
-	var ui = (_elm_lang$core$Native_Utils.cmp(model.ants.number, 0) > 0) ? A2(
+	var ui = function () {
+		var _p1 = model.state;
+		switch (_p1.ctor) {
+			case 'PreGame':
+				return _user$project$UI$writePreGame(model);
+			case 'InGame':
+				return _user$project$UI$writeUI(model);
+			default:
+				return _user$project$UI$writePostGame(model);
+		}
+	}();
+	return A2(
 		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
@@ -146,9 +157,8 @@ var _user$project$View$view = function (model) {
 				_user$project$View$renderGrid(model)),
 			_1: {
 				ctor: '::',
-				_0: _user$project$UI$writeUI(model),
+				_0: ui,
 				_1: {ctor: '[]'}
 			}
-		}) : _user$project$UI$writeGameOver(model);
-	return ui;
+		});
 };

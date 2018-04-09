@@ -131,144 +131,195 @@ var _user$project$Main$updateTile = function (tile) {
 };
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p2 = msg;
+		var _p2 = model.state;
 		switch (_p2.ctor) {
-			case 'NoMessageYet':
-				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-			case 'Resize':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{dimensions: _p2._0}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'MouseMove':
-				var _p3 = _p2._0;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{mPosX: _p3.x, mPosY: _p3.y}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'Resources':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							resources: A2(_user$project$Game_Resources$update, _p2._0, model.resources)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'Keys':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							pressedKeys: A2(_ohanhi$keyboard_extra$Keyboard_Extra$update, _p2._0, model.pressedKeys)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'MouseDown':
-				var _p5 = _p2._0;
-				var y = _elm_lang$core$Basics$round(_p5.y);
-				var x = _elm_lang$core$Basics$round(_p5.x);
-				var mousePos = A3(
-					_user$project$Game_TwoD_Camera$viewportToGameCoordinates,
-					model.camera,
-					{ctor: '_Tuple2', _0: model.dimensions.width, _1: model.dimensions.height},
-					{ctor: '_Tuple2', _0: x, _1: y});
-				var normalX = _elm_lang$core$Basics$floor(
-					_elm_lang$core$Tuple$first(mousePos));
-				var normalY = _elm_lang$core$Basics$floor(
-					_elm_lang$core$Tuple$second(mousePos));
-				var tile = function () {
-					var _p4 = A3(_user$project$Tile$getTile, model.grid, normalX, normalY);
-					if (_p4.ctor === 'Just') {
-						return _elm_lang$core$Maybe$Just(_p4._0);
-					} else {
-						return model.selected;
-					}
-				}();
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{mPosX: _p5.x, mPosY: _p5.y, selected: tile}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'Tick':
-				var _p6 = _p2._0;
-				var width = _elm_lang$core$Tuple$first(
-					A2(
-						_user$project$Game_TwoD_Camera$getViewSize,
-						{
+			case 'PreGame':
+				var _p3 = msg;
+				switch (_p3.ctor) {
+					case 'Resize':
+						return {
 							ctor: '_Tuple2',
-							_0: _elm_lang$core$Basics$toFloat(model.dimensions.width),
-							_1: _elm_lang$core$Basics$toFloat(model.dimensions.height)
-						},
-						model.camera));
-				var camSpeed = _p6 * (width / 4);
-				var arrows = _ohanhi$keyboard_extra$Keyboard_Extra$wasd(model.pressedKeys);
-				var x = _elm_lang$core$Basics$toFloat(arrows.x);
-				var y = _elm_lang$core$Basics$toFloat(arrows.y);
-				var newCamera = A4(_user$project$Main$inBounds, model, camSpeed, x, y) ? A2(
-					_user$project$Game_TwoD_Camera$moveBy,
-					{ctor: '_Tuple2', _0: x * camSpeed, _1: y * camSpeed},
-					model.camera) : model.camera;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							time: _p6 + model.time,
-							camera: newCamera,
-							ants: _user$project$Ants$calculatePopulation(model.ants)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'Collect':
-				var selY = _user$project$UnMaybe$unMaybeInt(
-					_user$project$Tile$getY(model.selected));
-				var selX = _user$project$UnMaybe$unMaybeInt(
-					_user$project$Tile$getX(model.selected));
-				var grid = A3(
-					_elm_lang$core$Dict$update,
-					{ctor: '_Tuple2', _0: selX, _1: selY},
-					_user$project$Main$updateTile,
-					model.grid);
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							ants: A2(_user$project$Ants$increase, model.ants, 200),
-							grid: grid,
-							selected: A2(
-								_elm_lang$core$Dict$get,
-								{ctor: '_Tuple2', _0: selX, _1: selY},
-								grid)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'Quit':
-				var ants = model.ants;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							ants: _elm_lang$core$Native_Utils.update(
-								ants,
-								{food: 0.1, deathRate: 0.5, number: 1})
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{dimensions: _p3._0}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					case 'UpdateState':
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{state: _p3._0}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					case 'Resources':
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									resources: A2(_user$project$Game_Resources$update, _p3._0, model.resources)
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					default:
+						return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'InGame':
+				var _p4 = msg;
+				switch (_p4.ctor) {
+					case 'NoMessageYet':
+						return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+					case 'Resize':
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{dimensions: _p4._0}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					case 'MouseMove':
+						var _p5 = _p4._0;
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{mPosX: _p5.x, mPosY: _p5.y}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					case 'Resources':
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									resources: A2(_user$project$Game_Resources$update, _p4._0, model.resources)
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					case 'Keys':
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									pressedKeys: A2(_ohanhi$keyboard_extra$Keyboard_Extra$update, _p4._0, model.pressedKeys)
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					case 'MouseDown':
+						var _p7 = _p4._0;
+						var y = _elm_lang$core$Basics$round(_p7.y);
+						var x = _elm_lang$core$Basics$round(_p7.x);
+						var mousePos = A3(
+							_user$project$Game_TwoD_Camera$viewportToGameCoordinates,
+							model.camera,
+							{ctor: '_Tuple2', _0: model.dimensions.width, _1: model.dimensions.height},
+							{ctor: '_Tuple2', _0: x, _1: y});
+						var normalX = _elm_lang$core$Basics$floor(
+							_elm_lang$core$Tuple$first(mousePos));
+						var normalY = _elm_lang$core$Basics$floor(
+							_elm_lang$core$Tuple$second(mousePos));
+						var tile = function () {
+							var _p6 = A3(_user$project$Tile$getTile, model.grid, normalX, normalY);
+							if (_p6.ctor === 'Just') {
+								return _elm_lang$core$Maybe$Just(_p6._0);
+							} else {
+								return model.selected;
+							}
+						}();
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{mPosX: _p7.x, mPosY: _p7.y, selected: tile}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					case 'Tick':
+						var _p8 = _p4._0;
+						var width = _elm_lang$core$Tuple$first(
+							A2(
+								_user$project$Game_TwoD_Camera$getViewSize,
+								{
+									ctor: '_Tuple2',
+									_0: _elm_lang$core$Basics$toFloat(model.dimensions.width),
+									_1: _elm_lang$core$Basics$toFloat(model.dimensions.height)
+								},
+								model.camera));
+						var camSpeed = _p8 * (width / 4);
+						var arrows = _ohanhi$keyboard_extra$Keyboard_Extra$wasd(model.pressedKeys);
+						var x = _elm_lang$core$Basics$toFloat(arrows.x);
+						var y = _elm_lang$core$Basics$toFloat(arrows.y);
+						var newCamera = A4(_user$project$Main$inBounds, model, camSpeed, x, y) ? A2(
+							_user$project$Game_TwoD_Camera$moveBy,
+							{ctor: '_Tuple2', _0: x * camSpeed, _1: y * camSpeed},
+							model.camera) : model.camera;
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									time: _p8 + model.time,
+									camera: newCamera,
+									ants: _user$project$Ants$calculatePopulation(model.ants)
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					case 'Collect':
+						var selY = _user$project$UnMaybe$unMaybeInt(
+							_user$project$Tile$getY(model.selected));
+						var selX = _user$project$UnMaybe$unMaybeInt(
+							_user$project$Tile$getX(model.selected));
+						var grid = A3(
+							_elm_lang$core$Dict$update,
+							{ctor: '_Tuple2', _0: selX, _1: selY},
+							_user$project$Main$updateTile,
+							model.grid);
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									ants: A2(_user$project$Ants$increase, model.ants, 200),
+									grid: grid,
+									selected: A2(
+										_elm_lang$core$Dict$get,
+										{ctor: '_Tuple2', _0: selX, _1: selY},
+										grid)
+								}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					default:
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{state: _p4._0}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+				}
 			default:
-				return {ctor: '_Tuple2', _0: _user$project$Model$initialModel, _1: _elm_lang$core$Platform_Cmd$none};
+				var _p9 = msg;
+				switch (_p9.ctor) {
+					case 'Resize':
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{dimensions: _p9._0}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					case 'UpdateState':
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{state: _p9._0, ants: _user$project$Ants$initialAnts}),
+							_1: _elm_lang$core$Platform_Cmd$none
+						};
+					default:
+						return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
 		}
 	});
 var _user$project$Main$main = _elm_lang$html$Html$program(
