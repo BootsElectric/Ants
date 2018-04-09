@@ -20,7 +20,12 @@ writeGameOver : Model -> Html Msg
 writeGameOver model =
     layout stylesheet <|
       screen <|
-        Element.column StyleOne [ center, verticalCenter, width ( px <| toFloat <| model.dimensions.width ), height ( px <| toFloat <| model.dimensions.height ) ]
+        Element.column StyleOne
+          [ center
+          , verticalCenter
+          , width ( px <| toFloat <| model.dimensions.width )
+          , height ( px <| toFloat <| model.dimensions.height )
+          ]
           [ Element.header GameOver [] ( Element.text "Game Over" )
           , Element.text "Refresh to try again!"
           ]
@@ -63,7 +68,11 @@ writeUI model =
               Queen ->
                 el StyleOne [] ( Element.text "" )
               Food ->
-                Element.button Button [ width (px 160) , Events.onClick Collect ] ( Element.text "Collect" )
+                Element.button Button
+                  [ width (px 160)
+                  , Events.onClick Collect
+                  ]
+                  ( Element.text "Collect" )
 
           Nothing ->
               el StyleOne [] ( Element.text "" )
@@ -72,7 +81,14 @@ writeUI model =
     layout stylesheet <|
       screen <|
         el MainBackground [ width ( px 180 ), height ( px (toFloat model.dimensions.height) ) ]
-          ( column MainBackground [ width ( px 180 ), paddingLeft 10, paddingTop 25, paddingBottom 25, alignLeft, spacing 25 ]
+          ( column MainBackground
+           [ width ( px 180 )
+           , paddingLeft 10
+           , paddingTop 25
+           , paddingBottom 25
+           , alignLeft
+           , spacing 25
+           ]
             [ ( Element.text ( String.concat [ "Selected: (", selX, ",", selY, ")"  ] ) )
             , row StyleOne [ spacing 10 ]
               [ ( el StyleOne [ paddingTop 15 ] ( Element.text kind ) )
