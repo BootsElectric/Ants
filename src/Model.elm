@@ -1,4 +1,5 @@
-module Model exposing ( Model, initialModel, Coord, Column, State(..), randomFloatsFromLists, createCoordList, createGrid, listOfCoords )
+module Model exposing ( Model, initialModel, Coord, Column, State(..)
+  , randomFloatsFromLists, createCoordList, createGrid, listOfCoords )
 
 import Tile exposing ( Tile, Kind(..), newTile, Grid )
 import Ants exposing (..)
