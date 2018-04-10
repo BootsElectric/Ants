@@ -10,7 +10,6 @@ import Window exposing (..)
 import Game.TwoD.Camera as Camera exposing ( Camera )
 import Game.Resources as Resources exposing ( Resources )
 import Keyboard.Extra exposing ( Key(..) )
-import Random exposing ( Seed, initialSeed )
 
 type State
   = PreGame
@@ -19,7 +18,6 @@ type State
 
 type alias Model =
   { state : State
-  , seed : Random.Seed
   , randomFloats : Dict ( Int, Int ) Float
   , floatsList : List Float
   , grid : Grid
@@ -36,10 +34,12 @@ type alias Model =
   }
 
 
+{-|
+  Sets up the initial model with default values
+-}
 initialModel : Model
 initialModel =
    { state = PreGame
-   , seed = initialSeed 42
    , randomFloats = empty
    , floatsList = []
    , grid = empty
@@ -63,11 +63,23 @@ type alias Coord =
 type alias Column =
   List Coord
 
-
+{-|
+  A function to generate a Dict of ( Int, Int ) and Float from List ( Int, Int ) and List FLoat
+    coords - the List of ( Int, Int )
+    floats - the List of Floats
+-}
 randomFloatsFromLists : List ( Int, Int ) -> List Float -> Dict ( Int, Int ) Float
 randomFloatsFromLists coords floats =
     List.map2 (,) coords floats |> fromList
 
+{-|
+  Creates a List ( Int, Int ) from two Ints and an empy List
+    var - the variable for recursion
+    const - the constant for recursion should be the same as var
+    list - the empty list to start from
+
+  *NOTE* This is a helper function for randomFloatsFromLists
+-}
 listOfCoords : Int -> Int -> List ( Int, Int ) -> List ( Int, Int )
 listOfCoords var const list =
 
@@ -81,10 +93,24 @@ listOfCoords var const list =
             listOfCoords ( var - 1 ) const newList
 
 
+{-|
+  Creates a List ( Int, Int ) from two Ints
+    x - the constant
+    y - the variable
+
+  *NOTE* This is a helper function of listOfCoords
+-}
 createCoordList : Int -> Int -> List ( Int, Int )
 createCoordList x y =
     List.map (createCoord x) ( List.range -y y )
 
+{-|
+  Create a ( Int, Int ) from two Ints
+    x - the x coordinate
+    y - the y coordinate
+
+  *NOTE* This is a helper function of createCoordList
+-}
 createCoord : Int -> Int -> ( Int, Int )
 createCoord x y =
     ( x, y )

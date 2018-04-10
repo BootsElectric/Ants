@@ -61,13 +61,22 @@ renderCoord model camera resources tile =
       }
 
 
+{-|
+  Finds the correct URL to use to load the correct texture,
+  either the highlighted texture, the selected texture or the normal texture
+    model - the model to use in helper functions
+    camera - the camera to use in helper functions
+    x - the x coordinate of the tile being rendered
+    y - the y coordinate of the tile being rendered
+    kind - string reperesentation of the tile being rendered's tile.kind
+-}
 useUrl : Model -> Camera -> Int -> Int -> String -> String
 useUrl model camera x y kind =
     if isWithin model camera x y then
 
       String.concat [texturesUrl, "h-", kind]
 
-    else if isSelected model camera x y then
+    else if isSelected model x y then
 
       String.concat [texturesUrl, "s-", kind]
 
@@ -76,8 +85,14 @@ useUrl model camera x y kind =
       String.concat [texturesUrl, kind]
 
 
-isSelected : Model -> Camera -> Int -> Int -> Bool
-isSelected m c x y =
+{-|
+  A function to test whether the tile being rendered is the selected tile
+    m - the Model to get the grid and selected from
+    x - the x coordinate of the tile being rendered
+    y - the y coordinate of the tile being rendered
+-}
+isSelected : Model -> Int -> Int -> Bool
+isSelected m x y =
 
   if Tile.getTile m.grid x y == m.selected then
     True
@@ -119,7 +134,10 @@ isWithin m camera x y =
     else
       False
 
-
+{-|
+  Generates the view to be used in Main's main function
+    model - the Model to generate the view from
+-}
 view : Model -> Html Msg
 view model =
   let

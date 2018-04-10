@@ -13,10 +13,16 @@ type MyStyles
   | GameOver
   | MainBackground
 
+{-|
+  Imports the font Roboto from google
+-}
 roboto : Style.Font
 roboto =
     Font.importUrl { url = "https://fonts.googleapis.com/css?family=Roboto", name = "roboto" }
 
+{-|
+  Makes the style sheets for each type of MyStyles
+-}
 stylesheet : Style.StyleSheet MyStyles variation
 stylesheet =
   Style.styleSheet

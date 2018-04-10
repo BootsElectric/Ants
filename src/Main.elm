@@ -165,10 +165,10 @@ update msg model =
 
             in
 
-            ( { model
-            | ants = ( Ants.increaseFood model.ants 200 )
-            , grid = grid
-            , selected = get ( selX, selY ) grid }, Cmd.none )
+              ( { model
+                | ants = ( Ants.increaseFood model.ants 200 )
+                , grid = grid
+                , selected = get ( selX, selY ) grid }, Cmd.none )
 
           UpdateState state ->
             ( { model | state = state }, Cmd.none )
@@ -186,9 +186,9 @@ update msg model =
 
             in
               ( { model
-              | ants = ( Ants.decreaseFood model.ants 40 )
-              , grid = grid
-              , selected = get ( selX, selY ) grid }, Cmd.none )
+                | ants = ( Ants.decreaseFood model.ants 40 )
+                , grid = grid
+                , selected = get ( selX, selY ) grid }, Cmd.none )
 
           _ ->
             ( model, Cmd.none )
@@ -200,10 +200,10 @@ update msg model =
 
           UpdateState state ->
             ( { model
-            | state = state
-            , ants = initialAnts
-            }
-            , Cmd.none )
+              | state = state
+              , ants = initialAnts
+              }
+              , Cmd.none )
 
           _ ->
             ( model, Cmd.none )
@@ -245,28 +245,8 @@ inBounds model speed x y =
         False
 
 
-randomFloatList : Generator Float-> List Float -> Model -> Random.Seed -> Int -> List Float
-randomFloatList generator floats model seed var =
 
-  let
-      floatSeedPair =
-        step generator seed
-
-      float =
-        Tuple.first floatSeedPair
-
-      newSeed = Tuple.second floatSeedPair
-  in
-
-
-  if var > 0 then
-      List.concat [ floats,  [ float ], randomFloatList generator floats model newSeed ( var - 1 ) ]
-  else
-      floats
-
-
-
--- SUBSCRIPTIONS TODO: try removing AnimationFrame
+-- SUBSCRIPTIONS
 subscriptions : Model -> Sub Msg
 subscriptions model =
   Sub.batch

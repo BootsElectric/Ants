@@ -1,4 +1,4 @@
-module UI exposing ( UI, writeUI, writePostGame, writePreGame )
+module UI exposing ( writeUI, writePostGame, writePreGame )
 
 import Html exposing (..)
 
@@ -13,9 +13,10 @@ import Textures exposing (..)
 import Tile exposing (..)
 import UnMaybe exposing ( unMaybeInt, unMaybeFloat )
 
-type UI =
-  UI
-
+{-|
+  Writes the UI of the PreGame State
+    model - the Model to generate the UI from
+-}
 writePreGame : Model -> Html Msg
 writePreGame model =
     layout stylesheet <|
@@ -37,6 +38,10 @@ writePreGame model =
              ( Element.text "Start Game" )
           ]
 
+{-|
+  Writes the UI of the PostGame State
+    model - the Model to generate the UI from
+-}
 writePostGame : Model -> Html Msg
 writePostGame model =
     layout stylesheet <|
@@ -57,7 +62,10 @@ writePostGame model =
             (Element.text "Back To Start")
           ]
 
-
+{-|
+  Writes the UI for the InGame State
+    model - the Model to generate the UI from
+-}
 writeUI : Model -> Html Msg
 writeUI model =
   let

@@ -119,9 +119,7 @@ var _user$project$Model$Model = function (a) {
 											return function (l) {
 												return function (m) {
 													return function (n) {
-														return function (o) {
-															return {state: a, seed: b, randomFloats: c, floatsList: d, grid: e, dimensions: f, mPosX: g, mPosY: h, screen: i, time: j, camera: k, resources: l, pressedKeys: m, selected: n, ants: o};
-														};
+														return {state: a, randomFloats: b, floatsList: c, grid: d, dimensions: e, mPosX: f, mPosY: g, screen: h, time: i, camera: j, resources: k, pressedKeys: l, selected: m, ants: n};
 													};
 												};
 											};
@@ -141,7 +139,6 @@ var _user$project$Model$InGame = {ctor: 'InGame'};
 var _user$project$Model$PreGame = {ctor: 'PreGame'};
 var _user$project$Model$initialModel = {
 	state: _user$project$Model$PreGame,
-	seed: _elm_lang$core$Random$initialSeed(42),
 	randomFloats: _elm_lang$core$Dict$empty,
 	floatsList: {ctor: '[]'},
 	grid: _elm_lang$core$Dict$empty,

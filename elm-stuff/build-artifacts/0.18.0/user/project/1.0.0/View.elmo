@@ -23,8 +23,8 @@ var _user$project$View$isWithin = F4(
 			_elm_lang$core$Basics$toFloat(y) + 1) < 1);
 		return (withinX && withinY) ? true : false;
 	});
-var _user$project$View$isSelected = F4(
-	function (m, c, x, y) {
+var _user$project$View$isSelected = F3(
+	function (m, x, y) {
 		return _elm_lang$core$Native_Utils.eq(
 			A3(_user$project$Tile$getTile, m.grid, x, y),
 			m.selected) ? true : false;
@@ -44,7 +44,7 @@ var _user$project$View$useUrl = F5(
 						_1: {ctor: '[]'}
 					}
 				}
-			}) : (A4(_user$project$View$isSelected, model, camera, x, y) ? _elm_lang$core$String$concat(
+			}) : (A3(_user$project$View$isSelected, model, x, y) ? _elm_lang$core$String$concat(
 			{
 				ctor: '::',
 				_0: _user$project$Textures$texturesUrl,

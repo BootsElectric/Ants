@@ -1,6 +1,3 @@
-var _user$project$Ants$noAntsLeft = function (ants) {
-	return _elm_lang$core$Native_Utils.cmp(ants.number, 0) < 1;
-};
 var _user$project$Ants$decreaseNumber = F2(
 	function (ants, amount) {
 		return (_elm_lang$core$Native_Utils.cmp(ants.number, amount) > 0) ? _elm_lang$core$Native_Utils.update(

@@ -45,8 +45,6 @@ newTile c f k =
   Gets the value of the X coordinate of the given tile
 
     t: The tile to find the X coordinate of
-
-    TODO: replace with Maybe.map
 -}
 getX : Maybe Tile -> Maybe Int
 getX t =
