@@ -1,4 +1,5 @@
 var _user$project$Textures$undugUrl = 'undug.jpg';
+var _user$project$Textures$disasterUrl = 'disaster.jpg';
 var _user$project$Textures$foodUrl = 'food.jpg';
 var _user$project$Textures$queenUrl = 'queen.jpg';
 var _user$project$Textures$dirtUrl = 'dirt.jpg';

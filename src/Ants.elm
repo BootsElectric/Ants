@@ -33,7 +33,10 @@ decreaseFood ants amount =
   if ants.food > amount then
       { ants | food = ants.food - amount }
   else
-      { ants | food = 0 }
+      { ants
+      | food = 0
+      , number = ants.number + (ants.food - amount)
+      }
 
 
 {-|

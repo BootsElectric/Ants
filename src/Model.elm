@@ -31,6 +31,8 @@ type alias Model =
   , pressedKeys : List Key
   , selected : Maybe Tile
   , ants : Ants
+  , undugTiles : Int
+  , won : Bool
   }
 
 
@@ -53,6 +55,8 @@ initialModel =
    , pressedKeys = []
    , selected = Nothing
    , ants = Ants.initialAnts
+   , undugTiles = 624
+   , won = False
   }
 
 
@@ -161,7 +165,9 @@ createKeyValuePair model x y =
     ( ( x, y ), generateTile model ( x, y ) )
 
 {-|
-  Creates a tile at random unless the coord is ( 0, 0 ) in which case a queen is created
+  Creates a tile at random unless the coord is ( 0, 0 ) in which case a queen is created.
+  Also there is a 10% chance for a tile to either be food or a disaster.
+    model - the model to get the random list of floats from
     coord - The coordinates to create the tile at
 -}
 generateTile : Model -> Coord -> Tile
@@ -183,6 +189,10 @@ generateTile model coord =
       if float < 0.1 then
 
         newTile coord float Food
+
+      else if float > 0.9 then
+
+        newTile coord float Disaster
 
       else
 

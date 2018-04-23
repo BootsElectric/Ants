@@ -25,6 +25,7 @@ type Kind
   = Dirt
   | Queen
   | Food
+  | Disaster
 
 {-|
   Creates a new tile with kind k at coordinates c
@@ -79,13 +80,24 @@ getFloat t =
         Nothing ->
             Nothing
 
+
+getKind : Maybe Tile -> Kind
+getKind tile =
+    case tile of
+        Just tile ->
+            tile.kind
+
+        Nothing ->
+            Dirt
+            
+
 {-|
   Gets the kind of tile that this is as a String
 
     tile: The tile to find the kind of
 -}
-getKind : Maybe Tile -> String
-getKind tile =
+getKindAsString : Maybe Tile -> String
+getKindAsString tile =
   case tile of
       Just tile ->
         if tile.isDug == False then
@@ -103,6 +115,9 @@ getKind tile =
 
               Food ->
                 "Food"
+
+              Disaster ->
+                "Disaster"
 
       Nothing ->
         ""

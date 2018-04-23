@@ -29,6 +29,12 @@ foodUrl =
     "food.jpg"
 
 {-|
+  The string of the name of the disaster texture
+-}
+disasterUrl : String
+disasterUrl =
+    "disaster.jpg"
+{-|
   The string of the name of the undug texture
 -}
 undugUrl : String

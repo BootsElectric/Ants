@@ -18,7 +18,7 @@ var _user$project$Ants$decreaseFood = F2(
 			ants,
 			{food: ants.food - amount}) : _elm_lang$core$Native_Utils.update(
 			ants,
-			{food: 0});
+			{food: 0, number: ants.number + (ants.food - amount)});
 	});
 var _user$project$Ants$increaseFood = F2(
 	function (ants, amount) {

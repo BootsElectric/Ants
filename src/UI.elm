@@ -44,6 +44,16 @@ writePreGame model =
 -}
 writePostGame : Model -> Html Msg
 writePostGame model =
+  let
+    winText =
+      if model.won then
+          Element.text "You Won!"
+      else
+          Element.text "Game Over"
+
+    score =
+      624 - model.undugTiles
+  in
     layout stylesheet <|
       screen <|
         Element.column StyleOne
@@ -53,7 +63,8 @@ writePostGame model =
           , height ( px <| toFloat <| model.dimensions.height )
           , spacing 50
           ]
-          [ Element.header GameOver [] ( Element.text "Game Over" )
+          [ Element.header GameOver [] ( winText )
+          , Element.text ( String.concat [ "Your score: ", ( toString score ) ] )
           , Element.button Button
             [ width ( px 160 )
             , height ( px 40 )
@@ -79,7 +90,7 @@ writeUI model =
       toString <| unMaybeFloat <| getFloat model.selected
 
     kind =
-      Tile.getKind model.selected
+      Tile.getKindAsString model.selected
 
     src =
       case model.selected of
@@ -99,6 +110,9 @@ writeUI model =
               Food ->
                 String.concat [ texturesUrl, foodUrl ]
 
+              Disaster ->
+                String.concat [ texturesUrl, disasterUrl ]
+
         Nothing ->
           "Nothing Selected"
 
@@ -114,16 +128,16 @@ writeUI model =
             else
 
               case tile.kind of
-                Dirt ->
-                  el StyleOne [] ( Element.text "" )
-                Queen ->
-                  el StyleOne [] ( Element.text "" )
+
                 Food ->
                   Element.button Button
                     [ width (px 160)
                     , Events.onClick Collect
                     ]
                     ( Element.text "Collect" )
+
+                _ ->
+                  el StyleOne [] ( Element.text "" )
 
           Nothing ->
               el StyleOne [] ( Element.text "" )

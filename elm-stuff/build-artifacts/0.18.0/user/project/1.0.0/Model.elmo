@@ -10,7 +10,7 @@ var _user$project$Model$generateTile = F2(
 		} else {
 			var $float = _user$project$UnMaybe$unMaybeFloat(
 				A2(_elm_lang$core$Dict$get, coord, model.randomFloats));
-			return (_elm_lang$core$Native_Utils.cmp($float, 0.1) < 0) ? A3(_user$project$Tile$newTile, coord, $float, _user$project$Tile$Food) : A3(_user$project$Tile$newTile, coord, $float, _user$project$Tile$Dirt);
+			return (_elm_lang$core$Native_Utils.cmp($float, 0.1) < 0) ? A3(_user$project$Tile$newTile, coord, $float, _user$project$Tile$Food) : ((_elm_lang$core$Native_Utils.cmp($float, 0.9) > 0) ? A3(_user$project$Tile$newTile, coord, $float, _user$project$Tile$Disaster) : A3(_user$project$Tile$newTile, coord, $float, _user$project$Tile$Dirt));
 		}
 	});
 var _user$project$Model$createKeyValuePair = F3(
@@ -119,7 +119,11 @@ var _user$project$Model$Model = function (a) {
 											return function (l) {
 												return function (m) {
 													return function (n) {
-														return {state: a, randomFloats: b, floatsList: c, grid: d, dimensions: e, mPosX: f, mPosY: g, screen: h, time: i, camera: j, resources: k, pressedKeys: l, selected: m, ants: n};
+														return function (o) {
+															return function (p) {
+																return {state: a, randomFloats: b, floatsList: c, grid: d, dimensions: e, mPosX: f, mPosY: g, screen: h, time: i, camera: j, resources: k, pressedKeys: l, selected: m, ants: n, undugTiles: o, won: p};
+															};
+														};
 													};
 												};
 											};
@@ -154,5 +158,7 @@ var _user$project$Model$initialModel = {
 	resources: _user$project$Game_Resources$init,
 	pressedKeys: {ctor: '[]'},
 	selected: _elm_lang$core$Maybe$Nothing,
-	ants: _user$project$Ants$initialAnts
+	ants: _user$project$Ants$initialAnts,
+	undugTiles: 624,
+	won: false
 };

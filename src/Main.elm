@@ -184,11 +184,32 @@ update msg model =
               grid =
                 Dict.update ( selX, selY ) Tile.digTile model.grid
 
+              ants =
+                if Tile.getKind model.selected == Tile.Disaster then
+                    ( Ants.decreaseFood model.ants 100 )
+                else
+                    ( Ants.decreaseFood model.ants 40 )
+
+              undugTiles =
+                model.undugTiles - 1
+
+              state =
+                if ants.number <= 0 || undugTiles <= 0 then
+                    PostGame
+                else
+                    InGame
+
+              won =
+                undugTiles <= 0
+
             in
               ( { model
-                | ants = ( Ants.decreaseFood model.ants 40 )
+                | ants = ants
                 , grid = grid
-                , selected = get ( selX, selY ) grid }, Cmd.none )
+                , state = state
+                , selected = get ( selX, selY ) grid
+                , undugTiles = undugTiles
+                , won = won }, Cmd.none )
 
           _ ->
             ( model, Cmd.none )
@@ -269,13 +290,16 @@ init =
       food =
         getTexturePaths foodUrl
 
-      undug=
+      undug =
         getTexturePaths undugUrl
+
+      disaster =
+        getTexturePaths disasterUrl
 
   in
     initialModel
     ! [ Task.perform Resize Window.size
-      , Cmd.map Resources ( Resources.loadTextures  ( List.concat [ dirt, queen, food, undug ] )  )
+      , Cmd.map Resources ( Resources.loadTextures  ( List.concat [ dirt, queen, food, undug, disaster ] )  )
       , Random.generate ( Generated PreGame ) ( Random.list 625 ( Random.float 0 1 ) )
       ]
 

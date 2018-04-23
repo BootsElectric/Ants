@@ -49,6 +49,7 @@ var _user$project$Main$getTexturePaths = function (kind) {
 	};
 };
 var _user$project$Main$init = function () {
+	var disaster = _user$project$Main$getTexturePaths(_user$project$Textures$disasterUrl);
 	var undug = _user$project$Main$getTexturePaths(_user$project$Textures$undugUrl);
 	var food = _user$project$Main$getTexturePaths(_user$project$Textures$foodUrl);
 	var queen = _user$project$Main$getTexturePaths(_user$project$Textures$queenUrl);
@@ -78,7 +79,11 @@ var _user$project$Main$init = function () {
 										_1: {
 											ctor: '::',
 											_0: undug,
-											_1: {ctor: '[]'}
+											_1: {
+												ctor: '::',
+												_0: disaster,
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
@@ -333,6 +338,12 @@ var _user$project$Main$update = F2(
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					case 'Dig':
+						var undugTiles = model.undugTiles - 1;
+						var won = _elm_lang$core$Native_Utils.cmp(undugTiles, 0) < 1;
+						var ants = _elm_lang$core$Native_Utils.eq(
+							_user$project$Tile$getKind(model.selected),
+							_user$project$Tile$Disaster) ? A2(_user$project$Ants$decreaseFood, model.ants, 100) : A2(_user$project$Ants$decreaseFood, model.ants, 40);
+						var state = ((_elm_lang$core$Native_Utils.cmp(ants.number, 0) < 1) || (_elm_lang$core$Native_Utils.cmp(undugTiles, 0) < 1)) ? _user$project$Model$PostGame : _user$project$Model$InGame;
 						var selY = _user$project$UnMaybe$unMaybeInt(
 							_user$project$Tile$getY(model.selected));
 						var selX = _user$project$UnMaybe$unMaybeInt(
@@ -347,12 +358,15 @@ var _user$project$Main$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
 								{
-									ants: A2(_user$project$Ants$decreaseFood, model.ants, 40),
+									ants: ants,
 									grid: grid,
+									state: state,
 									selected: A2(
 										_elm_lang$core$Dict$get,
 										{ctor: '_Tuple2', _0: selX, _1: selY},
-										grid)
+										grid),
+									undugTiles: undugTiles,
+									won: won
 								}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};

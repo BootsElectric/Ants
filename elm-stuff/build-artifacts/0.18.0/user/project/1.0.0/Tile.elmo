@@ -33,7 +33,7 @@ var _user$project$Tile$updateKind = F2(
 			return _elm_lang$core$Maybe$Nothing;
 		}
 	});
-var _user$project$Tile$getKind = function (tile) {
+var _user$project$Tile$getKindAsString = function (tile) {
 	var _p3 = tile;
 	if (_p3.ctor === 'Just') {
 		var _p5 = _p3._0;
@@ -46,8 +46,10 @@ var _user$project$Tile$getKind = function (tile) {
 					return 'Dirt';
 				case 'Queen':
 					return 'Queen';
-				default:
+				case 'Food':
 					return 'Food';
+				default:
+					return 'Disaster';
 			}
 		}
 	} else {
@@ -88,15 +90,24 @@ var _user$project$Tile$Tile = F4(
 	function (a, b, c, d) {
 		return {coord: a, kind: b, isDug: c, $float: d};
 	});
+var _user$project$Tile$Disaster = {ctor: 'Disaster'};
 var _user$project$Tile$Food = {ctor: 'Food'};
 var _user$project$Tile$Queen = {ctor: 'Queen'};
 var _user$project$Tile$Dirt = {ctor: 'Dirt'};
-var _user$project$Tile$updateToDirt = function (tile) {
+var _user$project$Tile$getKind = function (tile) {
 	var _p9 = tile;
 	if (_p9.ctor === 'Just') {
+		return _p9._0.kind;
+	} else {
+		return _user$project$Tile$Dirt;
+	}
+};
+var _user$project$Tile$updateToDirt = function (tile) {
+	var _p10 = tile;
+	if (_p10.ctor === 'Just') {
 		return _elm_lang$core$Maybe$Just(
 			_elm_lang$core$Native_Utils.update(
-				_p9._0,
+				_p10._0,
 				{kind: _user$project$Tile$Dirt}));
 	} else {
 		return _elm_lang$core$Maybe$Nothing;
