@@ -188,7 +188,7 @@ update msg model =
                 if Tile.getKind model.selected == Tile.Disaster then
                     ( Ants.decreaseFood model.ants 200 )
                 else
-                    ( Ants.decreaseFood model.ants 20 )
+                    ( Ants.decreaseFood model.ants 30 )
 
               undugTiles =
                 model.undugTiles - 1

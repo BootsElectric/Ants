@@ -342,7 +342,7 @@ var _user$project$Main$update = F2(
 						var won = _elm_lang$core$Native_Utils.cmp(undugTiles, 0) < 1;
 						var ants = _elm_lang$core$Native_Utils.eq(
 							_user$project$Tile$getKind(model.selected),
-							_user$project$Tile$Disaster) ? A2(_user$project$Ants$decreaseFood, model.ants, 200) : A2(_user$project$Ants$decreaseFood, model.ants, 20);
+							_user$project$Tile$Disaster) ? A2(_user$project$Ants$decreaseFood, model.ants, 200) : A2(_user$project$Ants$decreaseFood, model.ants, 30);
 						var state = ((_elm_lang$core$Native_Utils.cmp(ants.number, 0) < 1) || (_elm_lang$core$Native_Utils.cmp(undugTiles, 0) < 1)) ? _user$project$Model$PostGame : _user$project$Model$InGame;
 						var selY = _user$project$UnMaybe$unMaybeInt(
 							_user$project$Tile$getY(model.selected));
