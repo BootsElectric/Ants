@@ -166,7 +166,7 @@ update msg model =
             in
 
               ( { model
-                | ants = ( Ants.increaseFood model.ants 200 )
+                | ants = ( Ants.increaseFood model.ants 400 )
                 , grid = grid
                 , selected = get ( selX, selY ) grid }, Cmd.none )
 
@@ -186,9 +186,9 @@ update msg model =
 
               ants =
                 if Tile.getKind model.selected == Tile.Disaster then
-                    ( Ants.decreaseFood model.ants 100 )
+                    ( Ants.decreaseFood model.ants 200 )
                 else
-                    ( Ants.decreaseFood model.ants 40 )
+                    ( Ants.decreaseFood model.ants 20 )
 
               undugTiles =
                 model.undugTiles - 1
