@@ -1,3 +1,3 @@
-# Ants
+# Formica
 
-An RTS written in Elm
+A strategy game written in Elm.
