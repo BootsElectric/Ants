@@ -29,6 +29,242 @@ var _user$project$View$isSelected = F3(
 			A3(_user$project$Tile$getTile, m.grid, x, y),
 			m.selected) ? true : false;
 	});
+var _user$project$View$findClosestVerticalFood = F3(
+	function ($var, tile, grid) {
+		var yCoord = _elm_lang$core$Tuple$second(tile.coord);
+		var xCoord = _elm_lang$core$Tuple$first(tile.coord);
+		var nextPosotiveTile = A2(
+			_elm_lang$core$Dict$get,
+			{ctor: '_Tuple2', _0: xCoord, _1: yCoord + $var},
+			grid);
+		var posotiveVar = function () {
+			var _p0 = nextPosotiveTile;
+			if (_p0.ctor === 'Just') {
+				return _elm_lang$core$Native_Utils.eq(_p0._0.kind, _user$project$Tile$Food) ? $var : A3(_user$project$View$findClosestVerticalFood, $var + 1, tile, grid);
+			} else {
+				return 0;
+			}
+		}();
+		var nextNegativeTile = A2(
+			_elm_lang$core$Dict$get,
+			{ctor: '_Tuple2', _0: xCoord, _1: yCoord - $var},
+			grid);
+		var negativeVar = function () {
+			var _p1 = nextNegativeTile;
+			if (_p1.ctor === 'Just') {
+				return _elm_lang$core$Native_Utils.eq(_p1._0.kind, _user$project$Tile$Food) ? (0 - $var) : A3(_user$project$View$findClosestVerticalFood, $var + 1, tile, grid);
+			} else {
+				return 0;
+			}
+		}();
+		return (_elm_lang$core$Native_Utils.eq(posotiveVar, 0) && (!_elm_lang$core$Native_Utils.eq(negativeVar, 0))) ? negativeVar : (((!_elm_lang$core$Native_Utils.eq(posotiveVar, 0)) && _elm_lang$core$Native_Utils.eq(negativeVar, 0)) ? posotiveVar : ((_elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$Basics$abs(posotiveVar),
+			_elm_lang$core$Basics$abs(negativeVar)) < 1) ? posotiveVar : negativeVar));
+	});
+var _user$project$View$findClosestHorizontalFood = F3(
+	function ($var, tile, grid) {
+		var yCoord = _elm_lang$core$Tuple$second(tile.coord);
+		var xCoord = _elm_lang$core$Tuple$first(tile.coord);
+		var nextPosotiveTile = A2(
+			_elm_lang$core$Dict$get,
+			{ctor: '_Tuple2', _0: xCoord + $var, _1: yCoord},
+			grid);
+		var posotiveVar = function () {
+			var _p2 = nextPosotiveTile;
+			if (_p2.ctor === 'Just') {
+				return _elm_lang$core$Native_Utils.eq(_p2._0.kind, _user$project$Tile$Food) ? $var : A3(_user$project$View$findClosestHorizontalFood, $var + 1, tile, grid);
+			} else {
+				return 0;
+			}
+		}();
+		var nextNegativeTile = A2(
+			_elm_lang$core$Dict$get,
+			{ctor: '_Tuple2', _0: xCoord - $var, _1: yCoord},
+			grid);
+		var negativeVar = function () {
+			var _p3 = nextNegativeTile;
+			if (_p3.ctor === 'Just') {
+				return _elm_lang$core$Native_Utils.eq(_p3._0.kind, _user$project$Tile$Food) ? (0 - $var) : A3(_user$project$View$findClosestHorizontalFood, $var + 1, tile, grid);
+			} else {
+				return 0;
+			}
+		}();
+		return (_elm_lang$core$Native_Utils.eq(posotiveVar, 0) && (!_elm_lang$core$Native_Utils.eq(negativeVar, 0))) ? negativeVar : (((!_elm_lang$core$Native_Utils.eq(posotiveVar, 0)) && _elm_lang$core$Native_Utils.eq(negativeVar, 0)) ? posotiveVar : ((_elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$Basics$abs(posotiveVar),
+			_elm_lang$core$Basics$abs(negativeVar)) < 1) ? posotiveVar : negativeVar));
+	});
+var _user$project$View$findClosestFood = F2(
+	function (tile, grid) {
+		var closestVertical = A3(_user$project$View$findClosestVerticalFood, 1, tile, grid);
+		var closestHorizontal = A3(_user$project$View$findClosestHorizontalFood, 1, tile, grid);
+		return (_elm_lang$core$Native_Utils.eq(closestHorizontal, 0) && _elm_lang$core$Native_Utils.eq(closestVertical, 0)) ? '' : (_elm_lang$core$Native_Utils.eq(closestHorizontal, 0) ? ((_elm_lang$core$Native_Utils.cmp(closestVertical, 0) > 0) ? 'ft-' : 'fb-') : (_elm_lang$core$Native_Utils.eq(closestVertical, 0) ? ((_elm_lang$core$Native_Utils.cmp(closestHorizontal, 0) > 0) ? 'fr-' : 'fl-') : ((_elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$Basics$abs(closestHorizontal),
+			_elm_lang$core$Basics$abs(closestVertical)) < 1) ? ((_elm_lang$core$Native_Utils.cmp(closestHorizontal, 0) > 0) ? 'fr-' : 'fl-') : ((_elm_lang$core$Native_Utils.cmp(closestVertical, 0) > 0) ? 'ft-' : 'fb-'))));
+	});
+var _user$project$View$findClosestVerticalDisaster = F3(
+	function ($var, tile, grid) {
+		var yCoord = _elm_lang$core$Tuple$second(tile.coord);
+		var xCoord = _elm_lang$core$Tuple$first(tile.coord);
+		var nextPosotiveTile = A2(
+			_elm_lang$core$Dict$get,
+			{ctor: '_Tuple2', _0: xCoord, _1: yCoord + $var},
+			grid);
+		var posotiveVar = function () {
+			var _p4 = nextPosotiveTile;
+			if (_p4.ctor === 'Just') {
+				return _elm_lang$core$Native_Utils.eq(_p4._0.kind, _user$project$Tile$Disaster) ? $var : A3(_user$project$View$findClosestVerticalDisaster, $var + 1, tile, grid);
+			} else {
+				return 0;
+			}
+		}();
+		var nextNegativeTile = A2(
+			_elm_lang$core$Dict$get,
+			{ctor: '_Tuple2', _0: xCoord, _1: yCoord - $var},
+			grid);
+		var negativeVar = function () {
+			var _p5 = nextNegativeTile;
+			if (_p5.ctor === 'Just') {
+				return _elm_lang$core$Native_Utils.eq(_p5._0.kind, _user$project$Tile$Disaster) ? (0 - $var) : A3(_user$project$View$findClosestVerticalDisaster, $var + 1, tile, grid);
+			} else {
+				return 0;
+			}
+		}();
+		return (_elm_lang$core$Native_Utils.eq(posotiveVar, 0) && (!_elm_lang$core$Native_Utils.eq(negativeVar, 0))) ? negativeVar : (((!_elm_lang$core$Native_Utils.eq(posotiveVar, 0)) && _elm_lang$core$Native_Utils.eq(negativeVar, 0)) ? posotiveVar : ((_elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$Basics$abs(posotiveVar),
+			_elm_lang$core$Basics$abs(negativeVar)) < 1) ? posotiveVar : negativeVar));
+	});
+var _user$project$View$findClosestHorizontalDisaster = F3(
+	function ($var, tile, grid) {
+		var yCoord = _elm_lang$core$Tuple$second(tile.coord);
+		var xCoord = _elm_lang$core$Tuple$first(tile.coord);
+		var nextPosotiveTile = A2(
+			_elm_lang$core$Dict$get,
+			{ctor: '_Tuple2', _0: xCoord + $var, _1: yCoord},
+			grid);
+		var posotiveVar = function () {
+			var _p6 = nextPosotiveTile;
+			if (_p6.ctor === 'Just') {
+				return _elm_lang$core$Native_Utils.eq(_p6._0.kind, _user$project$Tile$Disaster) ? $var : A3(_user$project$View$findClosestHorizontalDisaster, $var + 1, tile, grid);
+			} else {
+				return 0;
+			}
+		}();
+		var nextNegativeTile = A2(
+			_elm_lang$core$Dict$get,
+			{ctor: '_Tuple2', _0: xCoord - $var, _1: yCoord},
+			grid);
+		var negativeVar = function () {
+			var _p7 = nextNegativeTile;
+			if (_p7.ctor === 'Just') {
+				return _elm_lang$core$Native_Utils.eq(_p7._0.kind, _user$project$Tile$Disaster) ? (0 - $var) : A3(_user$project$View$findClosestHorizontalDisaster, $var + 1, tile, grid);
+			} else {
+				return 0;
+			}
+		}();
+		return (_elm_lang$core$Native_Utils.eq(posotiveVar, 0) && (!_elm_lang$core$Native_Utils.eq(negativeVar, 0))) ? negativeVar : (((!_elm_lang$core$Native_Utils.eq(posotiveVar, 0)) && _elm_lang$core$Native_Utils.eq(negativeVar, 0)) ? posotiveVar : ((_elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$Basics$abs(posotiveVar),
+			_elm_lang$core$Basics$abs(negativeVar)) < 1) ? posotiveVar : negativeVar));
+	});
+var _user$project$View$findClosestDisaster = F2(
+	function (tile, grid) {
+		var closestVertical = A3(_user$project$View$findClosestVerticalDisaster, 1, tile, grid);
+		var closestHorizontal = A3(_user$project$View$findClosestHorizontalDisaster, 1, tile, grid);
+		return (_elm_lang$core$Native_Utils.eq(closestHorizontal, 0) && _elm_lang$core$Native_Utils.eq(closestVertical, 0)) ? '' : (_elm_lang$core$Native_Utils.eq(closestHorizontal, 0) ? ((_elm_lang$core$Native_Utils.cmp(closestVertical, 0) > 0) ? 'dt-' : 'db-') : (_elm_lang$core$Native_Utils.eq(closestVertical, 0) ? ((_elm_lang$core$Native_Utils.cmp(closestHorizontal, 0) > 0) ? 'dr-' : 'dl-') : ((_elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$Basics$abs(closestHorizontal),
+			_elm_lang$core$Basics$abs(closestVertical)) < 1) ? ((_elm_lang$core$Native_Utils.cmp(closestHorizontal, 0) > 0) ? 'dr-' : 'dl-') : ((_elm_lang$core$Native_Utils.cmp(closestVertical, 0) > 0) ? 'dt-' : 'db-'))));
+	});
+var _user$project$View$findIndicators = F2(
+	function (tile, grid) {
+		var closestFood = A2(_user$project$View$findClosestFood, tile, grid);
+		var closestDisaster = A2(_user$project$View$findClosestDisaster, tile, grid);
+		return _elm_lang$core$String$concat(
+			{
+				ctor: '::',
+				_0: closestDisaster,
+				_1: {
+					ctor: '::',
+					_0: closestFood,
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$View$chooseIndicatorUrl = F5(
+	function (model, camera, x, y, tile) {
+		var indicators = function () {
+			var _p8 = tile.indicator;
+			switch (_p8.ctor) {
+				case 'DB':
+					return 'db-';
+				case 'DL':
+					return 'dl-';
+				case 'DR':
+					return 'dr-';
+				case 'DT':
+					return 'dt-';
+				case 'FB':
+					return 'fb-';
+				case 'FL':
+					return 'fl-';
+				case 'FR':
+					return 'fr-';
+				case 'FT':
+					return 'ft-';
+				case 'BB':
+					return 'db-fb-';
+				case 'BL':
+					return 'dl-fl-';
+				case 'BR':
+					return 'dr-fr-';
+				case 'BT':
+					return 'dt-ft-';
+				case 'DBFL':
+					return 'db-fl-';
+				case 'DBFR':
+					return 'db-fr-';
+				case 'DBFT':
+					return 'db-ft-';
+				case 'DLFB':
+					return 'dl-fb-';
+				case 'DLFR':
+					return 'dl-fr-';
+				case 'DLFT':
+					return 'dl-ft-';
+				case 'DRFB':
+					return 'dr-fb-';
+				case 'DRFL':
+					return 'dr-fl-';
+				case 'DRFT':
+					return 'dr-ft-';
+				case 'DTFB':
+					return 'dt-fb-';
+				case 'DTFL':
+					return 'dt-fl-';
+				case 'DTFR':
+					return 'dt-fr-';
+				default:
+					return '';
+			}
+		}();
+		var prefix = A4(_user$project$View$isWithin, model, camera, x, y) ? 'h-' : (A3(_user$project$View$isSelected, model, x, y) ? 's-' : '');
+		return _elm_lang$core$String$concat(
+			{
+				ctor: '::',
+				_0: _user$project$Textures$texturesUrl,
+				_1: {
+					ctor: '::',
+					_0: prefix,
+					_1: {
+						ctor: '::',
+						_0: indicators,
+						_1: {
+							ctor: '::',
+							_0: _user$project$Textures$indicatorUrl,
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			});
+	});
 var _user$project$View$useUrl = F5(
 	function (model, camera, x, y, kind) {
 		return A4(_user$project$View$isWithin, model, camera, x, y) ? _elm_lang$core$String$concat(
@@ -85,10 +321,10 @@ var _user$project$View$renderCoord = F4(
 			if (_elm_lang$core$Native_Utils.eq(tile.isDug, false)) {
 				return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$undugUrl);
 			} else {
-				var _p0 = tile.kind;
-				switch (_p0.ctor) {
+				var _p9 = tile.kind;
+				switch (_p9.ctor) {
 					case 'Dirt':
-						return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$dirtUrl);
+						return A5(_user$project$View$chooseIndicatorUrl, model, camera, x, y, tile);
 					case 'Queen':
 						return A5(_user$project$View$useUrl, model, camera, x, y, _user$project$Textures$queenUrl);
 					case 'Food':
@@ -112,9 +348,21 @@ var _user$project$View$renderGrid = function (model) {
 		_elm_lang$core$Dict$values(model.grid));
 };
 var _user$project$View$view = function (model) {
+	var tile = function () {
+		var _p10 = model.selected;
+		if (_p10.ctor === 'Just') {
+			return _p10._0;
+		} else {
+			return A3(
+				_user$project$Tile$newTile,
+				{ctor: '_Tuple2', _0: 0, _1: 1},
+				0.5,
+				_user$project$Tile$Dirt);
+		}
+	}();
 	var ui = function () {
-		var _p1 = model.state;
-		switch (_p1.ctor) {
+		var _p11 = model.state;
+		switch (_p11.ctor) {
 			case 'PreGame':
 				return _user$project$UI$writePreGame(model);
 			case 'InGame':

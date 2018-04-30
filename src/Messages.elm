@@ -18,4 +18,5 @@ type Msg
   | UpdateState State
   | Dig
   | Generate
-  | Generated State ( List Float ) 
+  | Generated State ( List Float )
+  | UpdateIndicators

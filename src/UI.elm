@@ -30,6 +30,12 @@ writePreGame model =
           ]
           [ Element.header GameOver [] ( Element.text "Welcome To Formica" )
           , Element.text "A game about ant colonies"
+          , Element.text "How to play:"
+          , Element.text "Click on a tile to interact"
+          , Element.text "Use W, A, S and D to move the camera"
+          , Element.text "Red arrows indicate the nearest Disaster"
+          , Element.text "Green arrows indicate the nearest Food"
+          , Element.text "Dig through all the tiles to win!"
           , Element.button Button
             [ width ( px 160 )
             , height ( px 40 )
@@ -161,6 +167,7 @@ writeUI model =
               ]
             , Element.text ( String.concat [ "Population: ", ( toString <| model.ants.number ) ] )
             , Element.text ( String.concat [ "Food: ", ( toString <| model.ants.food ) ] )
+            , Element.text ( String.concat [ "Score: ", ( toString <| 625 - model.undugTiles ) ] )
             , collectButton
             , Element.button Button
               [ width ( px 160 )

@@ -166,9 +166,9 @@ update msg model =
             in
 
               ( { model
-                | ants = ( Ants.increaseFood model.ants 400 )
+                | ants = ( Ants.increaseFood model.ants 200 )
                 , grid = grid
-                , selected = get ( selX, selY ) grid }, Cmd.none )
+                , selected = get ( selX, selY ) grid }, send UpdateIndicators )
 
           UpdateState state ->
             ( { model | state = state }, Cmd.none )
@@ -188,7 +188,7 @@ update msg model =
                 if Tile.getKind model.selected == Tile.Disaster then
                     ( Ants.decreaseFood model.ants 200 )
                 else
-                    ( Ants.decreaseFood model.ants 30 )
+                    ( Ants.decreaseFood model.ants 40 )
 
               undugTiles =
                 model.undugTiles - 1
@@ -202,6 +202,8 @@ update msg model =
               won =
                 undugTiles <= 0
 
+
+
             in
               ( { model
                 | ants = ants
@@ -209,7 +211,17 @@ update msg model =
                 , state = state
                 , selected = get ( selX, selY ) grid
                 , undugTiles = undugTiles
-                , won = won }, Cmd.none )
+                , won = won }, send UpdateIndicators )
+
+          UpdateIndicators ->
+            let
+                updatedIndicators =
+                  Dict.fromList
+                    <| List.map2 (,)
+                    ( Dict.keys model.grid )
+                    ( List.map ( updateIndicators model ) ( Dict.values model.grid ) )
+            in
+              ( { model | grid = updatedIndicators }, Cmd.none )
 
           _ ->
             ( model, Cmd.none )
@@ -230,6 +242,95 @@ update msg model =
             ( model, Cmd.none )
 
 
+
+updateIndicators : Model -> Tile -> Tile
+updateIndicators model tile =
+  if tile.isDug && ( ( isInColumn model tile ) || ( isInRow model tile ) ) then
+    let
+        indicator =
+          case View.findIndicators tile model.grid of
+            "db-" ->
+              Tile.DB
+            "dl-" ->
+              Tile.DL
+            "dr-" ->
+              Tile.DR
+            "dt-" ->
+              Tile.DT
+            "fb-" ->
+              Tile.FB
+            "fl-" ->
+              Tile.FL
+            "fr-" ->
+              Tile.FR
+            "ft-" ->
+              Tile.FT
+            "db-fb-" ->
+              Tile.BB
+            "db-fl-" ->
+              Tile.DBFL
+            "db-fr-" ->
+              Tile.DBFR
+            "db-ft-" ->
+              Tile.DBFT
+            "dl-fb-" ->
+              Tile.DLFB
+            "dl-fl-" ->
+              Tile.BL
+            "dl-fr-" ->
+              Tile.DLFR
+            "dl-ft-" ->
+              Tile.DLFT
+            "dr-fb-" ->
+              Tile.DRFB
+            "dr-fl-" ->
+              Tile.DRFL
+            "dr-fr-" ->
+              Tile.BR
+            "dr-ft-" ->
+              Tile.DRFT
+            "dt-fb-" ->
+              Tile.DTFB
+            "dt-fl-" ->
+              Tile.DTFL
+            "dt-fr-" ->
+              Tile.DTFR
+            "dt-ft-" ->
+              Tile.BT
+            _ ->
+              Tile.BB
+
+    in
+
+      { tile | indicator = indicator }
+
+  else
+      tile
+
+send : msg -> Cmd msg
+send msg  =
+  Task.succeed msg
+  |> Task.perform identity
+
+isInRow : Model -> Tile -> Bool
+isInRow model tile =
+
+      case model.selected of
+          Just newTile ->
+              ( Tuple.first newTile.coord ) == ( Tuple.first tile.coord )
+
+          Nothing ->
+              False
+
+
+isInColumn : Model -> Tile -> Bool
+isInColumn model tile =
+    case model.selected of
+        Just newTile ->
+            ( Tuple.second newTile.coord ) == ( Tuple.second tile.coord )
+
+        Nothing ->
+            False
 
 
 {-|
@@ -296,10 +397,13 @@ init =
       disaster =
         getTexturePaths disasterUrl
 
+      indicators =
+        getAllIndicatorTexturePaths
+
   in
     initialModel
     ! [ Task.perform Resize Window.size
-      , Cmd.map Resources ( Resources.loadTextures  ( List.concat [ dirt, queen, food, undug, disaster ] )  )
+      , Cmd.map Resources ( Resources.loadTextures  ( List.concat [ dirt, queen, food, undug, disaster, indicators ] )  )
       , Random.generate ( Generated PreGame ) ( Random.list 625 ( Random.float 0 1 ) )
       ]
 
@@ -315,6 +419,41 @@ getTexturePaths kind =
     , String.concat [ texturesUrl, "s-", kind ]
     ]
 
+
+getIndicatorTexturePaths : String -> String -> List String
+getIndicatorTexturePaths disaster food =
+    [ String.concat [ texturesUrl, disaster, food, indicatorUrl ]
+    , String.concat [ texturesUrl, "h-", disaster, food, indicatorUrl ]
+    , String.concat [ texturesUrl, "s-", disaster, food, indicatorUrl ]
+    ]
+
+getAllIndicatorTexturePaths : List String
+getAllIndicatorTexturePaths =
+    List.concat [ getIndicatorTexturePaths "db-" "fb-" --"..\\textures\\bb-indicator.jpg"
+                , getIndicatorTexturePaths "dl-" "fl-"
+                , getIndicatorTexturePaths "dr-" "fr-"
+                , getIndicatorTexturePaths "dt-" "ft-"
+                , getIndicatorTexturePaths "db-" ""
+                , getIndicatorTexturePaths "dl-" ""
+                , getIndicatorTexturePaths "dr-" ""
+                , getIndicatorTexturePaths "dt-" ""
+                , getIndicatorTexturePaths "" "fb-"
+                , getIndicatorTexturePaths "" "fl-"
+                , getIndicatorTexturePaths "" "fr-"
+                , getIndicatorTexturePaths "" "ft-"
+                , getIndicatorTexturePaths "db-" "fl-"
+                , getIndicatorTexturePaths "db-" "fr-"
+                , getIndicatorTexturePaths "db-" "ft-"
+                , getIndicatorTexturePaths "dl-" "fb-"
+                , getIndicatorTexturePaths "dl-" "fr-"
+                , getIndicatorTexturePaths "dl-" "ft-"
+                , getIndicatorTexturePaths "dr-" "fb-"
+                , getIndicatorTexturePaths "dr-" "fl-"
+                , getIndicatorTexturePaths "dr-" "ft-"
+                , getIndicatorTexturePaths "dt-" "fb-"
+                , getIndicatorTexturePaths "dt-" "fl-"
+                , getIndicatorTexturePaths "dt-" "fr-"
+                ]
 
 -- MAIN
 main : Program Never Model Msg

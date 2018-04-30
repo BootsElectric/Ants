@@ -82,13 +82,9 @@ var _user$project$Tile$getX = function (t) {
 		return _elm_lang$core$Maybe$Nothing;
 	}
 };
-var _user$project$Tile$newTile = F3(
-	function (c, f, k) {
-		return {coord: c, kind: k, isDug: false, $float: f};
-	});
-var _user$project$Tile$Tile = F4(
-	function (a, b, c, d) {
-		return {coord: a, kind: b, isDug: c, $float: d};
+var _user$project$Tile$Tile = F5(
+	function (a, b, c, d, e) {
+		return {coord: a, kind: b, isDug: c, $float: d, indicator: e};
 	});
 var _user$project$Tile$Disaster = {ctor: 'Disaster'};
 var _user$project$Tile$Food = {ctor: 'Food'};
@@ -113,3 +109,32 @@ var _user$project$Tile$updateToDirt = function (tile) {
 		return _elm_lang$core$Maybe$Nothing;
 	}
 };
+var _user$project$Tile$None = {ctor: 'None'};
+var _user$project$Tile$newTile = F3(
+	function (c, f, k) {
+		return {coord: c, kind: k, isDug: false, $float: f, indicator: _user$project$Tile$None};
+	});
+var _user$project$Tile$DTFR = {ctor: 'DTFR'};
+var _user$project$Tile$DTFL = {ctor: 'DTFL'};
+var _user$project$Tile$DTFB = {ctor: 'DTFB'};
+var _user$project$Tile$DRFT = {ctor: 'DRFT'};
+var _user$project$Tile$DRFL = {ctor: 'DRFL'};
+var _user$project$Tile$DRFB = {ctor: 'DRFB'};
+var _user$project$Tile$DLFT = {ctor: 'DLFT'};
+var _user$project$Tile$DLFR = {ctor: 'DLFR'};
+var _user$project$Tile$DLFB = {ctor: 'DLFB'};
+var _user$project$Tile$DBFT = {ctor: 'DBFT'};
+var _user$project$Tile$DBFR = {ctor: 'DBFR'};
+var _user$project$Tile$DBFL = {ctor: 'DBFL'};
+var _user$project$Tile$FT = {ctor: 'FT'};
+var _user$project$Tile$FR = {ctor: 'FR'};
+var _user$project$Tile$FL = {ctor: 'FL'};
+var _user$project$Tile$FB = {ctor: 'FB'};
+var _user$project$Tile$DT = {ctor: 'DT'};
+var _user$project$Tile$DR = {ctor: 'DR'};
+var _user$project$Tile$DL = {ctor: 'DL'};
+var _user$project$Tile$DB = {ctor: 'DB'};
+var _user$project$Tile$BT = {ctor: 'BT'};
+var _user$project$Tile$BR = {ctor: 'BR'};
+var _user$project$Tile$BL = {ctor: 'BL'};
+var _user$project$Tile$BB = {ctor: 'BB'};

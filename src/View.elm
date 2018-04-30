@@ -1,4 +1,4 @@
-module View exposing ( view, isWithin )
+module View exposing ( view, isWithin, findIndicators )
 
 import Html exposing ( Html, div )
 import Html.Attributes as Attr exposing ( style )
@@ -46,7 +46,7 @@ renderCoord model camera resources tile =
 
         case tile.kind of
           Dirt ->
-            useUrl model camera x y dirtUrl
+            chooseIndicatorUrl model camera x y tile
 
           Queen ->
             useUrl model camera x y queenUrl
@@ -87,7 +87,371 @@ useUrl model camera x y kind =
 
       String.concat [texturesUrl, kind]
 
+{-}
+chooseIndicatorUrl : Model -> Camera -> Int -> Int -> Tile -> String
+chooseIndicatorUrl model camera x y tile =
+    let
+      prefix =
+        if isWithin model camera x y then
 
+          "h-"
+
+        else if isSelected model x y then
+
+          "s-"
+
+        else
+
+          ""
+
+      indicators =
+
+        findIndicators tile model.grid
+
+    in
+      if indicators == "" then
+          String.concat [ texturesUrl, prefix, dirtUrl ]
+      else
+
+          String.concat [ texturesUrl, prefix, indicators, indicatorUrl ]
+-}
+
+chooseIndicatorUrl : Model -> Camera -> Int -> Int -> Tile -> String
+chooseIndicatorUrl model camera x y tile =
+  let
+    prefix =
+      if isWithin model camera x y then
+
+        "h-"
+
+      else if isSelected model x y then
+
+        "s-"
+
+      else
+
+        ""
+
+    indicators =
+
+      case tile.indicator of
+        Tile.DB ->
+          "db-"
+        Tile.DL ->
+          "dl-"
+        Tile.DR ->
+          "dr-"
+        Tile.DT ->
+          "dt-"
+        Tile.FB ->
+          "fb-"
+        Tile.FL ->
+          "fl-"
+        Tile.FR ->
+          "fr-"
+        Tile.FT ->
+          "ft-"
+        Tile.BB ->
+          "db-fb-"
+        Tile.BL ->
+          "dl-fl-"
+        Tile.BR ->
+          "dr-fr-"
+        Tile.BT ->
+          "dt-ft-"
+        Tile.DBFL ->
+          "db-fl-"
+        Tile.DBFR ->
+          "db-fr-"
+        Tile.DBFT ->
+          "db-ft-"
+        Tile.DLFB ->
+          "dl-fb-"
+        Tile.DLFR ->
+          "dl-fr-"
+        Tile.DLFT ->
+          "dl-ft-"
+        Tile.DRFB ->
+          "dr-fb-"
+        Tile.DRFL ->
+          "dr-fl-"
+        Tile.DRFT ->
+          "dr-ft-"
+        Tile.DTFB ->
+          "dt-fb-"
+        Tile.DTFL ->
+          "dt-fl-"
+        Tile.DTFR ->
+          "dt-fr-"
+        Tile.None ->
+          ""
+  in
+    String.concat [ texturesUrl, prefix, indicators, indicatorUrl ]
+
+findIndicators : Tile -> Grid -> String
+findIndicators tile grid =
+    let
+        closestDisaster =
+          findClosestDisaster tile grid
+
+        closestFood =
+          findClosestFood tile grid
+
+    in
+
+        String.concat [ closestDisaster, closestFood ]
+
+
+findClosestDisaster : Tile -> Grid -> String
+findClosestDisaster tile grid =
+    let
+        closestHorizontal =
+          findClosestHorizontalDisaster 1 tile grid
+
+        closestVertical =
+          findClosestVerticalDisaster 1 tile grid
+    in
+        if closestHorizontal == 0 && closestVertical == 0 then
+            ""
+        else
+          if closestHorizontal == 0 then
+              if closestVertical > 0 then
+                  "dt-"
+              else
+                  "db-"
+          else
+            if closestVertical == 0 then
+              if closestHorizontal > 0 then
+                  "dr-"
+              else
+                  "dl-"
+            else
+              if abs closestHorizontal <= abs closestVertical then
+                  if closestHorizontal > 0 then
+                      "dr-"
+                  else
+                      "dl-"
+              else
+                  if closestVertical > 0 then
+                      "dt-"
+                  else
+                      "db-"
+
+
+findClosestHorizontalDisaster : Int -> Tile -> Grid -> Int
+findClosestHorizontalDisaster var tile grid =
+    let
+        xCoord =
+          Tuple.first tile.coord
+
+        yCoord =
+          Tuple.second tile.coord
+
+        nextPosotiveTile =
+          Dict.get ( ( xCoord + var ), yCoord ) grid
+
+        nextNegativeTile =
+          Dict.get ( ( xCoord - var ), yCoord ) grid
+
+        posotiveVar =
+          case nextPosotiveTile of
+            Just newTile ->
+              if newTile.kind == Disaster then
+                var
+              else
+                findClosestHorizontalDisaster ( var + 1 ) tile grid
+            Nothing ->
+              0
+
+        negativeVar =
+          case nextNegativeTile of
+            Just newTile ->
+              if newTile.kind == Disaster then
+                -var
+              else
+                findClosestHorizontalDisaster ( var + 1 ) tile grid
+            Nothing ->
+              0
+    in
+      if posotiveVar == 0 && negativeVar /= 0 then
+          negativeVar
+      else if posotiveVar /= 0 && negativeVar == 0 then
+          posotiveVar
+      else if abs posotiveVar <= abs negativeVar then
+          posotiveVar
+      else
+          negativeVar
+
+
+findClosestVerticalDisaster : Int -> Tile -> Grid -> Int
+findClosestVerticalDisaster var tile grid =
+    let
+        xCoord =
+          Tuple.first tile.coord
+
+        yCoord =
+          Tuple.second tile.coord
+
+        nextPosotiveTile =
+          Dict.get ( xCoord, ( yCoord + var ) ) grid
+
+        nextNegativeTile =
+          Dict.get ( xCoord, ( yCoord - var ) ) grid
+
+        posotiveVar =
+          case nextPosotiveTile of
+            Just newTile ->
+              if newTile.kind == Disaster then
+                var
+              else
+                findClosestVerticalDisaster ( var + 1 ) tile grid
+            Nothing ->
+              0
+
+        negativeVar =
+          case nextNegativeTile of
+            Just newTile ->
+              if newTile.kind == Disaster then
+                -var
+              else
+                findClosestVerticalDisaster ( var + 1 ) tile grid
+            Nothing ->
+              0
+    in
+      if posotiveVar == 0 && negativeVar /= 0 then
+          negativeVar
+      else if posotiveVar /= 0 && negativeVar == 0 then
+          posotiveVar
+      else if abs posotiveVar <= abs negativeVar then
+          posotiveVar
+      else
+          negativeVar
+
+findClosestFood : Tile -> Grid -> String
+findClosestFood tile grid =
+    let
+        closestHorizontal =
+          findClosestHorizontalFood 1 tile grid
+
+        closestVertical =
+          findClosestVerticalFood 1 tile grid
+    in
+        if closestHorizontal == 0 && closestVertical == 0 then
+            ""
+        else
+          if closestHorizontal == 0 then
+              if closestVertical > 0 then
+                  "ft-"
+              else
+                  "fb-"
+          else
+            if closestVertical == 0 then
+              if closestHorizontal > 0 then
+                  "fr-"
+              else
+                  "fl-"
+            else
+              if abs closestHorizontal <= abs closestVertical then
+                  if closestHorizontal > 0 then
+                      "fr-"
+                  else
+                      "fl-"
+              else
+                  if closestVertical > 0 then
+                      "ft-"
+                  else
+                      "fb-"
+
+
+
+findClosestHorizontalFood : Int -> Tile -> Grid -> Int
+findClosestHorizontalFood var tile grid =
+    let
+        xCoord =
+          Tuple.first tile.coord
+
+        yCoord =
+          Tuple.second tile.coord
+
+        nextPosotiveTile =
+          Dict.get ( ( xCoord + var ), yCoord ) grid
+
+        nextNegativeTile =
+          Dict.get ( ( xCoord - var ), yCoord ) grid
+
+        posotiveVar =
+          case nextPosotiveTile of
+            Just newTile ->
+              if newTile.kind == Food then
+                var
+              else
+                findClosestHorizontalFood ( var + 1 ) tile grid
+            Nothing ->
+              0
+
+        negativeVar =
+          case nextNegativeTile of
+            Just newTile ->
+              if newTile.kind == Food then
+                -var
+              else
+                findClosestHorizontalFood ( var + 1 ) tile grid
+            Nothing ->
+              0
+    in
+      if posotiveVar == 0 && negativeVar /= 0 then
+          negativeVar
+      else if posotiveVar /= 0 && negativeVar == 0 then
+          posotiveVar
+      else if abs posotiveVar <= abs negativeVar then
+          posotiveVar
+      else
+          negativeVar
+
+
+findClosestVerticalFood : Int -> Tile -> Grid -> Int
+findClosestVerticalFood var tile grid =
+    let
+        xCoord =
+          Tuple.first tile.coord
+
+        yCoord =
+          Tuple.second tile.coord
+
+        nextPosotiveTile =
+          Dict.get ( xCoord, ( yCoord + var ) ) grid
+
+        nextNegativeTile =
+          Dict.get ( xCoord, ( yCoord - var ) ) grid
+
+        posotiveVar =
+          case nextPosotiveTile of
+            Just newTile ->
+              if newTile.kind == Food then
+                var
+              else
+                findClosestVerticalFood ( var + 1 ) tile grid
+            Nothing ->
+              0
+
+        negativeVar =
+          case nextNegativeTile of
+            Just newTile ->
+              if newTile.kind == Food then
+                -var
+              else
+                findClosestVerticalFood ( var + 1 ) tile grid
+            Nothing ->
+              0
+    in
+      if posotiveVar == 0 && negativeVar /= 0 then
+          negativeVar
+      else if posotiveVar /= 0 && negativeVar == 0 then
+          posotiveVar
+      else if abs posotiveVar <= abs negativeVar then
+          posotiveVar
+      else
+          negativeVar
 {-|
   A function to test whether the tile being rendered is the selected tile
     m - the Model to get the grid and selected from
@@ -105,7 +469,8 @@ isSelected m x y =
 
 
 {-|
-  Uses Camera.viewportToGameCoordinates to normalise mouse position then compares that position to the position of the tiles.
+  Uses Camera.viewportToGameCoordinates to normalise mouse position then compares
+  that position to the position of the tiles.
 
     m is the model
     camera is the camera
@@ -118,7 +483,8 @@ isWithin : Model -> Camera -> Int -> Int -> Bool
 isWithin m camera x y =
   let
       mousePos =
-        Camera.viewportToGameCoordinates camera ( m.dimensions.width, m.dimensions.height ) ( round m.mPosX, round m.mPosY )
+        Camera.viewportToGameCoordinates
+           camera ( m.dimensions.width, m.dimensions.height ) ( round m.mPosX, round m.mPosY )
 
       mouseX =
         first mousePos
@@ -154,6 +520,14 @@ view model =
 
         PostGame ->
           writePostGame model
+
+    tile =
+      case model.selected of
+          Just tile ->
+              tile
+
+          Nothing ->
+              Tile.newTile ( 0, 1 ) 0.5 Tile.Dirt
   in
     div
     [ Attr.style [ ( "overflow", "hidden" ), ( "width", "100%" ), ( "height", "75%" ) ]
@@ -161,7 +535,9 @@ view model =
     , Canvas.onMouseDown MouseDown
     ]
     [ Game.render
-      { time = 0, camera = model.camera, size = ( model.dimensions.width, model.dimensions.height  ) }
+      { time = 0
+      , camera = model.camera
+      , size = ( model.dimensions.width, model.dimensions.height  ) }
       ( renderGrid model )
     , ui
     ]

@@ -2,7 +2,7 @@ Arguments:
   C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js start
 
 PATH: 
-  C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Program Files (x86)\Elm Platform\0.18\bin;C:\Users\wllhr\AppData\Local\Microsoft\WindowsApps;C:\Users\wllhr\AppData\Local\atom\bin;C:\Users\wllhr\AppData\Local\GitHubDesktop\bin;C:\Users\wllhr\AppData\Roaming\npm;C:\ProgramData\chocolatey\bin
+  C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Users\wllhr\AppData\Local\Microsoft\WindowsApps;C:\Users\wllhr\AppData\Local\atom\bin;C:\Program Files\Git\bin;C:\Program Files\nodejs\;C:\Program Files (x86)\Yarn\bin;C:\Program Files (x86)\Elm Platform\0.18\bin;C:\Users\wllhr\AppData\Roaming\npm\node_modules\elm-test\bin\elm-test;
 
 Yarn version: 
   1.5.1
@@ -4452,7 +4452,7 @@ Trace:
   Exit code: 1
   Command: C:\Windows\system32\cmd.exe
   Arguments: /d /s /c nf start
-  Directory: D:\Documents\Computer Science\Third Year\Final Year Project\Ants
+  Directory: D:\Documents\Computer Science\Third Year\Final Year Project\Formica
   Output:
   
       at ProcessTermError.MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)

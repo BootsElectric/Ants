@@ -1,3 +1,4 @@
+var _user$project$Messages$UpdateIndicators = {ctor: 'UpdateIndicators'};
 var _user$project$Messages$Generated = F2(
 	function (a, b) {
 		return {ctor: 'Generated', _0: a, _1: b};

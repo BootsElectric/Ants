@@ -271,25 +271,39 @@ var _user$project$UI$writeUI = function (model) {
 											})),
 									_1: {
 										ctor: '::',
-										_0: collectButton,
-										_1: {
-											ctor: '::',
-											_0: A3(
-												_mdgriffith$style_elements$Element$button,
-												_user$project$StyleSheet$Button,
+										_0: _mdgriffith$style_elements$Element$text(
+											_elm_lang$core$String$concat(
 												{
 													ctor: '::',
-													_0: _mdgriffith$style_elements$Element_Attributes$width(
-														_mdgriffith$style_elements$Element_Attributes$px(160)),
+													_0: 'Score: ',
 													_1: {
 														ctor: '::',
-														_0: _mdgriffith$style_elements$Element_Events$onClick(
-															_user$project$Messages$UpdateState(_user$project$Model$PostGame)),
+														_0: _elm_lang$core$Basics$toString(625 - model.undugTiles),
 														_1: {ctor: '[]'}
 													}
-												},
-												_mdgriffith$style_elements$Element$text('Quit')),
-											_1: {ctor: '[]'}
+												})),
+										_1: {
+											ctor: '::',
+											_0: collectButton,
+											_1: {
+												ctor: '::',
+												_0: A3(
+													_mdgriffith$style_elements$Element$button,
+													_user$project$StyleSheet$Button,
+													{
+														ctor: '::',
+														_0: _mdgriffith$style_elements$Element_Attributes$width(
+															_mdgriffith$style_elements$Element_Attributes$px(160)),
+														_1: {
+															ctor: '::',
+															_0: _mdgriffith$style_elements$Element_Events$onClick(
+																_user$project$Messages$UpdateState(_user$project$Model$PostGame)),
+															_1: {ctor: '[]'}
+														}
+													},
+													_mdgriffith$style_elements$Element$text('Quit')),
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
@@ -424,26 +438,50 @@ var _user$project$UI$writePreGame = function (model) {
 						_0: _mdgriffith$style_elements$Element$text('A game about ant colonies'),
 						_1: {
 							ctor: '::',
-							_0: A3(
-								_mdgriffith$style_elements$Element$button,
-								_user$project$StyleSheet$Button,
-								{
+							_0: _mdgriffith$style_elements$Element$text('How to play:'),
+							_1: {
+								ctor: '::',
+								_0: _mdgriffith$style_elements$Element$text('Click on a tile to interact'),
+								_1: {
 									ctor: '::',
-									_0: _mdgriffith$style_elements$Element_Attributes$width(
-										_mdgriffith$style_elements$Element_Attributes$px(160)),
+									_0: _mdgriffith$style_elements$Element$text('Use W, A, S and D to move the camera'),
 									_1: {
 										ctor: '::',
-										_0: _mdgriffith$style_elements$Element_Attributes$height(
-											_mdgriffith$style_elements$Element_Attributes$px(40)),
+										_0: _mdgriffith$style_elements$Element$text('Red arrows indicate the nearest Disaster'),
 										_1: {
 											ctor: '::',
-											_0: _mdgriffith$style_elements$Element_Events$onClick(_user$project$Messages$Generate),
-											_1: {ctor: '[]'}
+											_0: _mdgriffith$style_elements$Element$text('Green arrows indicate the nearest Food'),
+											_1: {
+												ctor: '::',
+												_0: _mdgriffith$style_elements$Element$text('Dig through all the tiles to win!'),
+												_1: {
+													ctor: '::',
+													_0: A3(
+														_mdgriffith$style_elements$Element$button,
+														_user$project$StyleSheet$Button,
+														{
+															ctor: '::',
+															_0: _mdgriffith$style_elements$Element_Attributes$width(
+																_mdgriffith$style_elements$Element_Attributes$px(160)),
+															_1: {
+																ctor: '::',
+																_0: _mdgriffith$style_elements$Element_Attributes$height(
+																	_mdgriffith$style_elements$Element_Attributes$px(40)),
+																_1: {
+																	ctor: '::',
+																	_0: _mdgriffith$style_elements$Element_Events$onClick(_user$project$Messages$Generate),
+																	_1: {ctor: '[]'}
+																}
+															}
+														},
+														_mdgriffith$style_elements$Element$text('Start Game')),
+													_1: {ctor: '[]'}
+												}
+											}
 										}
 									}
-								},
-								_mdgriffith$style_elements$Element$text('Start Game')),
-							_1: {ctor: '[]'}
+								}
+							}
 						}
 					}
 				})));

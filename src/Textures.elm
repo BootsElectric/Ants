@@ -40,3 +40,10 @@ disasterUrl =
 undugUrl : String
 undugUrl =
     "undug.jpg"
+
+{-|
+  String rep of indicator
+-}
+indicatorUrl : String
+indicatorUrl =
+  "indicator.jpg"

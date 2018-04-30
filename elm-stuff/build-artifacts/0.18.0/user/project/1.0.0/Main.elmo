@@ -1,3 +1,176 @@
+var _user$project$Main$getIndicatorTexturePaths = F2(
+	function (disaster, food) {
+		return {
+			ctor: '::',
+			_0: _elm_lang$core$String$concat(
+				{
+					ctor: '::',
+					_0: _user$project$Textures$texturesUrl,
+					_1: {
+						ctor: '::',
+						_0: disaster,
+						_1: {
+							ctor: '::',
+							_0: food,
+							_1: {
+								ctor: '::',
+								_0: _user$project$Textures$indicatorUrl,
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$String$concat(
+					{
+						ctor: '::',
+						_0: _user$project$Textures$texturesUrl,
+						_1: {
+							ctor: '::',
+							_0: 'h-',
+							_1: {
+								ctor: '::',
+								_0: disaster,
+								_1: {
+									ctor: '::',
+									_0: food,
+									_1: {
+										ctor: '::',
+										_0: _user$project$Textures$indicatorUrl,
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					}),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$core$String$concat(
+						{
+							ctor: '::',
+							_0: _user$project$Textures$texturesUrl,
+							_1: {
+								ctor: '::',
+								_0: 's-',
+								_1: {
+									ctor: '::',
+									_0: disaster,
+									_1: {
+										ctor: '::',
+										_0: food,
+										_1: {
+											ctor: '::',
+											_0: _user$project$Textures$indicatorUrl,
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}
+			}
+		};
+	});
+var _user$project$Main$getAllIndicatorTexturePaths = _elm_lang$core$List$concat(
+	{
+		ctor: '::',
+		_0: A2(_user$project$Main$getIndicatorTexturePaths, 'db-', 'fb-'),
+		_1: {
+			ctor: '::',
+			_0: A2(_user$project$Main$getIndicatorTexturePaths, 'dl-', 'fl-'),
+			_1: {
+				ctor: '::',
+				_0: A2(_user$project$Main$getIndicatorTexturePaths, 'dr-', 'fr-'),
+				_1: {
+					ctor: '::',
+					_0: A2(_user$project$Main$getIndicatorTexturePaths, 'dt-', 'ft-'),
+					_1: {
+						ctor: '::',
+						_0: A2(_user$project$Main$getIndicatorTexturePaths, 'db-', ''),
+						_1: {
+							ctor: '::',
+							_0: A2(_user$project$Main$getIndicatorTexturePaths, 'dl-', ''),
+							_1: {
+								ctor: '::',
+								_0: A2(_user$project$Main$getIndicatorTexturePaths, 'dr-', ''),
+								_1: {
+									ctor: '::',
+									_0: A2(_user$project$Main$getIndicatorTexturePaths, 'dt-', ''),
+									_1: {
+										ctor: '::',
+										_0: A2(_user$project$Main$getIndicatorTexturePaths, '', 'fb-'),
+										_1: {
+											ctor: '::',
+											_0: A2(_user$project$Main$getIndicatorTexturePaths, '', 'fl-'),
+											_1: {
+												ctor: '::',
+												_0: A2(_user$project$Main$getIndicatorTexturePaths, '', 'fr-'),
+												_1: {
+													ctor: '::',
+													_0: A2(_user$project$Main$getIndicatorTexturePaths, '', 'ft-'),
+													_1: {
+														ctor: '::',
+														_0: A2(_user$project$Main$getIndicatorTexturePaths, 'db-', 'fl-'),
+														_1: {
+															ctor: '::',
+															_0: A2(_user$project$Main$getIndicatorTexturePaths, 'db-', 'fr-'),
+															_1: {
+																ctor: '::',
+																_0: A2(_user$project$Main$getIndicatorTexturePaths, 'db-', 'ft-'),
+																_1: {
+																	ctor: '::',
+																	_0: A2(_user$project$Main$getIndicatorTexturePaths, 'dl-', 'fb-'),
+																	_1: {
+																		ctor: '::',
+																		_0: A2(_user$project$Main$getIndicatorTexturePaths, 'dl-', 'fr-'),
+																		_1: {
+																			ctor: '::',
+																			_0: A2(_user$project$Main$getIndicatorTexturePaths, 'dl-', 'ft-'),
+																			_1: {
+																				ctor: '::',
+																				_0: A2(_user$project$Main$getIndicatorTexturePaths, 'dr-', 'fb-'),
+																				_1: {
+																					ctor: '::',
+																					_0: A2(_user$project$Main$getIndicatorTexturePaths, 'dr-', 'fl-'),
+																					_1: {
+																						ctor: '::',
+																						_0: A2(_user$project$Main$getIndicatorTexturePaths, 'dr-', 'ft-'),
+																						_1: {
+																							ctor: '::',
+																							_0: A2(_user$project$Main$getIndicatorTexturePaths, 'dt-', 'fb-'),
+																							_1: {
+																								ctor: '::',
+																								_0: A2(_user$project$Main$getIndicatorTexturePaths, 'dt-', 'fl-'),
+																								_1: {
+																									ctor: '::',
+																									_0: A2(_user$project$Main$getIndicatorTexturePaths, 'dt-', 'fr-'),
+																									_1: {ctor: '[]'}
+																								}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	});
 var _user$project$Main$getTexturePaths = function (kind) {
 	return {
 		ctor: '::',
@@ -49,6 +222,7 @@ var _user$project$Main$getTexturePaths = function (kind) {
 	};
 };
 var _user$project$Main$init = function () {
+	var indicators = _user$project$Main$getAllIndicatorTexturePaths;
 	var disaster = _user$project$Main$getTexturePaths(_user$project$Textures$disasterUrl);
 	var undug = _user$project$Main$getTexturePaths(_user$project$Textures$undugUrl);
 	var food = _user$project$Main$getTexturePaths(_user$project$Textures$foodUrl);
@@ -82,7 +256,11 @@ var _user$project$Main$init = function () {
 											_1: {
 												ctor: '::',
 												_0: disaster,
-												_1: {ctor: '[]'}
+												_1: {
+													ctor: '::',
+													_0: indicators,
+													_1: {ctor: '[]'}
+												}
 											}
 										}
 									}
@@ -138,19 +316,112 @@ var _user$project$Main$inBounds = F4(
 		var checkX = (_elm_lang$core$Native_Utils.cmp(newX, 0 - maxX) > 0) && (_elm_lang$core$Native_Utils.cmp(newX, maxX) < 0);
 		return (checkX && checkY) ? true : false;
 	});
+var _user$project$Main$isInColumn = F2(
+	function (model, tile) {
+		var _p1 = model.selected;
+		if (_p1.ctor === 'Just') {
+			return _elm_lang$core$Native_Utils.eq(
+				_elm_lang$core$Tuple$second(_p1._0.coord),
+				_elm_lang$core$Tuple$second(tile.coord));
+		} else {
+			return false;
+		}
+	});
+var _user$project$Main$isInRow = F2(
+	function (model, tile) {
+		var _p2 = model.selected;
+		if (_p2.ctor === 'Just') {
+			return _elm_lang$core$Native_Utils.eq(
+				_elm_lang$core$Tuple$first(_p2._0.coord),
+				_elm_lang$core$Tuple$first(tile.coord));
+		} else {
+			return false;
+		}
+	});
+var _user$project$Main$send = function (msg) {
+	return A2(
+		_elm_lang$core$Task$perform,
+		_elm_lang$core$Basics$identity,
+		_elm_lang$core$Task$succeed(msg));
+};
+var _user$project$Main$updateIndicators = F2(
+	function (model, tile) {
+		if (tile.isDug && (A2(_user$project$Main$isInColumn, model, tile) || A2(_user$project$Main$isInRow, model, tile))) {
+			var indicator = function () {
+				var _p3 = A2(_user$project$View$findIndicators, tile, model.grid);
+				switch (_p3) {
+					case 'db-':
+						return _user$project$Tile$DB;
+					case 'dl-':
+						return _user$project$Tile$DL;
+					case 'dr-':
+						return _user$project$Tile$DR;
+					case 'dt-':
+						return _user$project$Tile$DT;
+					case 'fb-':
+						return _user$project$Tile$FB;
+					case 'fl-':
+						return _user$project$Tile$FL;
+					case 'fr-':
+						return _user$project$Tile$FR;
+					case 'ft-':
+						return _user$project$Tile$FT;
+					case 'db-fb-':
+						return _user$project$Tile$BB;
+					case 'db-fl-':
+						return _user$project$Tile$DBFL;
+					case 'db-fr-':
+						return _user$project$Tile$DBFR;
+					case 'db-ft-':
+						return _user$project$Tile$DBFT;
+					case 'dl-fb-':
+						return _user$project$Tile$DLFB;
+					case 'dl-fl-':
+						return _user$project$Tile$BL;
+					case 'dl-fr-':
+						return _user$project$Tile$DLFR;
+					case 'dl-ft-':
+						return _user$project$Tile$DLFT;
+					case 'dr-fb-':
+						return _user$project$Tile$DRFB;
+					case 'dr-fl-':
+						return _user$project$Tile$DRFL;
+					case 'dr-fr-':
+						return _user$project$Tile$BR;
+					case 'dr-ft-':
+						return _user$project$Tile$DRFT;
+					case 'dt-fb-':
+						return _user$project$Tile$DTFB;
+					case 'dt-fl-':
+						return _user$project$Tile$DTFL;
+					case 'dt-fr-':
+						return _user$project$Tile$DTFR;
+					case 'dt-ft-':
+						return _user$project$Tile$BT;
+					default:
+						return _user$project$Tile$BB;
+				}
+			}();
+			return _elm_lang$core$Native_Utils.update(
+				tile,
+				{indicator: indicator});
+		} else {
+			return tile;
+		}
+	});
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p1 = model.state;
-		switch (_p1.ctor) {
+		var _p4 = model.state;
+		switch (_p4.ctor) {
 			case 'PreGame':
-				var _p2 = msg;
-				switch (_p2.ctor) {
+				var _p5 = msg;
+				switch (_p5.ctor) {
 					case 'Resize':
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
-								{dimensions: _p2._0}),
+								{dimensions: _p5._0}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					case 'UpdateState':
@@ -158,7 +429,7 @@ var _user$project$Main$update = F2(
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
-								{state: _p2._0}),
+								{state: _p5._0}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					case 'Resources':
@@ -167,7 +438,7 @@ var _user$project$Main$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
 								{
-									resources: A2(_user$project$Game_Resources$update, _p2._0, model.resources)
+									resources: A2(_user$project$Game_Resources$update, _p5._0, model.resources)
 								}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
@@ -185,7 +456,7 @@ var _user$project$Main$update = F2(
 								floatList)
 						};
 					case 'Generated':
-						var _p3 = _p2._1;
+						var _p6 = _p5._1;
 						var newGrid = A4(_user$project$Model$createGrid, model, 12, 12, _elm_lang$core$Dict$empty);
 						var newFloats = A2(
 							_user$project$Model$randomFloatsFromLists,
@@ -194,20 +465,20 @@ var _user$project$Main$update = F2(
 								12,
 								12,
 								{ctor: '[]'}),
-							_p3);
+							_p6);
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
-								{randomFloats: newFloats, floatsList: _p3, grid: newGrid, state: _p2._0}),
+								{randomFloats: newFloats, floatsList: _p6, grid: newGrid, state: _p5._0}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					default:
 						return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			case 'InGame':
-				var _p4 = msg;
-				switch (_p4.ctor) {
+				var _p7 = msg;
+				switch (_p7.ctor) {
 					case 'NoMessageYet':
 						return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 					case 'Resize':
@@ -215,16 +486,16 @@ var _user$project$Main$update = F2(
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
-								{dimensions: _p4._0}),
+								{dimensions: _p7._0}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					case 'MouseMove':
-						var _p5 = _p4._0;
+						var _p8 = _p7._0;
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
-								{mPosX: _p5.x, mPosY: _p5.y}),
+								{mPosX: _p8.x, mPosY: _p8.y}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					case 'Resources':
@@ -233,7 +504,7 @@ var _user$project$Main$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
 								{
-									resources: A2(_user$project$Game_Resources$update, _p4._0, model.resources)
+									resources: A2(_user$project$Game_Resources$update, _p7._0, model.resources)
 								}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
@@ -243,16 +514,16 @@ var _user$project$Main$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
 								{
-									pressedKeys: A2(_ohanhi$keyboard_extra$Keyboard_Extra$update, _p4._0, model.pressedKeys)
+									pressedKeys: A2(_ohanhi$keyboard_extra$Keyboard_Extra$update, _p7._0, model.pressedKeys)
 								}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					case 'MouseDown':
-						var _p7 = _p4._0;
+						var _p10 = _p7._0;
 						var h = model.dimensions.height;
 						var w = model.dimensions.width;
-						var y = _elm_lang$core$Basics$round(_p7.y);
-						var x = _elm_lang$core$Basics$round(_p7.x);
+						var y = _elm_lang$core$Basics$round(_p10.y);
+						var x = _elm_lang$core$Basics$round(_p10.x);
 						var mousePos = A3(
 							_user$project$Game_TwoD_Camera$viewportToGameCoordinates,
 							model.camera,
@@ -263,9 +534,9 @@ var _user$project$Main$update = F2(
 						var normalY = _elm_lang$core$Basics$floor(
 							_elm_lang$core$Tuple$second(mousePos));
 						var tile = function () {
-							var _p6 = A3(_user$project$Tile$getTile, model.grid, normalX, normalY);
-							if (_p6.ctor === 'Just') {
-								return _elm_lang$core$Maybe$Just(_p6._0);
+							var _p9 = A3(_user$project$Tile$getTile, model.grid, normalX, normalY);
+							if (_p9.ctor === 'Just') {
+								return _elm_lang$core$Maybe$Just(_p9._0);
 							} else {
 								return model.selected;
 							}
@@ -274,11 +545,11 @@ var _user$project$Main$update = F2(
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
-								{mPosX: _p7.x, mPosY: _p7.y, selected: tile}),
+								{mPosX: _p10.x, mPosY: _p10.y, selected: tile}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					case 'Tick':
-						var _p8 = _p4._0;
+						var _p11 = _p7._0;
 						var h = model.dimensions.height;
 						var w = model.dimensions.width;
 						var width = _elm_lang$core$Tuple$first(
@@ -290,7 +561,7 @@ var _user$project$Main$update = F2(
 									_1: _elm_lang$core$Basics$toFloat(h)
 								},
 								model.camera));
-						var camSpeed = _p8 * (width / 4);
+						var camSpeed = _p11 * (width / 4);
 						var arrows = _ohanhi$keyboard_extra$Keyboard_Extra$wasd(model.pressedKeys);
 						var x = _elm_lang$core$Basics$toFloat(arrows.x);
 						var y = _elm_lang$core$Basics$toFloat(arrows.y);
@@ -302,7 +573,7 @@ var _user$project$Main$update = F2(
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
-								{time: _p8 + model.time, camera: newCamera}),
+								{time: _p11 + model.time, camera: newCamera}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					case 'Collect':
@@ -320,21 +591,21 @@ var _user$project$Main$update = F2(
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
 								{
-									ants: A2(_user$project$Ants$increaseFood, model.ants, 400),
+									ants: A2(_user$project$Ants$increaseFood, model.ants, 200),
 									grid: grid,
 									selected: A2(
 										_elm_lang$core$Dict$get,
 										{ctor: '_Tuple2', _0: selX, _1: selY},
 										grid)
 								}),
-							_1: _elm_lang$core$Platform_Cmd$none
+							_1: _user$project$Main$send(_user$project$Messages$UpdateIndicators)
 						};
 					case 'UpdateState':
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
-								{state: _p4._0}),
+								{state: _p7._0}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					case 'Dig':
@@ -342,7 +613,7 @@ var _user$project$Main$update = F2(
 						var won = _elm_lang$core$Native_Utils.cmp(undugTiles, 0) < 1;
 						var ants = _elm_lang$core$Native_Utils.eq(
 							_user$project$Tile$getKind(model.selected),
-							_user$project$Tile$Disaster) ? A2(_user$project$Ants$decreaseFood, model.ants, 200) : A2(_user$project$Ants$decreaseFood, model.ants, 30);
+							_user$project$Tile$Disaster) ? A2(_user$project$Ants$decreaseFood, model.ants, 200) : A2(_user$project$Ants$decreaseFood, model.ants, 40);
 						var state = ((_elm_lang$core$Native_Utils.cmp(ants.number, 0) < 1) || (_elm_lang$core$Native_Utils.cmp(undugTiles, 0) < 1)) ? _user$project$Model$PostGame : _user$project$Model$InGame;
 						var selY = _user$project$UnMaybe$unMaybeInt(
 							_user$project$Tile$getY(model.selected));
@@ -368,20 +639,40 @@ var _user$project$Main$update = F2(
 									undugTiles: undugTiles,
 									won: won
 								}),
+							_1: _user$project$Main$send(_user$project$Messages$UpdateIndicators)
+						};
+					case 'UpdateIndicators':
+						var updatedIndicators = _elm_lang$core$Dict$fromList(
+							A3(
+								_elm_lang$core$List$map2,
+								F2(
+									function (v0, v1) {
+										return {ctor: '_Tuple2', _0: v0, _1: v1};
+									}),
+								_elm_lang$core$Dict$keys(model.grid),
+								A2(
+									_elm_lang$core$List$map,
+									_user$project$Main$updateIndicators(model),
+									_elm_lang$core$Dict$values(model.grid))));
+						return {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{grid: updatedIndicators}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					default:
 						return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			default:
-				var _p9 = msg;
-				switch (_p9.ctor) {
+				var _p12 = msg;
+				switch (_p12.ctor) {
 					case 'Resize':
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
-								{dimensions: _p9._0}),
+								{dimensions: _p12._0}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					case 'UpdateState':
@@ -389,7 +680,7 @@ var _user$project$Main$update = F2(
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
-								{state: _p9._0, ants: _user$project$Ants$initialAnts}),
+								{state: _p12._0, ants: _user$project$Ants$initialAnts}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					default:

@@ -16,6 +16,7 @@ type alias Tile =
   , kind : Kind
   , isDug : Bool
   , float : Float
+  , indicator : Indicator
   }
 
 {-|
@@ -26,6 +27,20 @@ type Kind
   | Queen
   | Food
   | Disaster
+
+
+{-|
+  The type of indicator the tile uses
+-}
+type Indicator
+  = BB | BL | BR | BT
+  | DB | DL | DR | DT
+  | FB | FL | FR | FT
+  | DBFL | DBFR | DBFT
+  | DLFB | DLFR | DLFT
+  | DRFB | DRFL | DRFT
+  | DTFB | DTFL | DTFR
+  | None
 
 {-|
   Creates a new tile with kind k at coordinates c
@@ -39,6 +54,7 @@ newTile c f k =
   , kind = k
   , isDug = False
   , float = f
+  , indicator = None
   }
 
 
@@ -89,7 +105,7 @@ getKind tile =
 
         Nothing ->
             Dirt
-            
+
 
 {-|
   Gets the kind of tile that this is as a String
